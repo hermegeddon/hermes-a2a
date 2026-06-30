@@ -1,0 +1,47 @@
+{
+  "commit": "173695755607e884aa9acf8ce4feed90e32727a1",
+  "generated_at": "2026-06-30T18:30:20Z",
+  "implementation_decision": {
+    "fallback": "generate Python protobuf/grpc artifacts from spec/upstream/a2a.proto if pinned SDK drifts or cannot satisfy a conformance row",
+    "language": "Python",
+    "package_manager": "uv",
+    "sdk": {
+      "package": "a2a-sdk",
+      "role": "pinned official SDK runtime for generated proto/types, clients, server routes, task stores; local safety wrappers remain in hermes_a2a",
+      "version": "1.0.0"
+    }
+  },
+  "known_spec_notes": [
+    "v1.0.0 is latest released version in published versioned spec at retrieval time.",
+    "Section 1.4 says spec/a2a.proto is single authoritative normative definition of all protocol data objects and request/response messages.",
+    "REST SubscribeToTask docs list POST /tasks/{id}:subscribe while normative proto HTTP annotation uses GET /tasks/{id=*}:subscribe; official SDK accepts both GET and POST. Implement support for both and classify GET/proto as canonical."
+  ],
+  "license": {
+    "compatibility": "PASS for local vendoring/codegen; no public release authorized by this plan",
+    "file": "spec/upstream/LICENSE",
+    "spdx": "Apache-2.0"
+  },
+  "non_authorizations": [
+    "no public PR/release/package/deploy",
+    "no LAN/public listener",
+    "no live profile/plugin/MCP/service mutation",
+    "no IAP repo mutation"
+  ],
+  "normative_roles": {
+    "spec/upstream/a2a-sdk-pypi-1.0.0.json": "official Python SDK candidate metadata; external dependency candidate, not normative over proto/spec",
+    "spec/upstream/a2a.proto": "single authoritative normative definition of protocol data objects and request/response messages for v1.0.0",
+    "spec/upstream/adr-001-protojson-serialization.md": "normative-adjacent serialization ADR cited by spec for ProtoJSON naming/enum behavior",
+    "spec/upstream/buf.*": "build/codegen configuration used by upstream; input to reproducible generation checks",
+    "spec/upstream/specification.md": "normative prose specification; Section 1.4 states proto is single authoritative normative data/request-response definition"
+  },
+  "provenance": {
+    "commit_sha": "173695755607e884aa9acf8ce4feed90e32727a1",
+    "git_tag_verified_by": "git clone --branch v1.0.0 --depth 1 and exact tag checkout",
+    "signature_status": "no tag signature verification evidence captured; treated as unsigned-risk with source archive/tag cross-check required for release"
+  },
+  "release_url": "https://github.com/a2aproject/A2A/releases/tag/v1.0.0",
+  "remote": "https://github.com/a2aproject/A2A.git",
+  "tag": "v1.0.0",
+  "target_protocol_version": "1.0.0",
+  "versioned_spec_url": "https://a2a-protocol.org/v1.0.0/specification/"
+}

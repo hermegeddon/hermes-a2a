@@ -1,0 +1,20 @@
+{
+  "files": [
+    {
+      "bytes": 1388,
+      "path": "milestones/m18/IAP-PORTING-PACKET.md",
+      "sha256": "61941d97ecfe76b449037592cf89aeb2e54fa0f771ee55185ef70a532c29f9db"
+    },
+    {
+      "bytes": 519,
+      "path": "milestones/m18/M18-SYNTHESIS.md",
+      "sha256": "2c937c3b956ca13fc973419b6f0de12e35705993cd244cd18ca6a45356150ef5"
+    },
+    {
+      "bytes": 1719,
+      "path": "milestones/m18/RELEASE-READINESS.md",
+      "sha256": "e3ac6b4df10247015d1e8b1540f7597ca30ef4e8735e78af325fe8baebf489cf"
+    }
+  ],
+  "generated_at": "2026-06-30T18:41:14.985921Z"
+}

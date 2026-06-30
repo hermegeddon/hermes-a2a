@@ -1,0 +1,175 @@
+{
+  "generated_at": "2026-06-30T18:45:57.209318Z",
+  "git_state": "not_a_git_repo",
+  "git_status_output": [
+    "fatal: not a git repository (or any of the parent directories): .git"
+  ],
+  "hashes": [
+    {
+      "bytes": 42733,
+      "path": "PLAN.md",
+      "sha256": "5fab0228398a335806c27426172653c374852da145280ef159820fcd863364d1"
+    },
+    {
+      "bytes": 559,
+      "path": "pyproject.toml",
+      "sha256": "0fc428d8b2dd768bd2d1acc38e216c26fa9be199ba3c8e5e576bea8a5e806363"
+    },
+    {
+      "bytes": 174254,
+      "path": "uv.lock",
+      "sha256": "5f8027b4a5121131aaff69c7b4f4f2abb613caedb4af3207c460bf29f67d4aff"
+    },
+    {
+      "bytes": 1508,
+      "path": "README.md",
+      "sha256": "ad931a67e1a11ab1230fb008bc1a9359bce2bb10317b2229266219238d6a86ac"
+    },
+    {
+      "bytes": 2425,
+      "path": "milestones/m16/validation-receipt.json",
+      "sha256": "54dc526611ce8c92be6a2f3a9e0c4447faeef50da17480e38f3d55467da68233"
+    },
+    {
+      "bytes": 63833,
+      "path": "milestones/m16/CONFORMANCE-MATRIX-FINAL.json",
+      "sha256": "8b15d5f00364cb583c03beca1344abf2b84e3544e0bfa910c0d1c4f5b58c945d"
+    },
+    {
+      "bytes": 803,
+      "path": "milestones/m17a/validation-receipt.json",
+      "sha256": "02e395f8d1010e53ee0a009e80d5903182b583ce30664a39f0110e8cf1fbe2aa"
+    },
+    {
+      "bytes": 4345,
+      "path": "milestones/m18/validation-receipt.json",
+      "sha256": "10e2cd7353173820886a37fb808cdbe8256c845f2574055e2345c90feea1c2ce"
+    }
+  ],
+  "secret_shape_hits_count": 29,
+  "secret_shape_nonfixture_count": 0,
+  "secret_shape_sample": [
+    {
+      "fixture_or_synthetic": true,
+      "line": 76,
+      "path": "tests/test_agent_card_and_bindings.py",
+      "pattern": "generic_secret_assign"
+    },
+    {
+      "fixture_or_synthetic": true,
+      "line": 13,
+      "path": "tests/test_projection_receipts.py",
+      "pattern": "openai_like"
+    },
+    {
+      "fixture_or_synthetic": true,
+      "line": 1883,
+      "path": "artifacts/kanban/20260630T013929Z-m4-m5-safety-swarm/post-watcher-closeout.json",
+      "pattern": "openai_like"
+    },
+    {
+      "fixture_or_synthetic": true,
+      "line": 147,
+      "path": "scripts/validate_local_conformance.py",
+      "pattern": "openai_like"
+    },
+    {
+      "fixture_or_synthetic": true,
+      "line": 59,
+      "path": "scripts/validate_local_conformance.py",
+      "pattern": "generic_secret_assign"
+    },
+    {
+      "fixture_or_synthetic": true,
+      "line": 188,
+      "path": "milestones/m5/projection-envelope/fixtures/negative-cases.json",
+      "pattern": "openai_like"
+    },
+    {
+      "fixture_or_synthetic": true,
+      "line": 212,
+      "path": "milestones/m5/projection-envelope/fixtures/negative-cases.json",
+      "pattern": "openai_like"
+    },
+    {
+      "fixture_or_synthetic": true,
+      "line": 309,
+      "path": "milestones/m5/projection-envelope/fixtures/negative-cases.json",
+      "pattern": "openai_like"
+    },
+    {
+      "fixture_or_synthetic": true,
+      "line": 512,
+      "path": "milestones/m5/projection-envelope/fixtures/negative-cases.json",
+      "pattern": "openai_like"
+    },
+    {
+      "fixture_or_synthetic": true,
+      "line": 537,
+      "path": "milestones/m5/projection-envelope/fixtures/negative-cases.json",
+      "pattern": "openai_like"
+    },
+    {
+      "fixture_or_synthetic": true,
+      "line": 326,
+      "path": "milestones/m5/projection-receipts/tests/test_projection_harness.py",
+      "pattern": "openai_like"
+    },
+    {
+      "fixture_or_synthetic": true,
+      "line": 343,
+      "path": "milestones/m5/projection-receipts/tests/test_projection_harness.py",
+      "pattern": "openai_like"
+    },
+    {
+      "fixture_or_synthetic": true,
+      "line": 470,
+      "path": "milestones/m5/projection-receipts/tests/test_projection_harness.py",
+      "pattern": "openai_like"
+    },
+    {
+      "fixture_or_synthetic": true,
+      "line": 188,
+      "path": "milestones/m5/projection-receipts/fixtures/negative-cases.json",
+      "pattern": "openai_like"
+    },
+    {
+      "fixture_or_synthetic": true,
+      "line": 212,
+      "path": "milestones/m5/projection-receipts/fixtures/negative-cases.json",
+      "pattern": "openai_like"
+    },
+    {
+      "fixture_or_synthetic": true,
+      "line": 309,
+      "path": "milestones/m5/projection-receipts/fixtures/negative-cases.json",
+      "pattern": "openai_like"
+    },
+    {
+      "fixture_or_synthetic": true,
+      "line": 512,
+      "path": "milestones/m5/projection-receipts/fixtures/negative-cases.json",
+      "pattern": "openai_like"
+    },
+    {
+      "fixture_or_synthetic": true,
+      "line": 537,
+      "path": "milestones/m5/projection-receipts/fixtures/negative-cases.json",
+      "pattern": "openai_like"
+    },
+    {
+      "fixture_or_synthetic": true,
+      "line": 396,
+      "path": "milestones/m5/projection-harness/tests/test_projection_harness.py",
+      "pattern": "openai_like"
+    },
+    {
+      "fixture_or_synthetic": true,
+      "line": 413,
+      "path": "milestones/m5/projection-harness/tests/test_projection_harness.py",
+      "pattern": "openai_like"
+    }
+  ],
+  "trailing_whitespace_count": 0,
+  "trailing_whitespace_sample": []
+}

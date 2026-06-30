@@ -1,0 +1,313 @@
+{
+  "generated_at": "2026-06-30T18:30:20Z",
+  "operations": [
+    {
+      "abstract_operation": "SendMessage",
+      "functionality": "Send Message",
+      "grpc_method": "SendMessage",
+      "id": "OP-001",
+      "jsonrpc_method": "SendMessage",
+      "notes": "",
+      "request_type": "SendMessageRequest",
+      "requiredness": "required-by-proto-service",
+      "response_type": "SendMessageResponse",
+      "rest_all_proto_bindings": [
+        {
+          "method": "POST",
+          "path": "/message:send"
+        },
+        {
+          "method": "POST",
+          "path": "/{tenant}/message:send"
+        }
+      ],
+      "rest_canonical": {
+        "method": "POST",
+        "path": "/message:send"
+      },
+      "source_artifact": "spec/upstream/a2a.proto",
+      "source_section": "service A2AService and docs/specification.md Section 5.3",
+      "streaming": false
+    },
+    {
+      "abstract_operation": "SendStreamingMessage",
+      "functionality": "Send Streaming Message",
+      "grpc_method": "SendStreamingMessage",
+      "id": "OP-002",
+      "jsonrpc_method": "SendStreamingMessage",
+      "notes": "",
+      "request_type": "SendMessageRequest",
+      "requiredness": "required-by-proto-service",
+      "response_type": "stream StreamResponse",
+      "rest_all_proto_bindings": [
+        {
+          "method": "POST",
+          "path": "/message:stream"
+        },
+        {
+          "method": "POST",
+          "path": "/{tenant}/message:stream"
+        }
+      ],
+      "rest_canonical": {
+        "method": "POST",
+        "path": "/message:stream"
+      },
+      "source_artifact": "spec/upstream/a2a.proto",
+      "source_section": "service A2AService and docs/specification.md Section 5.3",
+      "streaming": true
+    },
+    {
+      "abstract_operation": "GetTask",
+      "functionality": "Get Task",
+      "grpc_method": "GetTask",
+      "id": "OP-003",
+      "jsonrpc_method": "GetTask",
+      "notes": "",
+      "request_type": "GetTaskRequest",
+      "requiredness": "required-by-proto-service",
+      "response_type": "Task",
+      "rest_all_proto_bindings": [
+        {
+          "method": "GET",
+          "path": "/tasks/{id}"
+        },
+        {
+          "method": "GET",
+          "path": "/{tenant}/tasks/{id}"
+        }
+      ],
+      "rest_canonical": {
+        "method": "GET",
+        "path": "/tasks/{id}"
+      },
+      "source_artifact": "spec/upstream/a2a.proto",
+      "source_section": "service A2AService and docs/specification.md Section 5.3",
+      "streaming": false
+    },
+    {
+      "abstract_operation": "ListTasks",
+      "functionality": "List Tasks",
+      "grpc_method": "ListTasks",
+      "id": "OP-004",
+      "jsonrpc_method": "ListTasks",
+      "notes": "",
+      "request_type": "ListTasksRequest",
+      "requiredness": "required-by-proto-service",
+      "response_type": "ListTasksResponse",
+      "rest_all_proto_bindings": [
+        {
+          "method": "GET",
+          "path": "/tasks"
+        },
+        {
+          "method": "GET",
+          "path": "/{tenant}/tasks"
+        }
+      ],
+      "rest_canonical": {
+        "method": "GET",
+        "path": "/tasks"
+      },
+      "source_artifact": "spec/upstream/a2a.proto",
+      "source_section": "service A2AService and docs/specification.md Section 5.3",
+      "streaming": false
+    },
+    {
+      "abstract_operation": "CancelTask",
+      "functionality": "Cancel Task",
+      "grpc_method": "CancelTask",
+      "id": "OP-005",
+      "jsonrpc_method": "CancelTask",
+      "notes": "",
+      "request_type": "CancelTaskRequest",
+      "requiredness": "required-by-proto-service",
+      "response_type": "Task",
+      "rest_all_proto_bindings": [
+        {
+          "method": "POST",
+          "path": "/tasks/{id}:cancel"
+        },
+        {
+          "method": "POST",
+          "path": "/{tenant}/tasks/{id}:cancel"
+        }
+      ],
+      "rest_canonical": {
+        "method": "POST",
+        "path": "/tasks/{id}:cancel"
+      },
+      "source_artifact": "spec/upstream/a2a.proto",
+      "source_section": "service A2AService and docs/specification.md Section 5.3",
+      "streaming": false
+    },
+    {
+      "abstract_operation": "SubscribeToTask",
+      "functionality": "Subscribe To Task",
+      "grpc_method": "SubscribeToTask",
+      "id": "OP-006",
+      "jsonrpc_method": "SubscribeToTask",
+      "notes": "Docs method mapping says POST /tasks/{id}:subscribe; proto annotation says GET /tasks/{id}:subscribe. Proto is authoritative; support docs-compatible fallback where SDK does.",
+      "request_type": "SubscribeToTaskRequest",
+      "requiredness": "required-by-proto-service",
+      "response_type": "stream StreamResponse",
+      "rest_all_proto_bindings": [
+        {
+          "method": "GET",
+          "path": "/tasks/{id}:subscribe"
+        },
+        {
+          "method": "GET",
+          "path": "/{tenant}/tasks/{id}:subscribe"
+        }
+      ],
+      "rest_canonical": {
+        "method": "GET",
+        "path": "/tasks/{id}:subscribe"
+      },
+      "source_artifact": "spec/upstream/a2a.proto",
+      "source_section": "service A2AService and docs/specification.md Section 5.3",
+      "streaming": true
+    },
+    {
+      "abstract_operation": "CreateTaskPushNotificationConfig",
+      "functionality": "Create Task Push Notification Config",
+      "grpc_method": "CreateTaskPushNotificationConfig",
+      "id": "OP-007",
+      "jsonrpc_method": "CreateTaskPushNotificationConfig",
+      "notes": "",
+      "request_type": "TaskPushNotificationConfig",
+      "requiredness": "required-by-proto-service",
+      "response_type": "TaskPushNotificationConfig",
+      "rest_all_proto_bindings": [
+        {
+          "method": "POST",
+          "path": "/tasks/{task_id}/pushNotificationConfigs"
+        },
+        {
+          "method": "POST",
+          "path": "/{tenant}/tasks/{task_id}/pushNotificationConfigs"
+        }
+      ],
+      "rest_canonical": {
+        "method": "POST",
+        "path": "/tasks/{task_id}/pushNotificationConfigs"
+      },
+      "source_artifact": "spec/upstream/a2a.proto",
+      "source_section": "service A2AService and docs/specification.md Section 5.3",
+      "streaming": false
+    },
+    {
+      "abstract_operation": "GetTaskPushNotificationConfig",
+      "functionality": "Get Task Push Notification Config",
+      "grpc_method": "GetTaskPushNotificationConfig",
+      "id": "OP-008",
+      "jsonrpc_method": "GetTaskPushNotificationConfig",
+      "notes": "Docs method mapping says GET /tasks/{id}/pushNotificationConfigs/{configId}; proto annotation says GET /tasks/{task_id}/pushNotificationConfigs/{id}. Proto is authoritative; support docs-compatible fallback where SDK does.",
+      "request_type": "GetTaskPushNotificationConfigRequest",
+      "requiredness": "required-by-proto-service",
+      "response_type": "TaskPushNotificationConfig",
+      "rest_all_proto_bindings": [
+        {
+          "method": "GET",
+          "path": "/tasks/{task_id}/pushNotificationConfigs/{id}"
+        },
+        {
+          "method": "GET",
+          "path": "/{tenant}/tasks/{task_id}/pushNotificationConfigs/{id}"
+        }
+      ],
+      "rest_canonical": {
+        "method": "GET",
+        "path": "/tasks/{task_id}/pushNotificationConfigs/{id}"
+      },
+      "source_artifact": "spec/upstream/a2a.proto",
+      "source_section": "service A2AService and docs/specification.md Section 5.3",
+      "streaming": false
+    },
+    {
+      "abstract_operation": "ListTaskPushNotificationConfigs",
+      "functionality": "List Task Push Notification Configs",
+      "grpc_method": "ListTaskPushNotificationConfigs",
+      "id": "OP-009",
+      "jsonrpc_method": "ListTaskPushNotificationConfigs",
+      "notes": "",
+      "request_type": "ListTaskPushNotificationConfigsRequest",
+      "requiredness": "required-by-proto-service",
+      "response_type": "ListTaskPushNotificationConfigsResponse",
+      "rest_all_proto_bindings": [
+        {
+          "method": "GET",
+          "path": "/tasks/{task_id}/pushNotificationConfigs"
+        },
+        {
+          "method": "GET",
+          "path": "/{tenant}/tasks/{task_id}/pushNotificationConfigs"
+        }
+      ],
+      "rest_canonical": {
+        "method": "GET",
+        "path": "/tasks/{task_id}/pushNotificationConfigs"
+      },
+      "source_artifact": "spec/upstream/a2a.proto",
+      "source_section": "service A2AService and docs/specification.md Section 5.3",
+      "streaming": false
+    },
+    {
+      "abstract_operation": "GetExtendedAgentCard",
+      "functionality": "Get Extended Agent Card",
+      "grpc_method": "GetExtendedAgentCard",
+      "id": "OP-010",
+      "jsonrpc_method": "GetExtendedAgentCard",
+      "notes": "",
+      "request_type": "GetExtendedAgentCardRequest",
+      "requiredness": "required-by-proto-service",
+      "response_type": "AgentCard",
+      "rest_all_proto_bindings": [
+        {
+          "method": "GET",
+          "path": "/extendedAgentCard"
+        },
+        {
+          "method": "GET",
+          "path": "/{tenant}/extendedAgentCard"
+        }
+      ],
+      "rest_canonical": {
+        "method": "GET",
+        "path": "/extendedAgentCard"
+      },
+      "source_artifact": "spec/upstream/a2a.proto",
+      "source_section": "service A2AService and docs/specification.md Section 5.3",
+      "streaming": false
+    },
+    {
+      "abstract_operation": "DeleteTaskPushNotificationConfig",
+      "functionality": "Delete Task Push Notification Config",
+      "grpc_method": "DeleteTaskPushNotificationConfig",
+      "id": "OP-011",
+      "jsonrpc_method": "DeleteTaskPushNotificationConfig",
+      "notes": "Docs method mapping says DELETE /tasks/{id}/pushNotificationConfigs/{configId}; proto annotation says DELETE /tasks/{task_id}/pushNotificationConfigs/{id}. Proto is authoritative; support docs-compatible fallback where SDK does.",
+      "request_type": "DeleteTaskPushNotificationConfigRequest",
+      "requiredness": "required-by-proto-service",
+      "response_type": "google.protobuf.Empty",
+      "rest_all_proto_bindings": [
+        {
+          "method": "DELETE",
+          "path": "/tasks/{task_id}/pushNotificationConfigs/{id}"
+        },
+        {
+          "method": "DELETE",
+          "path": "/{tenant}/tasks/{task_id}/pushNotificationConfigs/{id}"
+        }
+      ],
+      "rest_canonical": {
+        "method": "DELETE",
+        "path": "/tasks/{task_id}/pushNotificationConfigs/{id}"
+      },
+      "source_artifact": "spec/upstream/a2a.proto",
+      "source_section": "service A2AService and docs/specification.md Section 5.3",
+      "streaming": false
+    }
+  ]
+}

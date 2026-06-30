@@ -1,0 +1,23 @@
+{
+  "binding": "grpc-loopback",
+  "context_id": "7dfd6682-de82-4a43-accf-0c8fede116a8",
+  "endpoint": "127.0.0.1:46435",
+  "generated_at": "2026-06-30T19:29:25.209926Z",
+  "get_state": "TASK_STATE_COMPLETED",
+  "message_text": "Hermes A2A local echo: M17a peer A asks peer B for a synthetic local-only status.",
+  "non_claims": [
+    "No LAN attempted",
+    "No public listener",
+    "No live profile/service/MCP mutation",
+    "No protected work data"
+  ],
+  "policy_denial": {
+    "denied": true,
+    "reason": "push URL host is not loopback"
+  },
+  "receipt_ref": "receipts/receipt-65f87628-d4cc-48a1-8317-b6e9a464b2c9-06695f56f7d249c194c9790cbfd0badf.json",
+  "send_state": "TASK_STATE_COMPLETED",
+  "server_stopped": true,
+  "status": "passed",
+  "task_id": "65f87628-d4cc-48a1-8317-b6e9a464b2c9"
+}

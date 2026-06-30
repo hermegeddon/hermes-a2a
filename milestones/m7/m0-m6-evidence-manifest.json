@@ -1,0 +1,61 @@
+{
+  "artifacts": [
+    {
+      "classification": "local safety/regression evidence; not upstream wire conformance",
+      "file_count": 2,
+      "milestone": "m0",
+      "path": "milestones/m0",
+      "sha256_manifest": "ec7a9a2decbfb3b0a1c3e3c6a36800dee9e480ce2ce0d4019b27bd2f52a15709"
+    },
+    {
+      "classification": "local safety/regression evidence; not upstream wire conformance",
+      "file_count": 749,
+      "milestone": "m1",
+      "path": "milestones/m1",
+      "sha256_manifest": "3d4bbc1e89226f8759ec0d0ae36067500fcb948523865a00121ff00bcea70b15"
+    },
+    {
+      "classification": "local safety/regression evidence; not upstream wire conformance",
+      "file_count": 1928,
+      "milestone": "m2",
+      "path": "milestones/m2",
+      "sha256_manifest": "ea18a06cec09abad3a9a21ab659c9864864dc2282495c5d3c9804e2458a96f6e"
+    },
+    {
+      "classification": "local safety/regression evidence; not upstream wire conformance",
+      "file_count": 2383,
+      "milestone": "m3",
+      "path": "milestones/m3",
+      "sha256_manifest": "58e72f079348f1010c204acda87c182517877cc0c78d98a29c91056b8006a877"
+    },
+    {
+      "classification": "local safety/regression evidence; not upstream wire conformance",
+      "file_count": 1028,
+      "milestone": "m4",
+      "path": "milestones/m4",
+      "sha256_manifest": "c03956cc9844e4f8f15535ddfdb1bd32042fa97198b944dfc703bac77100f43e"
+    },
+    {
+      "classification": "local safety/regression evidence; not upstream wire conformance",
+      "file_count": 104,
+      "milestone": "m5",
+      "path": "milestones/m5",
+      "sha256_manifest": "5610c05b6f3b335790dd7eac765059413c0b6f2b6a315c644ec0a41f405729f6"
+    },
+    {
+      "classification": "local safety/regression evidence; not upstream wire conformance",
+      "file_count": 80,
+      "milestone": "m6",
+      "path": "milestones/m6",
+      "sha256_manifest": "eb406cf5a7913abeffce3ab32bd70d049b1c814236075c80b2d6badb6b403465"
+    },
+    {
+      "classification": "local closeout evidence; not upstream wire conformance",
+      "file_count": 4,
+      "milestone": "final",
+      "path": "milestones/final",
+      "sha256_manifest": "b1e63297652627ab3c0728fede9e1097591a8923f8efa3648d4be702d3355718"
+    }
+  ],
+  "generated_at": "2026-06-30T18:30:20Z"
+}

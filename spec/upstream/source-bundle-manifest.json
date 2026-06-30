@@ -1,0 +1,66 @@
+{
+  "files": [
+    {
+      "bytes": 18747,
+      "path": "spec/upstream/CHANGELOG.md",
+      "sha256": "8579bfff6dd2c1983973a5f3b959ff784df1ac14d67f3e6310af48f2bb535e60"
+    },
+    {
+      "bytes": 11358,
+      "path": "spec/upstream/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "bytes": 8429,
+      "path": "spec/upstream/README.md",
+      "sha256": "a3dfbcd026a1cb85370397b84a3f7df26403539aa8c44ed02a1afac4390516b1"
+    },
+    {
+      "bytes": 2757,
+      "path": "spec/upstream/SOURCE.json",
+      "sha256": "079283597b5a26bbdd1396365b56b0dbd32fc392da5c2d08c6dc620ee90f9145"
+    },
+    {
+      "bytes": 11871,
+      "path": "spec/upstream/a2a-sdk-pypi-1.0.0.json",
+      "sha256": "b8f5b7a1c7434b576c74931daa30fca70405fbc5b8769e10a60cf684a1d097fa"
+    },
+    {
+      "bytes": 34461,
+      "path": "spec/upstream/a2a.proto",
+      "sha256": "4b74c0baa923ae0acb55474e548f1d6e5d3f83b80d757b65f8bf3e99a3c2257f"
+    },
+    {
+      "bytes": 4036,
+      "path": "spec/upstream/adr-001-protojson-serialization.md",
+      "sha256": "cd66d9655fab8c319e6c2360432ccb14e4c01fa19c20d5ed3fd578880e785eee"
+    },
+    {
+      "bytes": 666,
+      "path": "spec/upstream/buf.gen.yaml",
+      "sha256": "de28012f9327f2a527efa5b158c2bd862abd5e5563d8d1bc51ef007fe68820f8"
+    },
+    {
+      "bytes": 282,
+      "path": "spec/upstream/buf.lock",
+      "sha256": "06c19c80cc80b6a5666f01b57ad6a78bdad6630cfcca1fa862681a6a934e59bc"
+    },
+    {
+      "bytes": 557,
+      "path": "spec/upstream/buf.yaml",
+      "sha256": "78197cdfa627a258d0a164d30d73b028cc3d4fdc500cece0a7bcb412a4a6ee25"
+    },
+    {
+      "bytes": 5730,
+      "path": "spec/upstream/json-README.md",
+      "sha256": "6a598f3bf5b34d3ab5d9eb11d0b2603a7a3177fdb0b1e4380992ed4ddedac8eb"
+    },
+    {
+      "bytes": 152715,
+      "path": "spec/upstream/specification.md",
+      "sha256": "087c6f6272ec08a7fcd90eb16843bf97e25e0dcd155afa5779033d23d5ac377d"
+    }
+  ],
+  "generated_at": "2026-06-30T18:30:20Z",
+  "root": "/home/openclaw/workspace/hermes-a2a"
+}

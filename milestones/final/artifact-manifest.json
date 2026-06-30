@@ -1,0 +1,75 @@
+{
+  "files": [
+    {
+      "bytes": 42733,
+      "path": "PLAN.md",
+      "sha256": "5fab0228398a335806c27426172653c374852da145280ef159820fcd863364d1"
+    },
+    {
+      "bytes": 1508,
+      "path": "README.md",
+      "sha256": "ad931a67e1a11ab1230fb008bc1a9359bce2bb10317b2229266219238d6a86ac"
+    },
+    {
+      "bytes": 559,
+      "path": "pyproject.toml",
+      "sha256": "0fc428d8b2dd768bd2d1acc38e216c26fa9be199ba3c8e5e576bea8a5e806363"
+    },
+    {
+      "bytes": 174254,
+      "path": "uv.lock",
+      "sha256": "5f8027b4a5121131aaff69c7b4f4f2abb613caedb4af3207c460bf29f67d4aff"
+    },
+    {
+      "bytes": 15995,
+      "path": "SNAPSHOT-MANIFEST.json",
+      "sha256": "1501227a44305d31a35322b2691a8f0e78c10f097d33a59405e9f7840d5e16dc"
+    },
+    {
+      "bytes": 2595,
+      "path": "docs/developer.md",
+      "sha256": "a91562afe4d2eb13f6fb26212c4bd18f180762ac095899917f011e974b87b4cc"
+    },
+    {
+      "bytes": 2196,
+      "path": "docs/operator.md",
+      "sha256": "c5e0e72effc75daf42fc893121dd398b16fd79de937bcf42f4e01d71a983c32b"
+    },
+    {
+      "bytes": 1362,
+      "path": "docs/hermes-stuff-submodule.md",
+      "sha256": "7f1f4560e9fcb167ffc11043685f7a1f865916bbc2c3872d39e9421a4e898074"
+    },
+    {
+      "bytes": 2329,
+      "path": "milestones/final/A2A-V1-LOCAL-IMPLEMENTATION-CLOSEOUT.md",
+      "sha256": "dd378056cb5695b5f93cc067e928f334db7415945ed07b4b80aec8ffe2e794fa"
+    },
+    {
+      "bytes": 408,
+      "path": "milestones/final/submodule-validation-receipt.json",
+      "sha256": "337ebc46f9abe665383522b5b9f797590c00f202f7f8345a690ed74073ab442e"
+    },
+    {
+      "bytes": 63833,
+      "path": "milestones/m16/CONFORMANCE-MATRIX-FINAL.json",
+      "sha256": "fb40d0038bb659dfe9ad4a18ba2a21aaac65837ab96cc47ae8496238bf996020"
+    },
+    {
+      "bytes": 2425,
+      "path": "milestones/m16/validation-receipt.json",
+      "sha256": "f5d861f0c98b9573ddc943069bb44356f7bfc4a3f1db8e5f5b433b6a46df56e1"
+    },
+    {
+      "bytes": 803,
+      "path": "milestones/m17a/validation-receipt.json",
+      "sha256": "c7101458eaee3b9db7571ef3c0dfda335988376c98a7bbb70734fc15cac34470"
+    },
+    {
+      "bytes": 4345,
+      "path": "milestones/m18/validation-receipt.json",
+      "sha256": "10e2cd7353173820886a37fb808cdbe8256c845f2574055e2345c90feea1c2ce"
+    }
+  ],
+  "generated_at": "2026-06-30T19:30:38.607082Z"
+}

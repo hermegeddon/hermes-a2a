@@ -1,0 +1,9 @@
+{
+  "correlation_id": "75c05e1b-b5ab-49c6-b93d-ed3d37401918",
+  "created_at": "2026-06-30T18:41:54.808534Z",
+  "payload_bytes": 299,
+  "payload_sha256": "483a48a319ff0aa1d14a3442af76576d3fb94133c3ac122ef95f598140316212",
+  "projection": "passed-before-exposure",
+  "schema": "hermes-a2a/private-receipt/v1",
+  "surface": "message"
+}

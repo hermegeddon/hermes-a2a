@@ -1,0 +1,45 @@
+{
+  "gaps": [
+    {
+      "blocker_milestone": "M8",
+      "closure_evidence": "",
+      "current_state": "M1-M6 use local A2A-shaped envelopes and fixture adapters, not pinned proto/ProtoJSON as primary surface",
+      "id": "G-001",
+      "spec_row": "all-data-model",
+      "status": "open"
+    },
+    {
+      "blocker_milestone": "M11-M15",
+      "closure_evidence": "",
+      "current_state": "No JSON-RPC/REST/gRPC/SSE/push A2A server/client binding exists in workspace",
+      "id": "G-002",
+      "spec_row": "all-bindings",
+      "status": "open"
+    },
+    {
+      "blocker_milestone": "M9",
+      "closure_evidence": "",
+      "current_state": "No canonical public/extended Agent Card generator or well-known route exists",
+      "id": "G-003",
+      "spec_row": "AgentCard",
+      "status": "open"
+    },
+    {
+      "blocker_milestone": "M10",
+      "closure_evidence": "",
+      "current_state": "M6 private-file-mailbox task semantics are not canonical A2A task state/store semantics",
+      "id": "G-004",
+      "spec_row": "Task lifecycle",
+      "status": "open"
+    },
+    {
+      "blocker_milestone": "M8-M10",
+      "closure_evidence": "",
+      "current_state": "M3/M5/M6 safety fixtures exist but no structural calls around canonical A2A egress exist yet",
+      "id": "G-005",
+      "spec_row": "security/projection/receipt",
+      "status": "open"
+    }
+  ],
+  "generated_at": "2026-06-30T18:30:20Z"
+}

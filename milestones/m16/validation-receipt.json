@@ -1,0 +1,66 @@
+{
+  "checks": {
+    "descriptor": {
+      "descriptor_methods": [
+        "CancelTask",
+        "CreateTaskPushNotificationConfig",
+        "DeleteTaskPushNotificationConfig",
+        "GetExtendedAgentCard",
+        "GetTask",
+        "GetTaskPushNotificationConfig",
+        "ListTaskPushNotificationConfigs",
+        "ListTasks",
+        "SendMessage",
+        "SendStreamingMessage",
+        "SubscribeToTask"
+      ],
+      "enum_count": 2,
+      "has_agent_card": true,
+      "has_task": true,
+      "has_task_state": true,
+      "message_count": 44,
+      "operation_count": 11,
+      "operation_methods_match_descriptor": true
+    },
+    "external_push_denied_by_policy_helper": true,
+    "forbidden_label_findings": [],
+    "grpc": {
+      "bound_host": "127.0.0.1",
+      "get_state": "TASK_STATE_COMPLETED",
+      "port": 44909,
+      "receipt_ref": "receipts/receipt-183d7d85-cf8d-4099-bf07-812d4a05f477-b6fd2ff7997240258591c0eb348f4ac9.json",
+      "send_state": "TASK_STATE_COMPLETED"
+    },
+    "http": {
+      "agent_card_interfaces": [
+        "GRPC",
+        "HTTP+JSON",
+        "JSONRPC"
+      ],
+      "agent_card_status": 200,
+      "extended_allowed_status": 200,
+      "extended_denied_status": 400,
+      "jsonrpc_receipt_ref": "receipts/receipt-34acb54a-a751-4d6b-9281-68c93971d7c6-29ece034826940d7900473da21312201.json",
+      "jsonrpc_state": "TASK_STATE_COMPLETED",
+      "jsonrpc_status": 200,
+      "push_allowed_status": 200,
+      "push_denied_status": 400,
+      "rest_get_status": 200,
+      "rest_state": "TASK_STATE_COMPLETED",
+      "rest_status": 200,
+      "stream_contains_completed": true,
+      "stream_content_type": "text/event-stream; charset=utf-8",
+      "stream_status": 200
+    },
+    "projection": {
+      "safe_passed": true,
+      "unsafe_blocked": true,
+      "unsafe_reason": "unsafe peer-visible validator-unsafe: mcp/tool surface, private local path, secret-shaped token; private local path at validator-unsafe:$.parts[0].text; mcp/tool surface at validator-unsafe:$.parts[0].text; secret-shaped token at validator-unsafe:$.parts[0].text"
+    },
+    "pytest_exit_code": 0,
+    "pytest_output_tail": "...................                                                      [100%]\n19 passed in 0.72s\n",
+    "uv_lock_sha256": "5f8027b4a5121131aaff69c7b4f4f2abb613caedb4af3207c460bf29f67d4aff"
+  },
+  "generated_at": "2026-06-30T19:29:24.220755Z",
+  "status": "passed"
+}

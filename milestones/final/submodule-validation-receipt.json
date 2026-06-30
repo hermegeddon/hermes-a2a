@@ -1,0 +1,18 @@
+{
+  "checks": {
+    "m16": "passed",
+    "m17a": "passed",
+    "matrix_status_counts": {
+      "passed": 102
+    },
+    "pytest": "19 passed",
+    "secret_shape_nonfixture_count": 0,
+    "trailing_whitespace_count": 0
+  },
+  "generated_at": "2026-06-30T19:29:25.826379Z",
+  "logs": {
+    "m16": "/tmp/hermes-a2a-submodule-m16.log",
+    "m17a": "/tmp/hermes-a2a-submodule-m17a.log"
+  },
+  "status": "passed"
+}

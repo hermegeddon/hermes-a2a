@@ -1,0 +1,16 @@
+{
+  "checks": {
+    "conformance_rows": 102,
+    "grpc_classification": "required-by-v1.0.0-spec",
+    "license_compatibility": "PASS-local",
+    "m0_m6_manifest_entries": 8,
+    "manifest_files": 12,
+    "operation_count": 11,
+    "sdk_package": "a2a-sdk==1.0.0",
+    "source_json_exists": true
+  },
+  "conformance_matrix_sha256": "c57be011e90359c03f499daaeddbe9a435f5524979c7abebcaaf46cccc9d13ae",
+  "generated_at": "2026-06-30T18:30:20Z",
+  "operation_table_sha256": "48d996fc6d8d08546e2ed0743b29851f700fe8d1033dbfadfa9b30999bfcf10f",
+  "source_sha256": "079283597b5a26bbdd1396365b56b0dbd32fc392da5c2d08c6dc620ee90f9145"
+}

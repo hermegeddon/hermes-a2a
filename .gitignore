@@ -1,0 +1,10 @@
+.venv/
+.pytest_cache/
+__pycache__/
+*.pyc
+.ruff_cache/
+dist/
+build/
+# Validation runs may create additional private receipt payloads; committed receipts are evidence snapshots.
+milestones/m16/receipts/*.json
+milestones/m17a/receipts/*.json
