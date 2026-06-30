@@ -2,7 +2,15 @@
 
 Local implementation lane for canonical upstream A2A v1.0.0 using the pinned `a2a-sdk==1.0.0` package plus Hermes/IAP safety wrappers.
 
-This workspace is local-only. No public release, LAN exposure, service installation, profile mutation, or IAP repo mutation is authorized by this package.
+This repository is the Git-backed implementation artifact for the active Hermes Project workspace at:
+
+```text
+/home/openclaw/workspace/hermes-a2a
+```
+
+The project workspace remains the meta/management layer for plans, reviews, Kanban receipts, and status documents. This repo/submodule is where implementation code, tests, scripts, package metadata, and code-facing docs should live.
+
+This repository is local-only. No public release, LAN exposure, service installation, profile mutation, or IAP repo mutation is authorized by this package.
 
 ## Implemented local surfaces
 

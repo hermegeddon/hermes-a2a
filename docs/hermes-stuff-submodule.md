@@ -1,7 +1,5 @@
 # Hermes Stuff submodule receipt
 
-Generated: `2026-06-30T19:28:50.807772Z`
-
 `hermes-a2a` is classified as a **project**, not a Hermes plugin:
 
 - it has no `plugin.yaml`;
@@ -9,25 +7,37 @@ Generated: `2026-06-30T19:28:50.807772Z`
 - it is an installable Python package/library plus local conformance/pilot scripts;
 - it wraps the pinned upstream A2A v1.0.0 SDK with Hermes/IAP-lite safety behavior.
 
-Canonical local repository:
+## Workspace / repository split
 
-```text
-/home/openclaw/dev/hermes-a2a
-```
-
-Hermes Stuff submodule path:
-
-```text
-/home/openclaw/dev/hermes-stuff/projects/hermes-a2a
-```
-
-Snapshot source:
+The active Hermes Project / management workspace remains:
 
 ```text
 /home/openclaw/workspace/hermes-a2a
 ```
 
-Included scope:
+That workspace is for project-level coordination: plans, reviews, Kanban/meta-management artifacts, research/design notes, status refreshes, and cross-repo receipts.
+
+The durable Git-backed implementation artifact lives under Hermes Stuff:
+
+```text
+/home/openclaw/dev/hermes-stuff/projects/hermes-a2a
+```
+
+That path is a local-path git submodule pointing at the standalone local repository:
+
+```text
+/home/openclaw/dev/hermes-a2a
+```
+
+## Snapshot source and included scope
+
+The first code artifact snapshot was prepared from the management workspace:
+
+```text
+/home/openclaw/workspace/hermes-a2a
+```
+
+Included in the durable code artifact:
 
 - code: `src/`, `tests/`, `scripts/`;
 - package metadata: `pyproject.toml`, `uv.lock`;
@@ -40,5 +50,7 @@ Excluded from the durable code repo:
 - prior multi-model review raw outputs;
 - old M0–M6 exploratory artifacts and Kanban scratch artifacts;
 - special files such as historical FIFO receipts.
+
+Historical implementation files may still exist in the management workspace. Treat those as project history unless deliberately refreshed from this repo. Future implementation edits should happen in the Git-backed code repo/submodule, while `/home/openclaw/workspace/hermes-a2a` remains the Hermes Project management layer.
 
 No public PR, public release, remote push, package publication, deployment, LAN exposure, live profile/service/MCP mutation, or IAP repository mutation is implied by this local submodule move.

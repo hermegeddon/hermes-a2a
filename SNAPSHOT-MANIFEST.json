@@ -30,14 +30,14 @@
       "sha256": "5fab0228398a335806c27426172653c374852da145280ef159820fcd863364d1"
     },
     {
-      "bytes": 1508,
+      "bytes": 1895,
       "path": "README.md",
-      "sha256": "ad931a67e1a11ab1230fb008bc1a9359bce2bb10317b2229266219238d6a86ac"
+      "sha256": "826658dda2c0c169d537fd80ffc7a695af307603f8832920dfdd47525e66078f"
     },
     {
-      "bytes": 15995,
+      "bytes": 15533,
       "path": "SNAPSHOT-MANIFEST.json",
-      "sha256": "1501227a44305d31a35322b2691a8f0e78c10f097d33a59405e9f7840d5e16dc"
+      "sha256": "9ed59c26a5549fb11be4c83da5438f64cf6a9927c8698da6909dba1a6770b467"
     },
     {
       "bytes": 2595,
@@ -45,9 +45,9 @@
       "sha256": "a91562afe4d2eb13f6fb26212c4bd18f180762ac095899917f011e974b87b4cc"
     },
     {
-      "bytes": 1362,
+      "bytes": 2176,
       "path": "docs/hermes-stuff-submodule.md",
-      "sha256": "7f1f4560e9fcb167ffc11043685f7a1f865916bbc2c3872d39e9421a4e898074"
+      "sha256": "6309d3998aea71cb1fb1966a28722aa8aa3e6f2abb7196944868edf92cf239fb"
     },
     {
       "bytes": 2196,
@@ -427,6 +427,7 @@
   ],
   "generated_at": "2026-06-30T19:28:50.807772Z",
   "refreshed_after_prune_at": "2026-06-30T19:30:38.782819Z",
+  "refreshed_after_workspace_split_doc_at": "2026-06-30T19:38:41.114641Z",
   "refreshed_at": "2026-06-30T19:29:38.788897Z",
   "skipped": [
     "src/hermes_a2a/__pycache__",
