@@ -26,6 +26,7 @@ DEFAULT_MANAGEMENT_ROOT = Path("/home/openclaw/workspace/hermes-a2a")
 SYSTEMD_USER_DIR = Path.home() / ".config" / "systemd" / "user"
 ENV_DIR = Path.home() / ".config" / "hermes-a2a" / "m17d"
 PYTHON = ROOT / ".venv" / "bin" / "python"
+HERMES = Path.home() / ".local" / "bin" / "hermes"
 A2A_HEADERS = {"A2A-Version": "1.0"}
 
 
@@ -97,7 +98,7 @@ def write_env_file(path: Path, token: str) -> None:
 def unit_text(spec: ServiceSpec, *, management_root: Path, receipt_root: Path, env_path: Path) -> str:
     live_args = ""
     if spec.executor == "live":
-        live_args = f" --live-profile {spec.live_profile} --live-workdir {management_root} --live-timeout-seconds 180"
+        live_args = f" --live-profile {spec.live_profile} --live-workdir {management_root} --live-timeout-seconds 180 --hermes-command {HERMES}"
     return f"""[Unit]
 Description=Hermes A2A sidecar for {spec.conceptual_agent_id}
 After=default.target
@@ -250,6 +251,8 @@ async def run_rollout(*, management_root: Path, run_id: str, approval_receipt: P
         raise FileNotFoundError(f"approval receipt is required before M17d: {approval_receipt}")
     if not PYTHON.exists():
         raise FileNotFoundError(f"project venv python not found: {PYTHON}")
+    if not HERMES.exists():
+        raise FileNotFoundError(f"Hermes launcher not found: {HERMES}")
     specs = default_specs()
     ports = [port for spec in specs for port in (spec.http_port, spec.grpc_port)]
     run_root = management_root / "milestones" / "m17d" / "runs" / run_id

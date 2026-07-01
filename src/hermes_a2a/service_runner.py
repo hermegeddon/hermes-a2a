@@ -37,12 +37,14 @@ def build_executor(
     live_profile: str,
     live_workdir: Path | None,
     live_timeout_seconds: float,
+    hermes_command: str,
 ) -> AgentExecutor | None:
     if executor == "synthetic":
         return None
     return HermesProfileExecutor(
         receipt_root,
         profile=live_profile,
+        command=(hermes_command,),
         workdir=live_workdir,
         limits=LiveExecutorLimits(timeout_seconds=live_timeout_seconds),
     )
@@ -67,6 +69,7 @@ async def run_service(args: argparse.Namespace) -> None:
         live_profile=args.live_profile,
         live_workdir=Path(args.live_workdir) if args.live_workdir else None,
         live_timeout_seconds=args.live_timeout_seconds,
+        hermes_command=args.hermes_command,
     )
     grpc_url = f"{args.host}:{args.grpc_port}" if args.grpc_port else "127.0.0.1:0"
     app = build_app(
@@ -139,6 +142,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--live-profile", default="default")
     parser.add_argument("--live-workdir", default=None)
     parser.add_argument("--live-timeout-seconds", type=float, default=180.0)
+    parser.add_argument("--hermes-command", default=str(Path.home() / ".local" / "bin" / "hermes"))
     parser.add_argument("--allow-non-loopback", action="store_true")
     parser.add_argument("--log-level", default="warning")
     return parser
