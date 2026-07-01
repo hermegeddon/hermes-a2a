@@ -15,6 +15,7 @@ Status: **local implementation complete; public release not authorized**.
 - M15 gRPC loopback route exercised.
 - M16 final conformance matrix generated with local receipt evidence.
 - M17a same-machine canonical A2A pilot passed.
+- M17b synthetic three-sidecar loopback triad passed when `scripts/run_m17b_triad_pilot.py --overwrite-config` writes a per-run management manifest and synthesis.
 
 ## Public release blockers / separate gates
 
@@ -26,6 +27,7 @@ A public release, PR, package publish, deployment, public Agent Card, or LAN/pub
 - Review Apache-2.0 obligations and generated-artifact notices.
 - Decide whether local Hermes/IAP extensions should be public API, private metadata, or omitted.
 - Run external SDK/client interoperability against real official examples if publishing interoperability claims.
+- Re-review M17b management artifacts before publication because they intentionally contain Janusz-local conceptual instance labels and absolute local receipt paths.
 
 ## Non-actions preserved
 
@@ -34,3 +36,4 @@ A public release, PR, package publish, deployment, public Agent Card, or LAN/pub
 - No live Hermes profile/plugin/skill/MCP/service config was mutated.
 - No IAP repo mutation was performed.
 - No protected work data or credentials were used.
+- M17b sidecars remain foreground, synthetic-only, and loopback-only; M17c/M17d/M17e remain separately gated.

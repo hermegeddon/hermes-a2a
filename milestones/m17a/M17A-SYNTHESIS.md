@@ -1,16 +1,16 @@
 # M17a controlled same-machine canonical A2A pilot
 
-Generated: `2026-06-30T19:29:25.209926Z`
+Generated: `2026-07-01T03:43:55.601458Z`
 
 Status: **PASSED**
 
 - Binding: `grpc-loopback`
-- Endpoint: `127.0.0.1:46435` bound by `LocalGrpcServer` to `127.0.0.1` only, then stopped.
-- Task ID: `65f87628-d4cc-48a1-8317-b6e9a464b2c9`
-- Context ID: `7dfd6682-de82-4a43-accf-0c8fede116a8`
+- Endpoint: `127.0.0.1:45281` bound by `LocalGrpcServer` to `127.0.0.1` only, then stopped.
+- Task ID: `848d91bc-af2c-406a-aa27-c24442238e91`
+- Context ID: `cb3635d3-a430-4741-97bc-7b26ab57091b`
 - Send state: `TASK_STATE_COMPLETED`
 - Get state: `TASK_STATE_COMPLETED`
-- Safe receipt reference: `receipts/receipt-65f87628-d4cc-48a1-8317-b6e9a464b2c9-06695f56f7d249c194c9790cbfd0badf.json`
+- Safe receipt reference: `receipts/receipt-848d91bc-af2c-406a-aa27-c24442238e91-23dd875b6a23476b82f27a3c10cc28a8.json`
 - Work-boundary/default-deny synthetic check: external push URL denied (`push URL host is not loopback`).
 
 Non-claims: no LAN attempted, no public listener, no protected work data, no live profile/service/MCP mutation.

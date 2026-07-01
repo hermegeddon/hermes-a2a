@@ -1,23 +1,35 @@
-"""Agent Card construction for the local Hermes A2A server."""
+"""Agent Card construction for local Hermes A2A sidecars."""
 
 from __future__ import annotations
 
 from a2a.types import a2a_pb2
 
 
-def build_agent_card(*, base_url: str = "http://127.0.0.1", require_auth: bool = False) -> a2a_pb2.AgentCard:
+def _normalized_http_base(base_url: str) -> str:
+    return base_url.rstrip("/")
+
+
+def build_agent_card(
+    *,
+    base_url: str = "http://127.0.0.1",
+    grpc_url: str = "127.0.0.1:0",
+    name: str = "Hermes A2A Local",
+    description: str = "Local-only canonical A2A v1.0.0 endpoint backed by Hermes safety gates.",
+    require_auth: bool = False,
+) -> a2a_pb2.AgentCard:
+    http_base = _normalized_http_base(base_url)
     card = a2a_pb2.AgentCard(
-        name="Hermes A2A Local",
-        description="Local-only canonical A2A v1.0.0 endpoint backed by Hermes safety gates.",
+        name=name,
+        description=description,
         version="0.1.0-local",
         provider=a2a_pb2.AgentProvider(organization="Hermes local", url="http://127.0.0.1"),
         capabilities=a2a_pb2.AgentCapabilities(streaming=True, push_notifications=True, extended_agent_card=True),
         default_input_modes=["text/plain"],
         default_output_modes=["text/plain", "application/json"],
         supported_interfaces=[
-            a2a_pb2.AgentInterface(url=f"{base_url}/", protocol_binding="JSONRPC", protocol_version="1.0"),
-            a2a_pb2.AgentInterface(url=f"{base_url}", protocol_binding="HTTP+JSON", protocol_version="1.0"),
-            a2a_pb2.AgentInterface(url="127.0.0.1:0", protocol_binding="GRPC", protocol_version="1.0"),
+            a2a_pb2.AgentInterface(url=f"{http_base}/", protocol_binding="JSONRPC", protocol_version="1.0"),
+            a2a_pb2.AgentInterface(url=http_base, protocol_binding="HTTP+JSON", protocol_version="1.0"),
+            a2a_pb2.AgentInterface(url=grpc_url, protocol_binding="GRPC", protocol_version="1.0"),
         ],
         skills=[
             a2a_pb2.AgentSkill(

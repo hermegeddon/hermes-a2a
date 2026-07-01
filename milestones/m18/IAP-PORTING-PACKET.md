@@ -22,11 +22,17 @@ This packet summarizes local decisions that may later be proposed to the IAP rep
 5. **Protocol-label discipline**
    - Labels like `a2a-<version>-full-local` must derive from pinned source and matrix evidence, not prose claims.
 
+6. **Synthetic sidecar rollout discipline**
+   - Treat per-instance A2A sidecars as separately configured identities with distinct loopback ports, Agent Cards, receipt roots, and allowed peers.
+   - Require a validation receipt that binds the exact roster SHA-256 and per-run receipt base before any sidecar binds.
+   - Keep live profile execution, serviceization, LAN/Tailscale exposure, and work-labeled execution behind separate approval receipts.
+
 ## Evidence paths
 
 - `milestones/m7/M7-SPEC-BASELINE.md`
 - `milestones/m16/CONFORMANCE-SYNTHESIS.md`
 - `milestones/m17a/M17A-SYNTHESIS.md`
+- `/home/openclaw/workspace/hermes-a2a/milestones/m17b/M17B-SYNTHETIC-TRIAD-SYNTHESIS.md`
 - `docs/operator.md`
 - `docs/developer.md`
 

@@ -1,20 +1,21 @@
 {
   "files": [
     {
-      "bytes": 1388,
+      "bytes": 1930,
       "path": "milestones/m18/IAP-PORTING-PACKET.md",
-      "sha256": "61941d97ecfe76b449037592cf89aeb2e54fa0f771ee55185ef70a532c29f9db"
+      "sha256": "497208d3bba0cdee2e772595e776b858b767a68e6e4c2e463b326fc3e201e90c"
     },
     {
-      "bytes": 519,
+      "bytes": 906,
       "path": "milestones/m18/M18-SYNTHESIS.md",
-      "sha256": "2c937c3b956ca13fc973419b6f0de12e35705993cd244cd18ca6a45356150ef5"
+      "sha256": "21e75e568c00268236f1613b2a44ca9ea4b0b896c370b84edc4cbaa0b3fd7667"
     },
     {
-      "bytes": 1719,
+      "bytes": 2158,
       "path": "milestones/m18/RELEASE-READINESS.md",
-      "sha256": "e3ac6b4df10247015d1e8b1540f7597ca30ef4e8735e78af325fe8baebf489cf"
+      "sha256": "811559518a103eec75ec655be1ad75370e918d70f2dc0c64d3d14c19dfef84b7"
     }
   ],
-  "generated_at": "2026-06-30T18:41:14.985921Z"
+  "generated_at": "2026-07-01T03:42:58Z",
+  "refresh_note": "M17b sidecar-triad documentation refresh"
 }

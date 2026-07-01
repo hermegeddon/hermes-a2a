@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-30T19:29:24.222140Z",
+  "generated_at": "2026-07-01T03:43:48.737525Z",
   "rows": [
     {
       "binding": "data-model",
@@ -1316,9 +1316,9 @@
     },
     {
       "binding": "loopback",
-      "evidence_path": "milestones/m17a/validation-receipt.json",
+      "evidence_path": "milestones/m16/validation-receipt.json",
       "id": "C-0102",
-      "notes": "Local validation used pinned a2a-sdk==1.0.0 generated descriptors/routes plus hermes_a2a safety tests. M17a loopback pilot passed over ephemeral 127.0.0.1 gRPC server.",
+      "notes": "Local validation used pinned a2a-sdk==1.0.0 generated descriptors/routes plus hermes_a2a safety tests.",
       "object_or_operation": "pilot",
       "owner_milestone": "M17a",
       "requiredness": "required",
@@ -1328,6 +1328,5 @@
       "status": "passed"
     }
   ],
-  "target_protocol_version": "1.0.0",
-  "updated_after_m17a_at": "2026-06-30T19:29:25.627456Z"
+  "target_protocol_version": "1.0.0"
 }

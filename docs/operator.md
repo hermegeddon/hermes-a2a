@@ -50,12 +50,32 @@ This starts an ephemeral `127.0.0.1:0` gRPC server, sends a synthetic A2A task, 
 - `milestones/m17a/validation-receipt.json`
 - `milestones/m17a/M17A-SYNTHESIS.md`
 
+## Run the M17b synthetic sidecar triad
+
+```bash
+uv run --extra dev python scripts/run_m17b_triad_pilot.py --overwrite-config
+```
+
+This is still synthetic-only. It writes or refreshes the management roster at:
+
+```text
+/home/openclaw/workspace/hermes-a2a/instances/instances.yaml
+```
+
+Then it validates the roster, starts three foreground loopback sidecars with in-memory `test_ephemeral` auth, exercises JSON-RPC, REST, and gRPC, captures `ss -ltnp` bind/teardown evidence, stops every sidecar, and writes per-run evidence under:
+
+```text
+/home/openclaw/workspace/hermes-a2a/milestones/m17b/runs/<run_id>/
+```
+
+The M17b runner must not be used for live Hermes profile execution, host inventory, service installation/restart, LAN/Tailscale exposure, work data, credentials, or raw MCP/tool proxying. Those remain M17c+ / M17d+ / M17e gated actions.
+
 ## A2A surfaces implemented locally
 
 - Agent Card: `GET /.well-known/agent-card.json`
 - JSON-RPC: `POST /`
 - REST: SDK routes for `message:send`, `message:stream`, `tasks`, push notification config, and extended Agent Card.
-- gRPC: SDK `A2AService` served by `LocalGrpcServer` for loopback smokes.
+- gRPC: SDK `A2AService` served by `LocalGrpcServer` for loopback smokes and by the M17b sidecar runtime on validated per-instance ports.
 
 Every HTTP request to SDK protocol routes must include:
 
