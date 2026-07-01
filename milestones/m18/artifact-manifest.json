@@ -6,16 +6,16 @@
       "sha256": "5cef50814f6c08c3ce497f52134c34cb8c276a80ffd9bbbed0363201a011c6f5"
     },
     {
-      "bytes": 1229,
+      "bytes": 1230,
       "path": "milestones/m18/M18-SYNTHESIS.md",
-      "sha256": "e172296dbfc7ce73b405baa7d4ed0a0f6e6d9e61784aa67db77ec31b1120b732"
+      "sha256": "a84289a50ae06b6b32977cc7f4351c775ed6c134ce992aade0b0a43480bb2abc"
     },
     {
-      "bytes": 3013,
+      "bytes": 3073,
       "path": "milestones/m18/RELEASE-READINESS.md",
-      "sha256": "d5679cb2456753a8930282bea6389562f40a0487d7bed274425e9a11695462c9"
+      "sha256": "871a392ee02230e7730b6e6690da431f9b348ed1569b5196dbde601de2110265"
     }
   ],
-  "generated_at": "2026-07-01T04:39:33.277447Z",
-  "refresh_note": "M17b-M17e live/service/LAN documentation refresh"
+  "generated_at": "2026-07-01T05:06:06.886776Z",
+  "refresh_note": "M17b-M17e live/service/LAN documentation refresh; M17e remote negative reachability proof recorded"
 }

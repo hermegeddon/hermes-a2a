@@ -23,7 +23,7 @@ This repository is local-first. Public release, public Agent Card publication, d
 - M17b validated three-instance synthetic sidecar roster and loopback sidecar runner
 - M17c gated live Hermes profile executor for one approved local profile
 - M17d gated user-level loopback sidecar service rollout
-- M17e bounded synthetic LAN Agent Card/A2A pilot script; current proof is blocked on negative unlisted-host reachability evidence
+- M17e bounded synthetic LAN Agent Card/A2A pilot with remote unlisted-host negative reachability evidence
 - Hermes safety wrappers: projection scanning, receipt-before-exposure, safe receipt refs, loopback-only push policy, and conformance-label gates
 
 ## Validate
@@ -35,10 +35,10 @@ uv run --extra dev python scripts/run_m17a_pilot.py
 uv run --extra dev python scripts/run_m17b_triad_pilot.py --overwrite-config
 uv run --extra dev python scripts/run_m17c_live_executor_pilot.py --approval-receipt /home/openclaw/workspace/hermes-a2a/milestones/m17c/<approval>.yaml --profile default
 uv run --extra dev python scripts/run_m17d_service_rollout.py --approval-receipt /home/openclaw/workspace/hermes-a2a/milestones/m17d/<approval>.yaml
-uv run --extra dev python scripts/run_m17e_lan_pilot.py --approval-receipt /home/openclaw/workspace/hermes-a2a/milestones/m17e/<approval>.yaml
+uv run --extra dev python scripts/run_m17e_lan_pilot.py --approval-receipt /home/openclaw/workspace/hermes-a2a/milestones/m17e/<approval>.yaml --negative-ssh-host <user@unlisted-lan-host>
 ```
 
-Expected result at closeout: all tests pass, M16 conformance receipt is `passed`, M17a loopback pilot receipt is `passed`, M17b/M17c/M17d approved pilots write passed per-run manifests under the management workspace, and M17e writes either a passed LAN manifest or a blocked manifest naming the missing negative reachability proof.
+Expected result at closeout: all tests pass, M16 conformance receipt is `passed`, M17a loopback pilot receipt is `passed`, and M17b/M17c/M17d/M17e approved pilots write passed per-run manifests under the management workspace. If the M17e negative probe is omitted or inconclusive, M17e writes a blocked manifest naming the missing negative reachability proof.
 
 ## Documentation
 

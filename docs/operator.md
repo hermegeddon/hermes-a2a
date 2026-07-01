@@ -108,10 +108,12 @@ systemctl --user daemon-reload
 ```bash
 uv run --extra dev python scripts/run_m17e_lan_pilot.py \
   --approval-receipt /home/openclaw/workspace/hermes-a2a/milestones/m17e/<approval>.yaml \
-  --host 192.168.1.3 --http-port 18751
+  --host 192.168.1.3 --http-port 18751 \
+  --negative-ssh-host <user@unlisted-lan-host> \
+  --remote-test-approval-receipt /home/openclaw/workspace/hermes-a2a/milestones/m17e/<remote-test-approval>.yaml
 ```
 
-The LAN pilot is synthetic-only by default and starts a foreground HTTP sidecar on the exact named local-network address, never wildcard. It fetches the Agent Card and completes a synthetic JSON-RPC task through that address, denies a non-allowed peer, captures bind/teardown evidence, and stops the listener. If no negative reachability proof from an unlisted host (or equivalent firewall/ACL deny receipt) is provided, the script writes a `blocked` M17e receipt rather than claiming LAN readiness.
+The LAN pilot is synthetic-only by default and starts a foreground HTTP sidecar on the exact named local-network address, never wildcard. It fetches the Agent Card and completes a synthetic JSON-RPC task through that address, denies a non-allowed peer, captures bind/teardown evidence, and stops the listener. If `--negative-ssh-host` is provided, the script SSHes to that unlisted host with a run-local known-hosts file and runs only a TCP/HTTP reachability probe against the pilot listener. If no negative reachability proof from an unlisted host (or equivalent firewall/ACL deny receipt) is provided, the script writes a `blocked` M17e receipt rather than claiming LAN readiness.
 
 ## A2A surfaces implemented locally
 

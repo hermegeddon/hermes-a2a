@@ -8,6 +8,7 @@ import asyncio
 import hashlib
 import json
 import secrets
+import shlex
 import socket
 from datetime import datetime, timezone
 from pathlib import Path
@@ -19,7 +20,10 @@ import uvicorn
 from hermes_a2a.app import build_app
 from hermes_a2a.executor import SafeEchoExecutor
 from hermes_a2a.serve import wait_for_tcp
-from run_m17b_triad_pilot import artifact_entry, listener_assertions, message_payload, run_command, ss_snapshot, write_json, write_manifest
+try:
+    from run_m17b_triad_pilot import artifact_entry, listener_assertions, message_payload, run_command, ss_snapshot, write_json, write_manifest
+except ModuleNotFoundError:  # pragma: no cover - package import path used by pytest
+    from scripts.run_m17b_triad_pilot import artifact_entry, listener_assertions, message_payload, run_command, ss_snapshot, write_json, write_manifest
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANAGEMENT_ROOT = Path("/home/openclaw/workspace/hermes-a2a")
@@ -53,7 +57,100 @@ def assert_port_free(host: str, port: int) -> None:
         sock.bind((host, port))
 
 
-async def run_lan_smoke(*, host: str, port: int, base_url: str, receipt_root: Path, token: str) -> dict[str, Any]:
+REMOTE_REACHABILITY_SCRIPT = """
+import json
+import socket
+import sys
+
+target_host = sys.argv[1]
+target_port = int(sys.argv[2])
+try:
+    with socket.create_connection((target_host, target_port), timeout=3.0) as sock:
+        request = f"GET /.well-known/agent-card.json HTTP/1.1\\r\\nHost: {target_host}:{target_port}\\r\\nConnection: close\\r\\n\\r\\n"
+        sock.sendall(request.encode("ascii"))
+        prefix = sock.recv(160).decode("latin-1", errors="replace")
+    print(json.dumps({"reachable": True, "http_prefix": prefix[:160]}, sort_keys=True))
+    raise SystemExit(0)
+except OSError as exc:
+    print(json.dumps({"reachable": False, "error_type": type(exc).__name__, "error": str(exc)}, sort_keys=True))
+    raise SystemExit(42)
+""".strip()
+
+
+def parse_remote_probe_output(output: str) -> dict[str, Any] | None:
+    for line in reversed(output.splitlines()):
+        stripped = line.strip()
+        if not stripped.startswith("{"):
+            continue
+        try:
+            parsed = json.loads(stripped)
+        except json.JSONDecodeError:
+            continue
+        if "reachable" in parsed:
+            return parsed
+    return None
+
+
+def run_negative_ssh_probe(
+    *,
+    ssh_host: str,
+    target_host: str,
+    target_port: int,
+    known_hosts_path: Path,
+    timeout_seconds: int,
+) -> dict[str, Any]:
+    known_hosts_path.parent.mkdir(parents=True, exist_ok=True)
+    remote_command = " ".join(
+        [
+            "python3",
+            "-c",
+            shlex.quote(REMOTE_REACHABILITY_SCRIPT),
+            shlex.quote(target_host),
+            shlex.quote(str(target_port)),
+        ]
+    )
+    command = [
+        "timeout",
+        str(timeout_seconds + 5),
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        f"ConnectTimeout={min(timeout_seconds, 10)}",
+        "-o",
+        "StrictHostKeyChecking=accept-new",
+        "-o",
+        f"UserKnownHostsFile={known_hosts_path}",
+        ssh_host,
+        remote_command,
+    ]
+    result = run_command(command)
+    parsed = parse_remote_probe_output(str(result.get("output", "")))
+    result["command"] = [*command[:-1], "<remote reachability command>", target_host, str(target_port)]
+    reachable = parsed.get("reachable") if isinstance(parsed, dict) else None
+    return {
+        "ssh_host": ssh_host,
+        "target": f"{target_host}:{target_port}",
+        "known_hosts_path": str(known_hosts_path),
+        "result": result,
+        "parsed": parsed,
+        "reachable": reachable,
+        "negative_proven": result.get("exit_code") == 42 and reachable is False,
+        "inconclusive": reachable is None or result.get("exit_code") not in {0, 42},
+    }
+
+
+async def run_lan_smoke(
+    *,
+    host: str,
+    port: int,
+    base_url: str,
+    receipt_root: Path,
+    token: str,
+    negative_ssh_host: str | None,
+    known_hosts_path: Path,
+    ssh_timeout_seconds: int,
+) -> dict[str, Any]:
     app = build_app(
         receipt_dir=receipt_root,
         require_auth=True,
@@ -84,6 +181,16 @@ async def run_lan_smoke(*, host: str, port: int, base_url: str, receipt_root: Pa
             )
         body = allowed.json() if allowed.headers.get("content-type", "").startswith("application/json") else {}
         task_body = body.get("result", {}).get("task", {})
+        remote_probe = None
+        if negative_ssh_host:
+            remote_probe = await asyncio.to_thread(
+                run_negative_ssh_probe,
+                ssh_host=negative_ssh_host,
+                target_host=host,
+                target_port=port,
+                known_hosts_path=known_hosts_path,
+                timeout_seconds=ssh_timeout_seconds,
+            )
         return {
             "agent_card_status": card.status_code,
             "agent_card_name": card.json().get("name") if card.status_code == 200 else None,
@@ -92,6 +199,7 @@ async def run_lan_smoke(*, host: str, port: int, base_url: str, receipt_root: Pa
             "allowed_state": task_body.get("status", {}).get("state"),
             "receipt_ref": task_body.get("metadata", {}).get("hermesReceiptRef"),
             "denied_status": denied.status_code,
+            "negative_remote_probe": remote_probe,
         }
     finally:
         server.should_exit = True
@@ -106,9 +214,14 @@ async def run_pilot(
     host: str,
     port: int,
     negative_reachability_receipt: Path | None,
+    negative_ssh_host: str | None,
+    remote_test_approval_receipt: Path | None,
+    ssh_timeout_seconds: int,
 ) -> dict[str, Any]:
     if not approval_receipt.exists():
         raise FileNotFoundError(f"approval receipt is required before M17e: {approval_receipt}")
+    if remote_test_approval_receipt is not None and not remote_test_approval_receipt.exists():
+        raise FileNotFoundError(f"remote test approval receipt does not exist: {remote_test_approval_receipt}")
     addresses = local_ipv4_addresses()
     if host not in addresses:
         raise RuntimeError(f"requested LAN host {host} is not one of observed IPv4 addresses: {addresses}")
@@ -124,7 +237,19 @@ async def run_pilot(
     before_snapshot = ss_snapshot([port])
     during_snapshot: dict[str, Any] = {}
     smoke: dict[str, Any] = {}
-    app_task = asyncio.create_task(run_lan_smoke(host=host, port=port, base_url=base_url, receipt_root=receipt_root, token=token))
+    known_hosts_path = run_root / "ssh-known-hosts"
+    app_task = asyncio.create_task(
+        run_lan_smoke(
+            host=host,
+            port=port,
+            base_url=base_url,
+            receipt_root=receipt_root,
+            token=token,
+            negative_ssh_host=negative_ssh_host,
+            known_hosts_path=known_hosts_path,
+            ssh_timeout_seconds=ssh_timeout_seconds,
+        )
+    )
     try:
         await wait_for_tcp(host, port)
         during_snapshot = ss_snapshot([port])
@@ -138,7 +263,30 @@ async def run_pilot(
                 pass
     after_snapshot = ss_snapshot([port])
     local_field_values = list(listener_assertions(during_snapshot, [port], expect_present=True).get("local_fields", {}).values())
-    negative_proof_present = negative_reachability_receipt is not None and negative_reachability_receipt.exists()
+    remote_probe = smoke.get("negative_remote_probe") if isinstance(smoke, dict) else None
+    if not isinstance(remote_probe, dict):
+        remote_probe = None
+    generated_negative_receipt_path = run_root / "negative-reachability-receipt.json" if remote_probe is not None else None
+    if generated_negative_receipt_path is not None:
+        write_json(
+            generated_negative_receipt_path,
+            {
+                "schema": "hermes-a2a/m17e-negative-reachability-receipt/v1",
+                "generated_at": utc_now(),
+                "status": "passed" if remote_probe.get("negative_proven") else "failed",
+                "run_id": run_id,
+                "target": f"{host}:{port}",
+                "unlisted_host_probe": remote_probe,
+                "approval_receipt": str(remote_test_approval_receipt) if remote_test_approval_receipt else None,
+                "claim": "The unlisted SSH host could not reach the M17e LAN listener." if remote_probe.get("negative_proven") else "The unlisted SSH host reached the listener or the probe was inconclusive; M17e remains blocked.",
+            },
+        )
+    effective_negative_receipt = generated_negative_receipt_path or negative_reachability_receipt
+    negative_proof_present = (
+        generated_negative_receipt_path is not None
+        and remote_probe is not None
+        and bool(remote_probe.get("negative_proven"))
+    ) or (negative_reachability_receipt is not None and negative_reachability_receipt.exists())
     assertions = {
         "approval_receipt_present": approval_receipt.exists(),
         "lan_host_observed": host in addresses,
@@ -151,6 +299,14 @@ async def run_pilot(
         "negative_unlisted_host_proof_present": negative_proof_present,
     }
     status = "passed" if all(assertions.values()) else "blocked"
+    if status == "passed":
+        blocker = None
+    elif remote_probe and remote_probe.get("reachable") is True:
+        blocker = f"Unlisted host {remote_probe.get('ssh_host')} reached {host}:{port}; M17e exposure is broader than the current approved host set."
+    elif remote_probe and remote_probe.get("inconclusive"):
+        blocker = f"Remote unlisted-host probe from {remote_probe.get('ssh_host')} was inconclusive; M17e still needs negative reachability or equivalent ACL/firewall deny evidence."
+    else:
+        blocker = "M17e acceptance still needs negative reachability proof from an unlisted host or a documented equivalent network ACL/firewall deny receipt."
     run_receipt_path = run_root / "lan-pilot-receipt.json"
     bind_path = run_root / "bind-evidence.json"
     implementation_state_path = run_root / "implementation-state.json"
@@ -160,7 +316,8 @@ async def run_pilot(
         "status": status,
         "run_id": run_id,
         "approval_receipt": str(approval_receipt),
-        "negative_reachability_receipt": str(negative_reachability_receipt) if negative_reachability_receipt else None,
+        "remote_test_approval_receipt": str(remote_test_approval_receipt) if remote_test_approval_receipt else None,
+        "negative_reachability_receipt": str(effective_negative_receipt) if effective_negative_receipt else None,
         "selected_instance": "agent:local:hermes-blinky-wsl",
         "host": host,
         "http_port": port,
@@ -168,7 +325,7 @@ async def run_pilot(
         "observed_ipv4_addresses": addresses,
         "assertions": assertions,
         "smoke": smoke,
-        "blocker": None if status == "passed" else "M17e acceptance still needs negative reachability proof from an unlisted host or a documented equivalent network ACL/firewall deny receipt.",
+        "blocker": blocker,
         "non_claims": [
             "Synthetic HTTP/JSON-RPC LAN pilot only",
             "No live-over-LAN executor",
@@ -195,6 +352,14 @@ async def run_pilot(
     write_json(implementation_state_path, implementation_state)
     synthesis_path = management_root / "milestones" / "m17e" / "M17E-SYNTHESIS.md"
     manifest_path = run_root / "artifact-manifest.json"
+    if remote_probe and remote_probe.get("negative_proven"):
+        reachability_text = f"Negative unlisted-host reachability proof passed from `{remote_probe.get('ssh_host')}`: TCP/HTTP to `{host}:{port}` failed as expected."
+    elif remote_probe and remote_probe.get("reachable") is True:
+        reachability_text = f"Negative unlisted-host reachability proof failed: `{remote_probe.get('ssh_host')}` reached `{host}:{port}`."
+    elif remote_probe:
+        reachability_text = f"Negative unlisted-host reachability proof was inconclusive from `{remote_probe.get('ssh_host')}`."
+    else:
+        reachability_text = "No negative unlisted-host reachability proof was supplied."
     lines = [
         "# M17e local-network pilot synthesis",
         "",
@@ -211,12 +376,13 @@ async def run_pilot(
         "",
         f"- Bound one foreground synthetic HTTP sidecar to the named local-network address `{host}:{port}` (not wildcard).",
         "- Fetched the Agent Card and completed a synthetic JSON-RPC A2A task through the LAN address from the local host.",
+        f"- {reachability_text}",
         "- Disallowed peer `agent:test:unauthorized` was denied before execution.",
         "- Teardown readback found no selected-port listener after the pilot stopped.",
         "",
         "## Blocker" if status != "passed" else "## Remaining evidence",
         "",
-        "M17e is not marked passed because no negative reachability proof from an unlisted host, or documented equivalent network ACL/firewall deny receipt, was available in this single-host session." if status != "passed" else "Negative reachability proof was supplied.",
+        blocker if status != "passed" else "Negative reachability proof was supplied.",
         "",
         "## Non-claims / non-actions",
         "",
@@ -232,11 +398,16 @@ async def run_pilot(
         artifact_entry(implementation_state_path, management_root=management_root, role="implementation commit/status evidence", owner_workspace="implementation", classification="implementation-evidence", source="git readback"),
         artifact_entry(synthesis_path, management_root=management_root, role="M17e synthesis", owner_workspace="management", classification="management-evidence", source="LAN pilot synthesis"),
     ]
+    if remote_test_approval_receipt is not None:
+        artifacts.append(artifact_entry(remote_test_approval_receipt, management_root=management_root, role="M17e remote SSH test approval receipt", owner_workspace="management", classification="management-evidence", source="current user chat approval normalized before remote probe"))
+    if effective_negative_receipt is not None and effective_negative_receipt.exists():
+        artifacts.append(artifact_entry(effective_negative_receipt, management_root=management_root, role="M17e negative reachability receipt", owner_workspace="management", classification="management-evidence", source="remote unlisted-host reachability probe"))
     manifest = write_manifest(manifest_path, run_id=run_id, management_root=management_root, artifacts=artifacts)
     final = {
         "status": status if manifest["readback"]["bad_count"] == 0 else "failed",
         "run_id": run_id,
         "approval_receipt": str(approval_receipt),
+        "negative_reachability_receipt": str(effective_negative_receipt) if effective_negative_receipt else None,
         "run_receipt": str(run_receipt_path),
         "manifest": str(manifest_path),
         "synthesis": str(synthesis_path),
@@ -255,6 +426,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--host", default=DEFAULT_LAN_HOST)
     parser.add_argument("--http-port", type=int, default=DEFAULT_HTTP_PORT)
     parser.add_argument("--negative-reachability-receipt", default=None)
+    parser.add_argument("--negative-ssh-host", default=None)
+    parser.add_argument("--remote-test-approval-receipt", default=None)
+    parser.add_argument("--ssh-timeout-seconds", type=int, default=8)
     args = parser.parse_args(argv)
     final = asyncio.run(
         run_pilot(
@@ -264,6 +438,9 @@ def main(argv: Sequence[str] | None = None) -> int:
             host=args.host,
             port=args.http_port,
             negative_reachability_receipt=Path(args.negative_reachability_receipt) if args.negative_reachability_receipt else None,
+            negative_ssh_host=args.negative_ssh_host,
+            remote_test_approval_receipt=Path(args.remote_test_approval_receipt) if args.remote_test_approval_receipt else None,
+            ssh_timeout_seconds=args.ssh_timeout_seconds,
         )
     )
     return 0 if final["status"] in {"passed", "blocked"} else 1

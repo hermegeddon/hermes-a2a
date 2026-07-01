@@ -18,11 +18,11 @@ Status: **local implementation complete; public release not authorized**.
 - M17b synthetic three-sidecar loopback triad passed when `scripts/run_m17b_triad_pilot.py --overwrite-config` writes a per-run management manifest and synthesis.
 - M17c one-profile live Hermes executor loopback pilot passed with an approval receipt, launcher proof, bounded output/private invocation receipts, and safe projection.
 - M17d user-level loopback sidecar service rollout passed for the finite `hermes-a2a-*` unit set, with service/PID/bind/readiness/log/smoke evidence and rollback commands.
-- M17e bounded synthetic LAN Agent Card/A2A pilot produced a management receipt but is **blocked** on negative unlisted-host reachability proof or equivalent firewall/ACL deny evidence; it is not a LAN-readiness claim.
+- M17e bounded synthetic LAN Agent Card/A2A pilot passed with exact named-address bind evidence, local positive Agent Card/JSON-RPC smoke, remote unlisted-host negative reachability proof from `janusz@mithraeum.dziurzynscy.com`, peer-denial evidence, and teardown proof.
 
 ## Public release blockers / separate gates
 
-A public release, PR, package publish, deployment, public Agent Card, public listener, or LAN-readiness claim still requires a fresh explicit gate. Before that gate:
+A public release, PR, package publish, deployment, public Agent Card, public listener, or broader LAN-readiness claim still requires a fresh explicit gate. Before that gate:
 
 - Re-run source provenance checks, including tag/source archive cross-check and any available signature/attestation verification.
 - Perform a full secret scan of source, tests, docs, receipts, and review artifacts.
