@@ -5,17 +5,20 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+import os
 import socket
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Sequence
+from typing import Callable, Sequence
 
+from a2a.server.agent_execution import AgentExecutor
 import httpx
 import uvicorn
 
 from hermes_a2a.app import build_app
 from hermes_a2a.config import InstanceConfig, InstancesConfig, load_instances_config
 from hermes_a2a.grpc_server import LocalGrpcServer
+from hermes_a2a.live_executor import HermesProfileExecutor, LiveExecutorLimits
 
 
 class SidecarRuntimeError(RuntimeError):
@@ -31,11 +34,18 @@ class SidecarEndpoint:
 
 
 class SidecarRuntime:
-    """Async context manager for one validated loopback M17b sidecar."""
+    """Async context manager for one validated loopback sidecar."""
 
-    def __init__(self, instance: InstanceConfig, *, test_token: str | None) -> None:
+    def __init__(
+        self,
+        instance: InstanceConfig,
+        *,
+        test_token: str | None,
+        executor_factory: Callable[[Path], AgentExecutor] | None = None,
+    ) -> None:
         self.instance = instance
         self.test_token = test_token
+        self.executor_factory = executor_factory
         self._uvicorn_server: uvicorn.Server | None = None
         self._uvicorn_task: asyncio.Task[None] | None = None
         self._grpc_server: LocalGrpcServer | None = None
@@ -76,6 +86,7 @@ class SidecarRuntime:
             grpc_url=(f"{self.instance.bind.host}:{self.instance.bind.grpc_port}" if self.instance.bind.grpc_port else "127.0.0.1:0"),
             allowed_peer_ids=self.instance.allowed_peer_ids,
             test_token=self.test_token if self.instance.auth.mode == "test_ephemeral" else None,
+            agent_executor=self.executor_factory(self.instance.receipt_root) if self.executor_factory else None,
         )
         config = uvicorn.Config(
             app,
@@ -97,6 +108,7 @@ class SidecarRuntime:
                 agent_name=self.instance.agent_card.name,
                 base_url=self.instance.agent_card.base_url,
                 grpc_url=f"{self.instance.bind.host}:{self.instance.bind.grpc_port}",
+                agent_executor=self.executor_factory(self.instance.receipt_root) if self.executor_factory else None,
             ).__aenter__()
             await wait_for_tcp(self.instance.bind.host, self.instance.bind.grpc_port)
 
@@ -125,10 +137,19 @@ class SidecarRuntime:
 class SidecarGroup:
     """Async context manager for all sidecars in one validated config."""
 
-    def __init__(self, config: InstancesConfig, *, test_token: str | None) -> None:
+    def __init__(
+        self,
+        config: InstancesConfig,
+        *,
+        test_token: str | None,
+        executor_factory: Callable[[Path], AgentExecutor] | None = None,
+    ) -> None:
         self.config = config
         self.test_token = test_token
-        self.runtimes = [SidecarRuntime(instance, test_token=test_token) for instance in config.instances]
+        self.executor_factory = executor_factory
+        self.runtimes = [
+            SidecarRuntime(instance, test_token=test_token, executor_factory=executor_factory) for instance in config.instances
+        ]
 
     async def __aenter__(self) -> "SidecarGroup":
         started: list[SidecarRuntime] = []
@@ -185,9 +206,15 @@ async def smoke_agent_card(endpoint: SidecarEndpoint) -> dict[str, object]:
     return {"status_code": response.status_code, "json": response.json() if response.status_code == 200 else None}
 
 
-async def _serve_until_interrupted(config: InstancesConfig, *, instance_id: str, token: str | None) -> None:
+async def _serve_until_interrupted(
+    config: InstancesConfig,
+    *,
+    instance_id: str,
+    token: str | None,
+    executor_factory: Callable[[Path], AgentExecutor] | None = None,
+) -> None:
     instance = config.instance(instance_id)
-    async with SidecarRuntime(instance, test_token=token):
+    async with SidecarRuntime(instance, test_token=token, executor_factory=executor_factory):
         print(json.dumps({"status": "running", "instance": instance_id, "http": instance.agent_card.base_url}, indent=2))
         try:
             while True:
@@ -207,14 +234,31 @@ def main(argv: Sequence[str] | None = None) -> int:
         default=None,
         help="in-memory test_ephemeral token; intended for local harnesses only and must not be persisted",
     )
+    parser.add_argument("--test-token-env", default=None, help="read test_ephemeral token from this environment variable")
+    parser.add_argument("--executor", choices=["synthetic", "live"], default="synthetic")
+    parser.add_argument("--live-profile", default="default", help="Hermes profile for --executor live")
+    parser.add_argument("--live-workdir", default=None, help="working directory for --executor live")
+    parser.add_argument("--live-timeout-seconds", type=float, default=180.0)
     args = parser.parse_args(argv)
+    token = args.test_token
+    if args.test_token_env:
+        token = os.environ.get(args.test_token_env)
+    executor_factory: Callable[[Path], AgentExecutor] | None = None
+    if args.executor == "live":
+        live_workdir = Path(args.live_workdir) if args.live_workdir else None
+        limits = LiveExecutorLimits(timeout_seconds=args.live_timeout_seconds)
+
+        def _factory(receipt_root: Path) -> AgentExecutor:
+            return HermesProfileExecutor(receipt_root, profile=args.live_profile, workdir=live_workdir, limits=limits)
+
+        executor_factory = _factory
     config = load_instances_config(
         args.config,
         run_id=args.run_id,
         management_root=Path(args.management_root),
         require_validation_receipt=True,
     )
-    asyncio.run(_serve_until_interrupted(config, instance_id=args.instance, token=args.test_token))
+    asyncio.run(_serve_until_interrupted(config, instance_id=args.instance, token=token, executor_factory=executor_factory))
     return 0
 
 

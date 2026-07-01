@@ -8,6 +8,7 @@ from typing import Self
 
 import grpc
 
+from a2a.server.agent_execution import AgentExecutor
 from a2a.server.request_handlers import GrpcHandler
 from a2a.types import a2a_pb2_grpc
 
@@ -26,6 +27,7 @@ class LocalGrpcServer:
         agent_name: str = "Hermes A2A Local",
         base_url: str = "http://127.0.0.1",
         grpc_url: str = "127.0.0.1:0",
+        agent_executor: AgentExecutor | None = None,
     ) -> None:
         if host != "127.0.0.1":
             raise ValueError("LocalGrpcServer is intentionally loopback-only")
@@ -36,6 +38,7 @@ class LocalGrpcServer:
         self.agent_name = agent_name
         self.base_url = base_url
         self.grpc_url = grpc_url
+        self.agent_executor = agent_executor
         self._server: grpc.aio.Server | None = None
 
     async def __aenter__(self) -> Self:
@@ -44,6 +47,7 @@ class LocalGrpcServer:
             agent_name=self.agent_name,
             base_url=self.base_url,
             grpc_url=self.grpc_url,
+            agent_executor=self.agent_executor,
         )
         servicer = GrpcHandler(handler)
         server = grpc.aio.server()

@@ -6,6 +6,7 @@ from functools import partial
 from pathlib import Path
 from typing import Iterable
 
+from a2a.server.agent_execution import AgentExecutor
 from a2a.server.routes.agent_card_routes import create_agent_card_routes
 from a2a.server.routes.jsonrpc_routes import create_jsonrpc_routes
 from a2a.server.routes.rest_routes import create_rest_routes
@@ -58,6 +59,7 @@ def build_handler(
     agent_description: str = "Local-only canonical A2A v1.0.0 endpoint backed by Hermes safety gates.",
     base_url: str = "http://127.0.0.1",
     grpc_url: str = "127.0.0.1:0",
+    agent_executor: AgentExecutor | None = None,
 ) -> SafeRequestHandler:
     card = build_agent_card(
         base_url=base_url,
@@ -73,7 +75,7 @@ def build_handler(
         description=agent_description,
         require_auth=require_auth,
     )
-    executor = SafeEchoExecutor(Path(receipt_dir))
+    executor = agent_executor or SafeEchoExecutor(Path(receipt_dir))
     return SafeRequestHandler(
         agent_executor=executor,
         task_store=InMemoryTaskStore(),
@@ -95,6 +97,7 @@ def build_app(
     grpc_url: str = "127.0.0.1:0",
     allowed_peer_ids: Iterable[str] = (),
     test_token: str | None = None,
+    agent_executor: AgentExecutor | None = None,
 ) -> Starlette:
     handler = build_handler(
         receipt_dir=receipt_dir,
@@ -104,6 +107,7 @@ def build_app(
         agent_description=agent_description,
         base_url=base_url,
         grpc_url=grpc_url,
+        agent_executor=agent_executor,
     )
     card = build_agent_card(
         base_url=base_url,
