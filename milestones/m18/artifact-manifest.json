@@ -1,21 +1,21 @@
 {
   "files": [
     {
-      "bytes": 1930,
+      "bytes": 3005,
       "path": "milestones/m18/IAP-PORTING-PACKET.md",
-      "sha256": "497208d3bba0cdee2e772595e776b858b767a68e6e4c2e463b326fc3e201e90c"
+      "sha256": "5cef50814f6c08c3ce497f52134c34cb8c276a80ffd9bbbed0363201a011c6f5"
     },
     {
-      "bytes": 906,
+      "bytes": 1229,
       "path": "milestones/m18/M18-SYNTHESIS.md",
-      "sha256": "21e75e568c00268236f1613b2a44ca9ea4b0b896c370b84edc4cbaa0b3fd7667"
+      "sha256": "e172296dbfc7ce73b405baa7d4ed0a0f6e6d9e61784aa67db77ec31b1120b732"
     },
     {
-      "bytes": 2158,
+      "bytes": 3013,
       "path": "milestones/m18/RELEASE-READINESS.md",
-      "sha256": "811559518a103eec75ec655be1ad75370e918d70f2dc0c64d3d14c19dfef84b7"
+      "sha256": "d5679cb2456753a8930282bea6389562f40a0487d7bed274425e9a11695462c9"
     }
   ],
-  "generated_at": "2026-07-01T03:42:58Z",
-  "refresh_note": "M17b sidecar-triad documentation refresh"
+  "generated_at": "2026-07-01T04:39:33.277447Z",
+  "refresh_note": "M17b-M17e live/service/LAN documentation refresh"
 }

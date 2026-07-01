@@ -27,12 +27,24 @@ This packet summarizes local decisions that may later be proposed to the IAP rep
    - Require a validation receipt that binds the exact roster SHA-256 and per-run receipt base before any sidecar binds.
    - Keep live profile execution, serviceization, LAN/Tailscale exposure, and work-labeled execution behind separate approval receipts.
 
+7. **Gated live-executor and service rollout discipline**
+   - Require a profile-launcher proof before any live Hermes executor handles an A2A task.
+   - Persist raw launcher stdout/stderr and invocation diagnostics only in private receipts; peer-visible output must remain bounded, projected, and receipt-backed.
+   - User-level sidecar services should use finite unit names, explicit bind ports, absolute launcher paths, env/file token inputs, service/PID/bind/readiness/log receipts, and rollback commands.
+
+8. **LAN-readiness proof discipline**
+   - A named-address LAN pilot is not enough for LAN readiness.
+   - Require positive reachability from approved hosts plus negative reachability from an unlisted host, or an equivalent firewall/Tailscale ACL deny receipt, before claiming exposure is limited to named hosts.
+
 ## Evidence paths
 
 - `milestones/m7/M7-SPEC-BASELINE.md`
 - `milestones/m16/CONFORMANCE-SYNTHESIS.md`
 - `milestones/m17a/M17A-SYNTHESIS.md`
 - `/home/openclaw/workspace/hermes-a2a/milestones/m17b/M17B-SYNTHETIC-TRIAD-SYNTHESIS.md`
+- `/home/openclaw/workspace/hermes-a2a/milestones/m17c/M17C-LIVE-EXECUTOR-SYNTHESIS.md`
+- `/home/openclaw/workspace/hermes-a2a/milestones/m17d/M17D-LOCAL-SERVICE-SYNTHESIS.md`
+- `/home/openclaw/workspace/hermes-a2a/milestones/m17e/M17E-SYNTHESIS.md`
 - `docs/operator.md`
 - `docs/developer.md`
 
