@@ -7,9 +7,11 @@ import argparse
 import hashlib
 import json
 import os
+import socket
 import secrets
 import stat
 import subprocess
+import time
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -154,6 +156,24 @@ def systemctl(args: Sequence[str]) -> dict[str, Any]:
     return run_command(["systemctl", "--user", *args])
 
 
+def wait_for_ports(ports: Sequence[int], *, host: str = "127.0.0.1", timeout: float = 15.0) -> dict[str, Any]:
+    deadline = time.monotonic() + timeout
+    ready = {str(port): False for port in ports}
+    last_errors: dict[str, str] = {}
+    while time.monotonic() < deadline and not all(ready.values()):
+        for port in ports:
+            if ready[str(port)]:
+                continue
+            try:
+                with socket.create_connection((host, port), timeout=0.2):
+                    ready[str(port)] = True
+            except OSError as exc:
+                last_errors[str(port)] = str(exc)
+        if not all(ready.values()):
+            time.sleep(0.1)
+    return {"ok": all(ready.values()), "ready": ready, "last_errors": last_errors}
+
+
 async def smoke_http(spec: ServiceSpec, token: str) -> dict[str, Any]:
     async with httpx.AsyncClient(base_url=spec.base_url.rstrip("/"), timeout=240.0) as client:
         card = await client.get("/.well-known/agent-card.json")
@@ -267,6 +287,7 @@ async def run_rollout(*, management_root: Path, run_id: str, approval_receipt: P
     restart = systemctl(["restart", *(spec.unit for spec in specs)])
     is_active = {spec.unit: systemctl(["is-active", spec.unit]) for spec in specs}
     process = process_identity(specs)
+    readiness = wait_for_ports(ports)
     during_snapshot = ss_snapshot(ports)
     smoke = await smoke_services(specs)
     assertions = {
@@ -278,6 +299,7 @@ async def run_rollout(*, management_root: Path, run_id: str, approval_receipt: P
         "enable_now_passed": enable_now["exit_code"] == 0,
         "restart_passed": restart["exit_code"] == 0,
         "all_units_active": all(item["exit_code"] == 0 and str(item.get("output", "")).strip() == "active" for item in is_active.values()),
+        "all_ports_ready": readiness["ok"],
         "listener_loopback_only": listener_assertions(during_snapshot, ports, expect_present=True)["ok"],
         "http_smokes_passed": all(
             item["http"]["agent_card_status"] == 200
@@ -321,6 +343,7 @@ async def run_rollout(*, management_root: Path, run_id: str, approval_receipt: P
         "restart": restart,
         "is_active": is_active,
         "process_identity": process,
+        "readiness": readiness,
     }
     bind_evidence = {
         "before": before_snapshot,
