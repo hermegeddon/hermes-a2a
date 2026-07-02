@@ -10,7 +10,7 @@ import re
 import sys
 from dataclasses import dataclass
 from datetime import datetime, timezone
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from typing import Any, Literal, Mapping, Sequence
 
 import yaml
@@ -214,7 +214,7 @@ def _enum(value: Any, path: str, allowed: set[str], errors: list[str]) -> str:
 
 def _path(value: Any, path: str, errors: list[str]) -> Path:
     text = _string(value, path, errors) or ""
-    if not text.startswith("/"):
+    if not (Path(text).is_absolute() or PurePosixPath(text).is_absolute() or PureWindowsPath(text).is_absolute()):
         errors.append(f"{path} must be an absolute path")
     if ".." in Path(text).parts:
         errors.append(f"{path} must not contain path traversal")

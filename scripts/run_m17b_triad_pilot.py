@@ -9,6 +9,7 @@ import copy
 import hashlib
 import json
 import secrets
+import shutil
 import socket
 import subprocess
 from datetime import datetime, timezone
@@ -152,24 +153,37 @@ def write_default_config(path: Path, data: dict[str, Any], *, overwrite: bool) -
     path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
 
 
-def run_command(command: Sequence[str], *, cwd: Path | None = None) -> dict[str, Any]:
-    completed = subprocess.run(command, cwd=cwd, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
-    return {"command": list(command), "cwd": str(cwd) if cwd else None, "exit_code": completed.returncode, "output": completed.stdout[-6000:]}
+def run_command(command: Sequence[str], *, cwd: Path | None = None, output_limit: int | None = 6000) -> dict[str, Any]:
+    try:
+        completed = subprocess.run(command, cwd=cwd, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=False)
+    except FileNotFoundError as exc:
+        return {"command": list(command), "cwd": str(cwd) if cwd else None, "exit_code": 127, "output": str(exc)}
+    output = completed.stdout if output_limit is None else completed.stdout[-output_limit:]
+    return {"command": list(command), "cwd": str(cwd) if cwd else None, "exit_code": completed.returncode, "output": output}
 
 
 def ss_snapshot(ports: Sequence[int]) -> dict[str, Any]:
-    result = run_command(["ss", "-ltnp"])
+    if shutil.which("ss"):
+        result = run_command(["ss", "-ltnp"], output_limit=None)
+        output_format = "ss"
+    else:
+        result = run_command(["netstat", "-ano", "-p", "tcp"], output_limit=None)
+        output_format = "netstat"
     lines = result["output"].splitlines() if isinstance(result["output"], str) else []
     port_strings = {f":{port}" for port in ports}
     filtered = [line for line in lines if any(marker in line for marker in port_strings)]
-    return {**result, "filtered_lines": filtered}
+    if output_format == "netstat":
+        filtered = [line for line in filtered if "LISTENING" in line]
+    output = result["output"][-6000:] if isinstance(result["output"], str) else result["output"]
+    return {**result, "output": output, "format": output_format, "filtered_lines": filtered}
 
 
 def listener_assertions(snapshot: dict[str, Any], ports: Sequence[int], *, expect_present: bool) -> dict[str, Any]:
     lines = list(snapshot.get("filtered_lines", []))
     by_port = {port: [line for line in lines if f":{port}" in line] for port in ports}
+    local_field_index = 1 if snapshot.get("format") == "netstat" else 3
     if expect_present:
-        local_fields = {line: (line.split()[3] if len(line.split()) > 3 else "") for line in lines}
+        local_fields = {line: (line.split()[local_field_index] if len(line.split()) > local_field_index else "") for line in lines}
         present = {
             str(port): any(
                 local.endswith(f"127.0.0.1:{port}") or local == f"[::ffff:127.0.0.1]:{port}"
