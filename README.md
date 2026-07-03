@@ -46,14 +46,35 @@ hermes gateway restart
 hermes a2a status
 ```
 
-For a public Git install, including Windows/PowerShell, use the Python interpreter from the Hermes install/venv as `<hermes-python>`:
+For a public Git install on Windows/PowerShell, target the Python interpreter used by the Windows-side `hermes` command:
 
 ```powershell
-<hermes-python> -m pip install git+https://github.com/hermegeddon/hermes-a2a.git
+$HermesCommand = Get-Command hermes
+$HermesItem = Get-Item $HermesCommand.Source
+$HermesReal = if ($HermesItem.Target) { $HermesItem.Target } else { $HermesItem.FullName }
+$HermesRoot = Split-Path (Split-Path $HermesReal -Parent) -Parent
+$HermesPython = Join-Path $HermesRoot "Scripts\python.exe"
+if (-not (Test-Path $HermesPython)) {
+  $HermesPython = Join-Path $env:USERPROFILE ".hermes\hermes-agent\venv\Scripts\python.exe"
+}
+if (-not (Test-Path $HermesPython)) {
+  throw "Could not find the Windows Hermes Python; set `$HermesPython to the python.exe used by hermes."
+}
+
+& $HermesPython -m pip install "git+https://github.com/hermegeddon/hermes-a2a.git"
 hermes plugins install "https://github.com/hermegeddon/hermes-a2a.git#plugin" --no-enable
 hermes plugins enable hermes-a2a --no-allow-tool-override
 hermes gateway restart
 hermes a2a status
+```
+
+For a Windows local checkout, replace the `pip install` and plugin-install lines with:
+
+```powershell
+$Repo = "C:\path\to\hermes-a2a"
+& $HermesPython -m pip install -e $Repo
+$RepoUrl = "file:///" + ((Resolve-Path $Repo).Path -replace "\\", "/")
+hermes plugins install "$RepoUrl#plugin" --no-enable
 ```
 
 Do not grant tool override permission; the plugin registers only additive read-only tools and a guarded operator CLI.
@@ -69,6 +90,22 @@ hermes a2a serve agent:local:hermes-blinky-wsl \
   --management-root <management-root> \
   --config <management-root>/instances/instances.yaml \
   --run-id <validated-run-id>
+```
+
+On Windows/PowerShell, keep the token in an environment variable and use the Windows-side instance id from the roster:
+
+```powershell
+$Mgmt = "<management-root>"
+$Cfg = Join-Path $Mgmt "instances\instances.yaml"
+$Run = "<validated-run-id>"
+$env:HERMES_A2A_LOCAL_TEST_TOKEN = (& $HermesPython -c "import secrets; print(secrets.token_urlsafe(32))").Trim()
+hermes a2a serve agent:local:hermes-blinky-windows `
+  --foreground `
+  --executor synthetic `
+  --test-token-env HERMES_A2A_LOCAL_TEST_TOKEN `
+  --management-root $Mgmt `
+  --config $Cfg `
+  --run-id $Run
 ```
 
 Live executor, service install/restart/stop, task-smoke, LAN exposure, public Agent Card publication, package publication, push/merge, and deployment remain separately gated.
