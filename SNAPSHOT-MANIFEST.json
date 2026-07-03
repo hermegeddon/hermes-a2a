@@ -1,4 +1,24 @@
 {
+  "schema": "hermes-a2a/repository-snapshot-manifest/v2",
+  "generated_at": "2026-07-03T17:41:43.519732Z",
+  "git": {
+    "branch": "main",
+    "source_tree_head": "c3538aada295b38a3aba56d3a06fe46ab2e4321f",
+    "note": "SNAPSHOT-MANIFEST.json excludes itself; source_tree_head identifies the non-manifest tracked files hashed below."
+  },
+  "root": "<repo-root>",
+  "historical_management_root": "<management-root>",
+  "scope": "tracked git files; excludes SNAPSHOT-MANIFEST.json self-hash by design",
+  "sanitization": {
+    "machine_specific_paths": "removed from current tracked publication surface",
+    "personal_operator_identifiers": "neutralized in public-facing plan/test/plugin metadata",
+    "path_placeholders": [
+      "<management-root>",
+      "<repo-root>",
+      "<standalone-repo>",
+      "<local-iap-workspace>"
+    ]
+  },
   "file_count": 118,
   "files": [
     {
@@ -17,9 +37,9 @@
       "sha256": "f3f92137a767ee2e1475cb380fdeb9056254391d0a8fb96c565387a51adc49a7"
     },
     {
-      "bytes": 4151,
+      "bytes": 7485,
       "path": "README.md",
-      "sha256": "082ec528701e1065a4fa56b0119778e5d9fd1c4cfefe67a3306088323510eba6"
+      "sha256": "8a59420eea0e5ae5731ff34686b5469cbded7240dc6dfe959e5da5896e12b6f6"
     },
     {
       "bytes": 6255,
@@ -32,9 +52,9 @@
       "sha256": "be3593306c03865fa2bf59bac857ff1bed9669d63e4d1a4f4e0a739e74750faf"
     },
     {
-      "bytes": 7603,
+      "bytes": 8652,
       "path": "docs/operator.md",
-      "sha256": "10acbc2b076dfd3466b1995ef3113e7c1c486fc08ff66dfc34c9c3922ff359db"
+      "sha256": "c6d61b1e8e7b04b3b9d9785fcdfbd1823a601044a3f601ae6469f17797cbf098"
     },
     {
       "bytes": 8392,
@@ -64,12 +84,12 @@
     {
       "bytes": 63709,
       "path": "milestones/m16/CONFORMANCE-MATRIX-FINAL.json",
-      "sha256": "226b4b95af6fdac36fbdc56021591fee9cdc258b94e2a0df2726d130f5b3b46a"
+      "sha256": "04dda97a34429025019b567937315683ba6a2ba6a1a79649ae86b75b4928328e"
     },
     {
       "bytes": 606,
       "path": "milestones/m16/CONFORMANCE-SYNTHESIS.md",
-      "sha256": "12636377fe684b9bc2164b1a908a13f4c8c49239f03b77d8ba04b1d68096889f"
+      "sha256": "56a22f701f3934b0eec9c4e8877b30d0dcc5723528c61a14fc916134505fee36"
     },
     {
       "bytes": 332,
@@ -152,9 +172,9 @@
       "sha256": "93b05a8fee07beafa3650606bc997b82687a34788928f7c6dd885799a0dea40c"
     },
     {
-      "bytes": 2425,
+      "bytes": 2506,
       "path": "milestones/m16/validation-receipt.json",
-      "sha256": "87585c8a42c1d758d7aec7359911a8e490d2e27e8400d8c214ad8eff64cc309d"
+      "sha256": "e4431944e07bda4e21cbfdc69294603820b388536fadb14e082fffa2d7462ab4"
     },
     {
       "bytes": 748,
@@ -207,9 +227,9 @@
       "sha256": "8b1c2ae177c56496c297ea7989002b036e5c1d317a317ff2d048a2e7133bc18c"
     },
     {
-      "bytes": 1034,
+      "bytes": 1231,
       "path": "milestones/m18/final-hygiene.json",
-      "sha256": "a0d3d791af26444ae1fa09f904591d543c415226fc13364550ef2391f583ef08"
+      "sha256": "4a5740b6193c95667c303fb7652b09c03ff256a12d5c0158ecf4d533771fd042"
     },
     {
       "bytes": 4345,
@@ -262,9 +282,9 @@
       "sha256": "8c82c72818de6c6f0718c725c96b024d634427a6adc0c511ce1fb83acf352d0a"
     },
     {
-      "bytes": 819,
+      "bytes": 963,
       "path": "pyproject.toml",
-      "sha256": "d32f6e4613d23e583eb5be48332803e73b90d735c48d93c52718787733c99564"
+      "sha256": "3530e8e0fe290a9b09f131a1be8133ce4335d8f3d58d8a5a68a4676bca41bf9e"
     },
     {
       "bytes": 2162,
@@ -277,9 +297,9 @@
       "sha256": "637e081e312e972120c0bd8bc925989f2e5bfb49f658ca6bef07f261515308f8"
     },
     {
-      "bytes": 28406,
+      "bytes": 29245,
       "path": "scripts/run_m17b_triad_pilot.py",
-      "sha256": "35ca475ec73f524e60079b1b44629ac46c06faa430b50324f112ad0574bda1c7"
+      "sha256": "bbc70a7422788bc54b66d01aa65132ec8c663934c37516f2f81c13bffe0a4123"
     },
     {
       "bytes": 13877,
@@ -297,9 +317,9 @@
       "sha256": "2706d1a9cf8899f4d74ee6e69d8f4c39c7acad0be21af4585ef11b0ff191628b"
     },
     {
-      "bytes": 10884,
+      "bytes": 11200,
       "path": "scripts/validate_local_conformance.py",
-      "sha256": "b895b66b5e4a1d5c45eee9a2f71bbc55f99dfc0559cf455800ffd9399d47029c"
+      "sha256": "1b4991e7ece5d813704ccb49d7031226b914699afb12e6cc95549cd1d5bd76c5"
     },
     {
       "bytes": 18747,
@@ -377,14 +397,14 @@
       "sha256": "a44206496d1b7700c1841ec6bb748cbb019f2675ba0a9dc7687556f9b6c31623"
     },
     {
-      "bytes": 4880,
+      "bytes": 5210,
       "path": "src/hermes_a2a/app.py",
-      "sha256": "d38bded69fb235e71b0e87e2275e98ea36c7d7953e9497451aa6c123064aa09d"
+      "sha256": "df1210497b05ff9d444d54b0bbd1095821ffeeccfab0650574d67adc4c3edb8e"
     },
     {
-      "bytes": 26765,
+      "bytes": 26879,
       "path": "src/hermes_a2a/config.py",
-      "sha256": "59cce9607c45a9302a49a255d6f155da10dd13baebf37f62a304c74c1d4c20ea"
+      "sha256": "5eefa1dca9f208cab5060a25d0a3e3b1724e43d4bf39167cd790dd01b67f2d1c"
     },
     {
       "bytes": 1568,
@@ -427,9 +447,9 @@
       "sha256": "5f90c4cd776df64cb657f9f26e985bf27ed91e3a3266f2fa8ba2528192c9b0cb"
     },
     {
-      "bytes": 11288,
+      "bytes": 11474,
       "path": "src/hermes_a2a/serve.py",
-      "sha256": "bc4714de3b339b42186f927639b2a7a981e286dc1051cd3a4e9c116105c85bed"
+      "sha256": "26cc7e9d31e0869d81a2262e1e28586dd5135d0537032953d016687677d8f5a0"
     },
     {
       "bytes": 6207,
@@ -442,9 +462,9 @@
       "sha256": "08ab85a708fa3083b4d636935b8afca74dd4fa5aeed8fad57316a9a432433142"
     },
     {
-      "bytes": 17138,
+      "bytes": 17379,
       "path": "src/hermes_a2a_plugin/cli.py",
-      "sha256": "55fdc36bd267ccbafffbe38bffad48c4acaf10512e856746b0d9a32929b1d1a3"
+      "sha256": "214a4de50acd839dd02ea5a574d2c7cd5750839673c436b5482489f266c3741b"
     },
     {
       "bytes": 8716,
@@ -477,14 +497,14 @@
       "sha256": "0ada82284a27cadab3fe5a0c70b9d5f63f4092480773b1779ecfb10f0ac34dd4"
     },
     {
-      "bytes": 3423,
+      "bytes": 4353,
       "path": "tests/plugin/test_cli.py",
-      "sha256": "791704bf7fbee3d5cf72b2efaae4509699fb2ce7a604699b4aedb3334a9449b8"
+      "sha256": "3b68c36595a4e7d763496141eb247b14a071d15bfcec1e879a3ba9a7dc0e8655"
     },
     {
-      "bytes": 919,
+      "bytes": 1114,
       "path": "tests/plugin/test_docs_and_packaging.py",
-      "sha256": "ac1e82a50c9582b091c3dbcf88d8c3357a866cbce5e3b2f979ba936a102f76b8"
+      "sha256": "d13126fb53261692937c29cd601b5b6c89131855b3a08ecf7c009de49c42a0b9"
     },
     {
       "bytes": 7444,
@@ -492,9 +512,9 @@
       "sha256": "2826f479259bb02c311ac96a9395388f8e63e3ae060699b5067281e4fce41a5e"
     },
     {
-      "bytes": 8275,
+      "bytes": 9239,
       "path": "tests/plugin/test_live_delegation_seam.py",
-      "sha256": "d942bc85bc2b45d838172927f484520cc7845360553d31f1a3bd39616b6a4932"
+      "sha256": "d0ecbf9658acf6bb414a5959678b2a8d22458b1cbec63d4f59eb201645891068"
     },
     {
       "bytes": 1721,
@@ -532,9 +552,9 @@
       "sha256": "168253d12f5d8a1cc5a4b38ea24272219fe68eab44cb50174b1c641b6e6489b1"
     },
     {
-      "bytes": 3616,
+      "bytes": 5630,
       "path": "tests/test_agent_card_and_bindings.py",
-      "sha256": "c37c058aa7c5cc1c064061d4c7d3836d8f06f0d5fa25584c2291a8dd6e64c4ed"
+      "sha256": "e0db6ca534aecf42d4f285852a2d6b06bbef649d628bfc801606025a794b1b48"
     },
     {
       "bytes": 687,
@@ -572,9 +592,9 @@
       "sha256": "560588b8407e6212e9b1b7027261b9b35508a397442934bc41daccf7a1f82c24"
     },
     {
-      "bytes": 3276,
+      "bytes": 3650,
       "path": "tests/test_sidecar_runner.py",
-      "sha256": "a4de2af78ad2c39004f9b117753f1833ba5c7743e29e2088f34cdeaca589a808"
+      "sha256": "7d7204c612a849c1838fa427c776ae3e00878603d968c1f4154c7ac42340cd3a"
     },
     {
       "bytes": 3528,
@@ -591,24 +611,5 @@
       "path": "uv.lock",
       "sha256": "2f5f7edd4b060b5d32f85a1540097630f946d221a1149f87527ca871420a3cb7"
     }
-  ],
-  "generated_at": "2026-07-03T15:27:12.341844Z",
-  "git": {
-    "branch": "feat/hermes-plugin-wrapper",
-    "head_before_hygiene_commit": "ec2e732e861ae38531a89f322f24ab888e8cc78c"
-  },
-  "historical_management_root": "<management-root>",
-  "root": "<repo-root>",
-  "sanitization": {
-    "machine_specific_paths": "removed from current tracked publication surface",
-    "path_placeholders": [
-      "<management-root>",
-      "<repo-root>",
-      "<standalone-repo>",
-      "<local-iap-workspace>"
-    ],
-    "personal_operator_identifiers": "neutralized in public-facing plan/test/plugin metadata"
-  },
-  "schema": "hermes-a2a/repository-snapshot-manifest/v2",
-  "scope": "tracked git files plus newly added root LICENSE; excludes SNAPSHOT-MANIFEST.json self-hash by design"
+  ]
 }
