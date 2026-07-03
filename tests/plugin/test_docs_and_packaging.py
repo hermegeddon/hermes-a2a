@@ -22,5 +22,10 @@ def test_operator_skill_has_required_sections() -> None:
 
 def test_pyproject_includes_plugin_package_and_entry_point() -> None:
     data = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))
-    assert "src/hermes_a2a_plugin" in data["tool"]["hatch"]["build"]["targets"]["wheel"]["packages"]
+    wheel_config = data["tool"]["hatch"]["build"]["targets"]["wheel"]
+    assert "src/hermes_a2a_plugin" in wheel_config["packages"]
+    assert (
+        wheel_config["force-include"]["src/hermes_a2a_plugin/skills/operator/SKILL.md"]
+        == "hermes_a2a_plugin/skills/operator/SKILL.md"
+    )
     assert data["project"]["entry-points"]["hermes_agent.plugins"]["hermes-a2a"] == "hermes_a2a_plugin"

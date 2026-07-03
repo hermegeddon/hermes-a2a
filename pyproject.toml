@@ -27,6 +27,9 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["src/hermes_a2a", "src/hermes_a2a_plugin"]
 
+[tool.hatch.build.targets.wheel.force-include]
+"src/hermes_a2a_plugin/skills/operator/SKILL.md" = "hermes_a2a_plugin/skills/operator/SKILL.md"
+
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
