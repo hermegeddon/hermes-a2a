@@ -27,6 +27,20 @@ Not authorized by this workspace:
 uv run --extra dev python -m pytest tests -q
 ```
 
+## Hermes plugin wrapper
+
+The reviewed rev-2 plugin wrapper adds a disabled-by-default Hermes plugin surface around this package:
+
+```bash
+hermes a2a status
+hermes a2a validate-config --config /path/to/instances.yaml --run-id <run-id>
+hermes a2a plan --config /path/to/instances.yaml --run-id <run-id>
+```
+
+Model-callable plugin tools are read-only and projection-scanned. CLI receipt writing remains opt-in via `validate-config --write-receipt`. Live/service/task-smoke commands refuse until all plugin gates pass: `--live-enabled`, `--yes`, a strict single-use UUID4 approval receipt under `$HERMES_HOME/state/hermes-a2a-plugin/approvals/`, and the operation-specific environment gate. Plugin service commands are limited to the two local service units (`--instance local-services`) and exclude the work-labeled unit; `task-smoke` supports only `agent:local:hermes-blinky-wsl` via the existing M17c live loopback pilot.
+
+See `docs/plugin.md` and the bundled `hermes-a2a:operator` skill for the full gate model, install/enablement notes, rollback, and standing non-authorizations. This implementation does not enable the plugin, install services, restart services, run live profile execution, expose LAN/public listeners, or publish the package.
+
 ## Run conformance evidence
 
 ```bash

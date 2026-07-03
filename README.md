@@ -25,6 +25,7 @@ This repository is local-first. Public release, public Agent Card publication, d
 - M17d gated user-level loopback sidecar service rollout
 - M17e bounded synthetic LAN Agent Card/A2A pilot with remote unlisted-host negative reachability evidence
 - Hermes safety wrappers: projection scanning, receipt-before-exposure, safe receipt refs, loopback-only push policy, and conformance-label gates
+- Hermes Agent plugin wrapper: read-only model tools, `hermes a2a` operator CLI, approval-gated live/service seams, and bundled operator skill; see `docs/plugin.md`
 
 ## Validate
 
