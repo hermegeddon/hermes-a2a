@@ -28,7 +28,7 @@ Every gated command requires: `--live-enabled`, `--yes`, `--approval-receipt <pa
 
 ## Approval receipts
 
-Approval receipts live at `$HERMES_HOME/state/hermes-a2a-plugin/approvals/<id>.yaml`. They use strict schema version 1, a normalized UUID4 `id`, operation and instance binding, `issued_at`/`expires_at` timestamps with TTL at most 24 hours, a non-empty approver, and `scope: single-use`. The plugin derives `<id>.consumed` from the normalized UUID and rechecks marker containment before writing it immediately before a gated delegate call.
+Approval receipts live at `$HERMES_HOME/state/hermes-a2a-plugin/approvals/<id>.yaml`. They use strict schema version 1, a normalized UUID4 `id`, operation and instance binding, `issued_at`/`expires_at` timestamps with TTL at most 24 hours, a non-empty approver, and `scope: single-use`. The receipt path must be the canonical approvals-root `<id>.yaml` path, and the plugin derives the root-level `<id>.consumed` marker from the normalized UUID before writing it immediately before a gated delegate call.
 
 ## Receipt/artifact locations
 

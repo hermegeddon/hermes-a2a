@@ -105,12 +105,12 @@ Verification rules:
 
 - The path must be supplied explicitly, resolve to a regular file, and remain contained in the approvals directory after symlink resolution.
 - YAML must parse and match the strict schema; unknown keys are refused.
-- `id` must be a normalized UUID4 string; consumption markers are derived from that normalized UUID and rechecked for approvals-directory containment before creation.
+- `id` must be a normalized UUID4 string; the receipt path must be the canonical approvals-root `<id>.yaml` path, and the consumption marker is the approvals-root `<id>.consumed` path derived from that normalized UUID.
 - `kind`, `schema_version`, `operation`, and `instance` must match the requested operation.
 - `issued_at <= now < expires_at`; TTL must be at most 24 hours.
 - `approver` must be non-empty.
 - `scope` must be `single-use`.
-- A consumption marker `<id>.consumed` beside the receipt makes a receipt non-reusable.
+- A consumption marker `<id>.consumed` in the approvals root makes a receipt non-reusable across copied or nested receipt files.
 
 ## Receipt and artifact locations
 

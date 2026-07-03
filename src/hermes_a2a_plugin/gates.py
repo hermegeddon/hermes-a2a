@@ -150,7 +150,10 @@ def _verify_receipt(
     receipt_id = str(receipt_uuid)
     if receipt_uuid.version != 4 or receipt_id != receipt_id_raw:
         return _fail("approval_receipt_id", "approval receipt id must be a normalized UUID4 string"), None, None
-    marker = receipt_path.parent / f"{receipt_id}.consumed"
+    canonical_receipt = root / f"{receipt_id}.yaml"
+    if receipt_path.resolve(strict=False) != canonical_receipt.resolve(strict=False):
+        return _fail("approval_receipt_path", "approval receipt path must be the canonical approvals/<id>.yaml path"), None, None
+    marker = root / f"{receipt_id}.consumed"
     if not _contained(marker, root):
         return _fail("approval_receipt_marker_outside_approvals_dir", "approval receipt consumption marker must remain inside approvals directory"), None, None
     if marker.exists():

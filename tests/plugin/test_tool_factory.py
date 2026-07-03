@@ -91,3 +91,19 @@ def test_broken_projection_scanner_fails_closed(monkeypatch: pytest.MonkeyPatch)
     assert result["ok"] is False
     assert result["error"] == "projection_unavailable"
     assert "safe-looking" not in raw
+
+
+def test_handler_exception_does_not_return_raw_detail() -> None:
+    from hermes_a2a_plugin.tools import safe_model_tool
+
+    def boom(data):  # type: ignore[no-untyped-def]
+        raise RuntimeError("/home/openclaw/.hermes/private-token")
+
+    handler = safe_model_tool("unit", strict_schema(), {"name"}, boom)
+
+    raw = handler({"name": "x"})
+    result = decode_tool_result(raw)
+
+    assert result == {"ok": False, "error": "handler_failed"}
+    assert "/home/openclaw" not in raw
+    assert "private-token" not in raw

@@ -65,8 +65,8 @@ def safe_model_tool(name: str, schema: dict[str, Any], allowed_args: set[str], h
                 return _json({"ok": False, "error": "unexpected_argument", "key": key})
         try:
             result = handler(data)
-        except Exception as exc:  # defensive model boundary: structured error, no traceback
-            return _json({"ok": False, "error": "handler_failed", "detail": str(exc)})
+        except Exception:  # defensive model boundary: structured error, no traceback or raw exception text
+            return _json({"ok": False, "error": "handler_failed"})
         projected = project_response(result, surface=name)
         return _json(projected)
 

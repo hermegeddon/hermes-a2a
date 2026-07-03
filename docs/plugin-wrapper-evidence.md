@@ -33,8 +33,8 @@ All commands ran in `/home/openclaw/dev/hermes-stuff/projects/hermes-a2a`.
 |---|---|
 | `uv run --extra dev python -m pytest tests/plugin/test_register_side_effect_free.py -q -v` | `3 passed in 0.02s` |
 | `uv run --extra dev python -m pytest tests/plugin/test_register_api_allowlist.py -q -v` | `1 passed in 0.01s` |
-| `uv run --extra dev python -m pytest tests/plugin/test_tool_factory.py -q -v` | `5 passed in 0.02s` |
-| `uv run --extra dev python -m pytest tests/plugin/test_gates.py -q -v` | `18 passed in 0.07s` |
+| `uv run --extra dev python -m pytest tests/plugin/test_tool_factory.py -q -v` | `6 passed in 0.01s` |
+| `uv run --extra dev python -m pytest tests/plugin/test_gates.py -q -v` | `19 passed in 0.07s` |
 | `uv run --extra dev python -m pytest tests/plugin/test_live_delegation_seam.py -q -v` | `9 passed in 0.06s` |
 | `uv run --extra dev python -m pytest tests/plugin/test_tool_schemas.py -q -v` | `1 passed in 0.01s` |
 | `uv run --extra dev python -m pytest tests/plugin/test_status_tool.py tests/plugin/test_validate_config_tool.py tests/plugin/test_peer_task_dry_run.py -q -v` | `8 passed in 0.06s` |
@@ -48,7 +48,7 @@ Coverage highlights:
 - Every model tool schema has `additionalProperties: false` and every model tool is factory-wrapped.
 - Unknown/denylisted tool args are rejected before `hermes_a2a` import or file open.
 - Projection findings redact unsafe fields; scanner failure returns `projection_unavailable` without raw output.
-- Approval receipt tests cover missing file, non-regular path, containment, YAML, unknown keys, wrong kind/version/operation/instance, time validity, TTL, canonical lowercase UUID4 id validation, marker escape prevention, approver, single-use consumption, missing flags/env, and execution-control args.
+- Approval receipt tests cover missing file, non-regular path, containment, YAML, unknown keys, wrong kind/version/operation/instance, time validity, TTL, canonical lowercase UUID4 id validation, canonical root receipt-path enforcement, marker escape prevention, approver, single-use consumption, missing flags/env, and execution-control args.
 - Valid live/service/task-smoke gate paths reach only top-level mocked delegates under global process/network/exec/systemctl guards.
 - Service unit selection excludes `hermes-a2a-work-hermes-work.service`; unsupported work-labeled service instances are refused before gate consumption.
 - Task-smoke delegates to the existing `run_m17c_live_executor_pilot` top-level seam rather than a dry-run placeholder.
@@ -68,14 +68,16 @@ Fixes applied before final review/commit:
 - `task-smoke` now supports only `agent:local:hermes-blinky-wsl` and delegates to `run_m17c_live_executor_pilot` after gates.
 - Tests were expanded to cover malicious receipt ids, marker escape prevention, unsupported service/task-smoke instance refusals, work-unit exclusion, and task-smoke top-level delegation.
 
-Final independent review via `profile_delegate` run `pd_20260703_141210_27u37o` returned `status: ok` with no remaining blockers. It verified the staged diff artifact SHA `f69c257418426382ed7bbdf47dcb577346954fc07bc78b3d232fc16aa5d20abf`, the canonical lowercase UUID4 refusal probe, traversal-id refusal/no marker escape, local service-unit allowlist excluding work, task-smoke delegation to `run_m17c_live_executor_pilot`, docs non-authorizations, staged secret-pattern scan, `git diff --staged --check`, and focused/full test results.
+Independent reviewer-profile one-shot with toolsets disabled reviewed staged diff artifact SHA `f69c257418426382ed7bbdf47dcb577346954fc07bc78b3d232fc16aa5d20abf` and returned `status: block` before commit. It found that copied/nested approval YAML files with the same normalized UUID could get independent consumed markers because markers were written beside the supplied receipt path instead of at the approvals root. The fix requires the canonical approvals-root `<id>.yaml` receipt path, always writes the approvals-root `<id>.consumed` marker, adds the copied/nested receipt regression test, and removes raw exception details from model-tool `handler_failed` responses.
+
+Final reviewer-profile one-shot with toolsets disabled reviewed the incremental hardening diff SHA `779098820e18368d655c2cb7a7056ac43d02ac0e94008c84a8ee29b1518390e2` and full branch diff SHA `6fba7f0110a80097adec8ad792de70a7f55da20923effdbde76b074ff3069809`. It returned `status: pass`, `acceptable_to_commit: true`, and no blockers. Non-blocking suggestions were to consider explicit symlink canonical-path coverage and CLI receipt-read error redaction as future defense-in-depth refinements.
 
 ## Full-suite evidence
 
 | Command | Result |
 |---|---|
-| `uv run --extra dev python -m pytest tests/plugin -q` | `52 passed in 0.21s` |
-| `uv run --extra dev python -m pytest tests -q` | `90 passed in 3.06s` |
+| `uv run --extra dev python -m pytest tests/plugin -q` | `54 passed in 0.22s` |
+| `uv run --extra dev python -m pytest tests -q` | `92 passed in 3.19s` |
 | `uv run --extra dev python scripts/validate_local_conformance.py` | exit `0`, status `passed`; expected negative logs for non-loopback push URL and missing extended-card auth appeared. |
 
 `validate_local_conformance.py` regenerated tracked M16 timestamp/ephemeral-port receipts; those generated diffs were inspected and reverted because they were outside this plugin-wrapper scope. The command output above is retained as evidence.

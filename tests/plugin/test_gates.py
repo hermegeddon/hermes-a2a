@@ -136,6 +136,22 @@ def test_gate_refuses_path_traversal_receipt_id_without_writing_marker(tmp_path:
     assert not (tmp_path / "state" / "hermes-a2a-plugin" / "escape-marker.consumed").exists()
 
 
+def test_gate_requires_canonical_receipt_path_for_single_use_marker(tmp_path: Path) -> None:
+    from hermes_a2a_plugin.gates import approvals_dir
+
+    canonical = write_receipt(tmp_path)
+    nested = approvals_dir(tmp_path) / "nested" / "copied.yaml"
+    nested.parent.mkdir(parents=True)
+    nested.write_text(canonical.read_text(encoding="utf-8"), encoding="utf-8")
+
+    result = call_gate(tmp_path, nested, consume=True)
+
+    assert result.allowed is False
+    assert result.rule == "approval_receipt_path"
+    assert not (nested.parent / "11111111-1111-4111-8111-111111111111.consumed").exists()
+    assert not (approvals_dir(tmp_path) / "11111111-1111-4111-8111-111111111111.consumed").exists()
+
+
 def test_gate_refuses_missing_flags_env_and_execution_args(monkeypatch, tmp_path: Path) -> None:  # type: ignore[no-untyped-def]
     receipt = write_receipt(tmp_path)
     monkeypatch.delenv("HERMES_A2A_PLUGIN_LIVE", raising=False)
