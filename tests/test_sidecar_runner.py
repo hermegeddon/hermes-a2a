@@ -9,7 +9,7 @@ import yaml
 from a2a.types import a2a_pb2, a2a_pb2_grpc
 
 from hermes_a2a.config import load_instances_config
-from hermes_a2a.serve import SidecarRuntime
+from hermes_a2a.serve import SidecarRuntime, SidecarRuntimeError
 from scripts.run_m17b_triad_pilot import default_config_data, message_payload, reserve_ports
 
 RUN_ID = "20260701T000001Z-abcdef"
@@ -22,6 +22,16 @@ def write_config(tmp_path: Path):  # type: ignore[no-untyped-def]
     config_path.parent.mkdir(parents=True)
     config_path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
     return load_instances_config(config_path, run_id=RUN_ID, management_root=tmp_path)
+
+
+@pytest.mark.asyncio
+async def test_sidecar_runtime_refuses_test_ephemeral_without_token(tmp_path: Path) -> None:
+    config = write_config(tmp_path)
+    instance = config.instances[0]
+
+    with pytest.raises(SidecarRuntimeError, match="test_ephemeral sidecars require"):
+        async with SidecarRuntime(instance, test_token=None):
+            pass
 
 
 @pytest.mark.asyncio

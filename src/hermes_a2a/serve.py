@@ -72,6 +72,8 @@ class SidecarRuntime:
     async def start(self) -> None:
         if self.instance.bind.host != "127.0.0.1":
             raise SidecarRuntimeError("M17b sidecars may bind only 127.0.0.1")
+        if self.instance.auth.mode == "test_ephemeral" and not self.test_token:
+            raise SidecarRuntimeError("test_ephemeral sidecars require --test-token or --test-token-env")
         assert_port_free(self.instance.bind.host, self.instance.bind.http_port)
         if self.instance.bind.grpc_port is not None:
             assert_port_free(self.instance.bind.host, self.instance.bind.grpc_port)

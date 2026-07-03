@@ -27,8 +27,8 @@
     "grpc": {
       "bound_host": "127.0.0.1",
       "get_state": "TASK_STATE_COMPLETED",
-      "port": 45727,
-      "receipt_ref": "receipts/receipt-10b844de-6169-4274-bcda-8e76de9654ba-75c3d676a4984a21824613f53d8c6a22.json",
+      "port": 42297,
+      "receipt_ref": "receipts/receipt-ae96ce30-281a-4b12-a952-341dbcccf19e-f881daf23cf043f193a2efaf774caf45.json",
       "send_state": "TASK_STATE_COMPLETED"
     },
     "http": {
@@ -40,7 +40,7 @@
       "agent_card_status": 200,
       "extended_allowed_status": 200,
       "extended_denied_status": 400,
-      "jsonrpc_receipt_ref": "receipts/receipt-8fd03fff-a388-4348-a067-d3e2f4d988e0-6bfba74d2ad245aab20e1f26fd1acc71.json",
+      "jsonrpc_receipt_ref": "receipts/receipt-30eca0f2-4ffa-432c-8eb0-cad3bb54766f-804270c818f14f4bad7089ad6329e174.json",
       "jsonrpc_state": "TASK_STATE_COMPLETED",
       "jsonrpc_status": 200,
       "push_allowed_status": 200,
@@ -58,9 +58,9 @@
       "unsafe_reason": "unsafe peer-visible validator-unsafe: mcp/tool surface, private local path, secret-shaped token; private local path at validator-unsafe:$.parts[0].text; mcp/tool surface at validator-unsafe:$.parts[0].text; secret-shaped token at validator-unsafe:$.parts[0].text"
     },
     "pytest_exit_code": 0,
-    "pytest_output_tail": "...............................                                          [100%]\n31 passed in 2.89s\n",
+    "pytest_output_tail": "........................................................................ [ 74%]\n.........................                                                [100%]\n97 passed in 3.49s\n",
     "uv_lock_sha256": "2f5f7edd4b060b5d32f85a1540097630f946d221a1149f87527ca871420a3cb7"
   },
-  "generated_at": "2026-07-01T03:43:48.736732Z",
+  "generated_at": "2026-07-03T16:46:39.574692Z",
   "status": "passed"
 }

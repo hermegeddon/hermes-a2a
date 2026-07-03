@@ -84,6 +84,38 @@ def test_valid_gated_path_reaches_only_top_level_mock(monkeypatch, tmp_path: Pat
     assert len(calls) == 1
 
 
+def test_synthetic_serve_passes_test_token_env_to_delegate(monkeypatch, tmp_path: Path) -> None:  # type: ignore[no-untyped-def]
+    from hermes_a2a_plugin import cli
+
+    config_path, _ = write_roster(tmp_path)
+    calls: list[object] = []
+    monkeypatch.setattr(cli, "_serve_delegate", lambda args: calls.append(args) or 0)
+
+    rc = cli.a2a_command(
+        parse_cli(
+            [
+                "serve",
+                "agent:local:hermes-blinky-wsl",
+                "--foreground",
+                "--executor",
+                "synthetic",
+                "--test-token-env",
+                "HERMES_A2A_LOCAL_TEST_TOKEN",
+                "--config",
+                str(config_path),
+                "--run-id",
+                RUN_ID,
+                "--management-root",
+                str(tmp_path),
+            ]
+        )
+    )
+
+    assert rc == 0
+    assert len(calls) == 1
+    assert calls[0].test_token_env == "HERMES_A2A_LOCAL_TEST_TOKEN"
+
+
 def test_valid_service_gate_reaches_only_service_delegate_mock(monkeypatch, tmp_path: Path, hermes_home: Path) -> None:  # type: ignore[no-untyped-def]
     from hermes_a2a_plugin import cli
 
