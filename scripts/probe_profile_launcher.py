@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+import os
 from pathlib import Path
 from typing import Sequence
 
@@ -15,7 +16,7 @@ from hermes_a2a.live_executor import LiveExecutorLimits, run_hermes_profile
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Probe one approved Hermes profile launcher shape")
     parser.add_argument("--profile", default="default")
-    parser.add_argument("--workdir", default="/home/openclaw/workspace/hermes-a2a")
+    parser.add_argument("--workdir", default=os.environ.get("HERMES_A2A_MANAGEMENT_ROOT", "."))
     parser.add_argument("--marker", default="HERMES_A2A_LAUNCHER_OK")
     parser.add_argument("--timeout-seconds", type=float, default=120.0)
     return parser

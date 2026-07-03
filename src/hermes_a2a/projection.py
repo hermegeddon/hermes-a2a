@@ -10,7 +10,7 @@ from google.protobuf import json_format
 from google.protobuf.message import Message as ProtoMessage
 
 _SECRET_RE = re.compile(r"\b(?:sk|xox[baprs]|gh[pousr]|pat|api[_-]?key|token)[-_A-Za-z0-9]{4,}", re.IGNORECASE)
-_PRIVATE_PATH_RE = re.compile(r"(?:/home/openclaw|/mnt/[a-z]/Users|\.hermes|/\.ssh|/\.config)", re.IGNORECASE)
+_PRIVATE_PATH_RE = re.compile(r"(?:/home/[^/\s]+|/Users/[^/\s]+|/mnt/[a-z]/Users/[^/\s]+|\.hermes|/\.ssh|/\.config)", re.IGNORECASE)
 _MCP_RE = re.compile(r"\b(?:mcp|tool schema|tool call|raw tool|shell proxy)\b", re.IGNORECASE)
 _ENV_RE = re.compile(r"\b[A-Z][A-Z0-9_]{5,}\s*=", re.IGNORECASE)
 

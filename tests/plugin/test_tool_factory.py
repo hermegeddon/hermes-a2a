@@ -66,14 +66,14 @@ def test_projection_violation_redacts_instead_of_returning_raw() -> None:
         "unit",
         strict_schema(),
         {"name"},
-        lambda data: {"ok": True, "leak": "/home/openclaw/.hermes/token", "safe": "hello"},
+        lambda data: {"ok": True, "leak": "/home/example/.hermes/token", "safe": "hello"},
     )
 
     raw = handler({"name": "x"})
     result = decode_tool_result(raw)
 
     assert "projection_refused" in raw
-    assert "/home/openclaw" not in raw
+    assert "/home/example" not in raw
     assert result["leak"]["error"] == "projection_refused"
     assert result["safe"] == "hello"
 
@@ -97,7 +97,7 @@ def test_handler_exception_does_not_return_raw_detail() -> None:
     from hermes_a2a_plugin.tools import safe_model_tool
 
     def boom(data):  # type: ignore[no-untyped-def]
-        raise RuntimeError("/home/openclaw/.hermes/private-token")
+        raise RuntimeError("/home/example/.hermes/private-token")
 
     handler = safe_model_tool("unit", strict_schema(), {"name"}, boom)
 
@@ -105,5 +105,5 @@ def test_handler_exception_does_not_return_raw_detail() -> None:
     result = decode_tool_result(raw)
 
     assert result == {"ok": False, "error": "handler_failed"}
-    assert "/home/openclaw" not in raw
+    assert "/home/example" not in raw
     assert "private-token" not in raw

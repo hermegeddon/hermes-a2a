@@ -29,7 +29,7 @@ async def test_agent_card_is_public_safe_and_declares_bindings(tmp_path):
     assert card["name"] == "Hermes A2A Local"
     assert {i["protocolBinding"] for i in card["supportedInterfaces"]} >= {"JSONRPC", "HTTP+JSON", "GRPC"}
     rendered = response.text
-    assert "/home/openclaw" not in rendered
+    assert "/home/example" not in rendered
     assert ".hermes" not in rendered
     assert "mcp" not in rendered.lower()
     assert "sk-" not in rendered

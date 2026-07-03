@@ -10,7 +10,7 @@ from hermes_a2a.receipts import ReceiptStore, emit_peer_visible
 
 def test_projection_rejects_private_paths_mcp_and_secret_shaped_text() -> None:
     msg = a2a_pb2.Message(role=a2a_pb2.ROLE_AGENT)
-    msg.parts.append(a2a_pb2.Part(text="internal /home/openclaw/.hermes config uses MCP tool sk-live"))
+    msg.parts.append(a2a_pb2.Part(text="internal /home/example/.hermes config uses MCP tool sk-live"))
 
     with pytest.raises(ProjectionViolation) as exc:
         assert_safe_peer_visible(msg, surface="message")

@@ -15,7 +15,17 @@ from typing import Any, Literal, Mapping, Sequence
 
 import yaml
 
-MANAGEMENT_ROOT = Path("/home/openclaw/workspace/hermes-a2a")
+MANAGEMENT_ROOT_ENV = "HERMES_A2A_MANAGEMENT_ROOT"
+
+
+def default_management_root() -> Path:
+    """Return the configured management root, defaulting to the current directory."""
+
+    text = os.environ.get(MANAGEMENT_ROOT_ENV)
+    return Path(text).expanduser() if text else Path.cwd()
+
+
+MANAGEMENT_ROOT = default_management_root()
 SCHEMA_VERSION = 1
 RUN_ID_RE = re.compile(r"^\d{8}T\d{6}Z-[0-9a-f]{6}$")
 AGENT_ID_RE = re.compile(r"^agent:(local|work|test):[a-z0-9][a-z0-9-]*$")
@@ -286,7 +296,7 @@ def parse_instances_config(
     source_path: Path,
     source_sha256: str,
     run_id: str,
-    management_root: Path = MANAGEMENT_ROOT,
+    management_root: Path | None = None,
     require_peer_auth: bool = True,
 ) -> InstancesConfig:
     """Parse and validate an M17b roster as typed config.
@@ -298,7 +308,7 @@ def parse_instances_config(
     errors: list[str] = []
     if not RUN_ID_RE.match(run_id):
         errors.append("run_id must match YYYYMMDDTHHMMSSZ-<6 lowercase hex>")
-    root = Path(management_root).expanduser()
+    root = (Path(management_root).expanduser() if management_root is not None else default_management_root())
     expected_base = expected_receipt_base(root, run_id)
 
     data = _mapping(raw, "$", errors)
@@ -465,7 +475,7 @@ def load_instances_config(
     config_path: str | os.PathLike[str] | None,
     *,
     run_id: str,
-    management_root: Path = MANAGEMENT_ROOT,
+    management_root: Path | None = None,
     require_validation_receipt: bool = False,
 ) -> InstancesConfig:
     path = resolve_config_path(config_path)
@@ -578,12 +588,13 @@ def _write_failure_receipt(output_path: Path, *, run_id: str, config_path: Path,
 
 
 def _validate_cli(args: argparse.Namespace) -> int:
-    output = Path(args.output) if args.output else validation_receipt_path(Path(args.management_root), args.run_id)
+    management_root = Path(args.management_root).expanduser() if args.management_root else default_management_root()
+    output = Path(args.output) if args.output else validation_receipt_path(management_root, args.run_id)
     try:
         config = load_instances_config(
             args.config,
             run_id=args.run_id,
-            management_root=Path(args.management_root),
+            management_root=management_root,
             require_validation_receipt=False,
         )
         receipt = write_validation_receipt(config, output, command=" ".join(sys.argv))
@@ -603,7 +614,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     validate = subparsers.add_parser("validate", help="validate instances.yaml and write validation receipt")
     validate.add_argument("--config", default=None, help="path to instances.yaml; default: HERMES_A2A_INSTANCES")
     validate.add_argument("--run-id", required=True, help="M17b run id YYYYMMDDTHHMMSSZ-<6 hex>")
-    validate.add_argument("--management-root", default=str(MANAGEMENT_ROOT), help="management workspace root")
+    validate.add_argument("--management-root", default=None, help="management workspace root; default: HERMES_A2A_MANAGEMENT_ROOT or current directory")
     validate.add_argument("--output", default=None, help="validation receipt path")
     validate.set_defaults(func=_validate_cli)
     args = parser.parse_args(argv)

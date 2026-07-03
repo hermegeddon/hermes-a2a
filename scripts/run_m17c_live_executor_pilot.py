@@ -7,6 +7,7 @@ import argparse
 import asyncio
 import hashlib
 import json
+import os
 import secrets
 import socket
 import subprocess
@@ -24,7 +25,7 @@ from hermes_a2a.serve import wait_for_tcp
 from run_m17b_triad_pilot import artifact_entry, listener_assertions, run_command, ss_snapshot, write_json, write_manifest
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_MANAGEMENT_ROOT = Path("/home/openclaw/workspace/hermes-a2a")
+DEFAULT_MANAGEMENT_ROOT = Path(os.environ.get("HERMES_A2A_MANAGEMENT_ROOT", ROOT))
 A2A_HEADERS = {"A2A-Version": "1.0"}
 
 

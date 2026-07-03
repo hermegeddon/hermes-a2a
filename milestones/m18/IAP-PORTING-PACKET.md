@@ -41,13 +41,13 @@ This packet summarizes local decisions that may later be proposed to the IAP rep
 - `milestones/m7/M7-SPEC-BASELINE.md`
 - `milestones/m16/CONFORMANCE-SYNTHESIS.md`
 - `milestones/m17a/M17A-SYNTHESIS.md`
-- `/home/openclaw/workspace/hermes-a2a/milestones/m17b/M17B-SYNTHETIC-TRIAD-SYNTHESIS.md`
-- `/home/openclaw/workspace/hermes-a2a/milestones/m17c/M17C-LIVE-EXECUTOR-SYNTHESIS.md`
-- `/home/openclaw/workspace/hermes-a2a/milestones/m17d/M17D-LOCAL-SERVICE-SYNTHESIS.md`
-- `/home/openclaw/workspace/hermes-a2a/milestones/m17e/M17E-SYNTHESIS.md`
+- `<management-root>/milestones/m17b/M17B-SYNTHETIC-TRIAD-SYNTHESIS.md`
+- `<management-root>/milestones/m17c/M17C-LIVE-EXECUTOR-SYNTHESIS.md`
+- `<management-root>/milestones/m17d/M17D-LOCAL-SERVICE-SYNTHESIS.md`
+- `<management-root>/milestones/m17e/M17E-SYNTHESIS.md`
 - `docs/operator.md`
 - `docs/developer.md`
 
 ## Non-action
 
-No files under `/home/openclaw/dev/hermes-agent-interop-profile` were modified.
+No files under `<local-iap-workspace>` were modified.

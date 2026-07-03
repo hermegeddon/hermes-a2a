@@ -61,13 +61,13 @@ def test_cli_receipts_show_projection_scans(tmp_path: Path, capsys) -> None:  # 
 
     receipt_dir = tmp_path / "receipts"
     receipt_dir.mkdir()
-    (receipt_dir / "receipt-safe.json").write_text(json.dumps({"schema": "x", "payload_sha256": "0" * 64, "note": "/home/openclaw/.hermes/private"}), encoding="utf-8")
+    (receipt_dir / "receipt-safe.json").write_text(json.dumps({"schema": "x", "payload_sha256": "0" * 64, "note": "/home/example/.hermes/private"}), encoding="utf-8")
 
     assert a2a_command(parse_cli(["receipts", "show", "receipt-safe.json", "--receipt-dir", str(receipt_dir)])) == 0
     out = capsys.readouterr().out
 
     assert "projection_refused" in out
-    assert "/home/openclaw" not in out
+    assert "/home/example" not in out
 
 
 def test_cli_card_show_uses_roster_without_writes(tmp_path: Path, capsys) -> None:  # type: ignore[no-untyped-def]

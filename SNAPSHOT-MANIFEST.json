@@ -1,23 +1,5 @@
 {
-  "copied": [
-    ".gitignore",
-    "PLAN.md",
-    "README.md",
-    "pyproject.toml",
-    "uv.lock",
-    "src",
-    "tests",
-    "scripts",
-    "docs",
-    "spec",
-    "milestones/m7",
-    "milestones/m16",
-    "milestones/m17a",
-    "milestones/m18",
-    "milestones/final",
-    "docs/hermes-stuff-submodule.md"
-  ],
-  "destination": "/home/openclaw/dev/hermes-a2a",
+  "file_count": 118,
   "files": [
     {
       "bytes": 239,
@@ -25,34 +7,44 @@
       "sha256": "7c3fa685dc02e5e5c3c6b5325828a99b51eb6a86071e3e446abe658697774dce"
     },
     {
-      "bytes": 42733,
+      "bytes": 11357,
+      "path": "LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "bytes": 42659,
       "path": "PLAN.md",
-      "sha256": "5fab0228398a335806c27426172653c374852da145280ef159820fcd863364d1"
+      "sha256": "f3f92137a767ee2e1475cb380fdeb9056254391d0a8fb96c565387a51adc49a7"
     },
     {
-      "bytes": 1895,
+      "bytes": 4151,
       "path": "README.md",
-      "sha256": "826658dda2c0c169d537fd80ffc7a695af307603f8832920dfdd47525e66078f"
+      "sha256": "082ec528701e1065a4fa56b0119778e5d9fd1c4cfefe67a3306088323510eba6"
     },
     {
-      "bytes": 15533,
-      "path": "SNAPSHOT-MANIFEST.json",
-      "sha256": "9ed59c26a5549fb11be4c83da5438f64cf6a9927c8698da6909dba1a6770b467"
-    },
-    {
-      "bytes": 2595,
+      "bytes": 6255,
       "path": "docs/developer.md",
-      "sha256": "a91562afe4d2eb13f6fb26212c4bd18f180762ac095899917f011e974b87b4cc"
+      "sha256": "b7a91b95146fb6e7a55212e054591f73eb40fe4cc3487b608cdd2be96d60e475"
     },
     {
-      "bytes": 2176,
+      "bytes": 2270,
       "path": "docs/hermes-stuff-submodule.md",
-      "sha256": "6309d3998aea71cb1fb1966a28722aa8aa3e6f2abb7196944868edf92cf239fb"
+      "sha256": "be3593306c03865fa2bf59bac857ff1bed9669d63e4d1a4f4e0a739e74750faf"
     },
     {
-      "bytes": 2196,
+      "bytes": 7603,
       "path": "docs/operator.md",
-      "sha256": "c5e0e72effc75daf42fc893121dd398b16fd79de937bcf42f4e01d71a983c32b"
+      "sha256": "10acbc2b076dfd3466b1995ef3113e7c1c486fc08ff66dfc34c9c3922ff359db"
+    },
+    {
+      "bytes": 8392,
+      "path": "docs/plugin-wrapper-evidence.md",
+      "sha256": "e8ca9ab2b3ec7b25c09197c46a41c587ea99b855e73317f6a23583c1d0f4f79b"
+    },
+    {
+      "bytes": 10487,
+      "path": "docs/plugin.md",
+      "sha256": "cf96762e59b5b5139860bc415864cb3467081ee6a0e921dcc98e768e0635d488"
     },
     {
       "bytes": 2329,
@@ -70,14 +62,14 @@
       "sha256": "337ebc46f9abe665383522b5b9f797590c00f202f7f8345a690ed74073ab442e"
     },
     {
-      "bytes": 63833,
+      "bytes": 63709,
       "path": "milestones/m16/CONFORMANCE-MATRIX-FINAL.json",
-      "sha256": "fb40d0038bb659dfe9ad4a18ba2a21aaac65837ab96cc47ae8496238bf996020"
+      "sha256": "226b4b95af6fdac36fbdc56021591fee9cdc258b94e2a0df2726d130f5b3b46a"
     },
     {
       "bytes": 606,
       "path": "milestones/m16/CONFORMANCE-SYNTHESIS.md",
-      "sha256": "82ff8628e9380ea2066c77caec9495976ad5b018e2af94d5b81a855cd46a42e9"
+      "sha256": "12636377fe684b9bc2164b1a908a13f4c8c49239f03b77d8ba04b1d68096889f"
     },
     {
       "bytes": 332,
@@ -162,12 +154,12 @@
     {
       "bytes": 2425,
       "path": "milestones/m16/validation-receipt.json",
-      "sha256": "f5d861f0c98b9573ddc943069bb44356f7bfc4a3f1db8e5f5b433b6a46df56e1"
+      "sha256": "87585c8a42c1d758d7aec7359911a8e490d2e27e8400d8c214ad8eff64cc309d"
     },
     {
       "bytes": 748,
       "path": "milestones/m17a/M17A-SYNTHESIS.md",
-      "sha256": "8ea8676275ea712cccab2de93feb889a76f325f31d481bd1641cb50e3c83c9f8"
+      "sha256": "cef20aad8499c30135ee019c23f70bd87ee2a5cc878bf16287bb401c7b5e1842"
     },
     {
       "bytes": 332,
@@ -192,32 +184,32 @@
     {
       "bytes": 803,
       "path": "milestones/m17a/validation-receipt.json",
-      "sha256": "c7101458eaee3b9db7571ef3c0dfda335988376c98a7bbb70734fc15cac34470"
+      "sha256": "b481b1d7014366ff57a2e3c514c1cc70f069c4ceb367960dcbb77a71a296d039"
     },
     {
-      "bytes": 1388,
+      "bytes": 2907,
       "path": "milestones/m18/IAP-PORTING-PACKET.md",
-      "sha256": "61941d97ecfe76b449037592cf89aeb2e54fa0f771ee55185ef70a532c29f9db"
+      "sha256": "6a96f0c085ff9d78377d9f04811ef51366401e95570a5c5f1e6632cd63ee3094"
     },
     {
-      "bytes": 519,
+      "bytes": 1230,
       "path": "milestones/m18/M18-SYNTHESIS.md",
-      "sha256": "2c937c3b956ca13fc973419b6f0de12e35705993cd244cd18ca6a45356150ef5"
+      "sha256": "a84289a50ae06b6b32977cc7f4351c775ed6c134ce992aade0b0a43480bb2abc"
     },
     {
-      "bytes": 1719,
+      "bytes": 3057,
       "path": "milestones/m18/RELEASE-READINESS.md",
-      "sha256": "e3ac6b4df10247015d1e8b1540f7597ca30ef4e8735e78af325fe8baebf489cf"
+      "sha256": "72ffcbad255c72b35d56870ed8fa9027b7f987901cf0c3c72fa77ff2e8044577"
     },
     {
-      "bytes": 574,
+      "bytes": 696,
       "path": "milestones/m18/artifact-manifest.json",
-      "sha256": "12536256f3ae853ed3c217af5d9c2f86732f56b140fa83047a9607d72e5c2978"
+      "sha256": "8b1c2ae177c56496c297ea7989002b036e5c1d317a317ff2d048a2e7133bc18c"
     },
     {
-      "bytes": 5186,
+      "bytes": 1034,
       "path": "milestones/m18/final-hygiene.json",
-      "sha256": "741d33c801a3784ec5dada0395c6e89f74b5b2c1a8b9155fefa44ab544201e50"
+      "sha256": "a0d3d791af26444ae1fa09f904591d543c415226fc13364550ef2391f583ef08"
     },
     {
       "bytes": 4345,
@@ -260,9 +252,24 @@
       "sha256": "9910d4a9ddfcbd22d089622a739d9d9e4424d9761a31afd1439eb10a0ef18344"
     },
     {
-      "bytes": 559,
+      "bytes": 323,
+      "path": "plugin/__init__.py",
+      "sha256": "55ddac67d602678d242e8c8290d2572b853d7a0c9a30144d5683cf1dd302c55d"
+    },
+    {
+      "bytes": 346,
+      "path": "plugin/plugin.yaml",
+      "sha256": "8c82c72818de6c6f0718c725c96b024d634427a6adc0c511ce1fb83acf352d0a"
+    },
+    {
+      "bytes": 819,
       "path": "pyproject.toml",
-      "sha256": "0fc428d8b2dd768bd2d1acc38e216c26fa9be199ba3c8e5e576bea8a5e806363"
+      "sha256": "d32f6e4613d23e583eb5be48332803e73b90d735c48d93c52718787733c99564"
+    },
+    {
+      "bytes": 2162,
+      "path": "scripts/probe_profile_launcher.py",
+      "sha256": "9c28d4406400a62e9e1f2896eb92c266d096d61d2a0823869959a5036d2ea278"
     },
     {
       "bytes": 3361,
@@ -270,9 +277,29 @@
       "sha256": "637e081e312e972120c0bd8bc925989f2e5bfb49f658ca6bef07f261515308f8"
     },
     {
-      "bytes": 10885,
+      "bytes": 28406,
+      "path": "scripts/run_m17b_triad_pilot.py",
+      "sha256": "35ca475ec73f524e60079b1b44629ac46c06faa430b50324f112ad0574bda1c7"
+    },
+    {
+      "bytes": 13877,
+      "path": "scripts/run_m17c_live_executor_pilot.py",
+      "sha256": "aa9bd8d0e7d3a301e1c3a62322c4a56b954558c128bb875802c00d5f99169d14"
+    },
+    {
+      "bytes": 21356,
+      "path": "scripts/run_m17d_service_rollout.py",
+      "sha256": "25eb0f95f1ac58c2e7066272a100f436f63043a1c9b6237ff8ed22dc6b9fe58d"
+    },
+    {
+      "bytes": 21498,
+      "path": "scripts/run_m17e_lan_pilot.py",
+      "sha256": "2706d1a9cf8899f4d74ee6e69d8f4c39c7acad0be21af4585ef11b0ff191628b"
+    },
+    {
+      "bytes": 10884,
       "path": "scripts/validate_local_conformance.py",
-      "sha256": "0348229511eaae269f4e41a1848527655d89742eba6f16a79247e8cda093d964"
+      "sha256": "b895b66b5e4a1d5c45eee9a2f71bbc55f99dfc0559cf455800ffd9399d47029c"
     },
     {
       "bytes": 18747,
@@ -330,9 +357,9 @@
       "sha256": "6a598f3bf5b34d3ab5d9eb11d0b2603a7a3177fdb0b1e4380992ed4ddedac8eb"
     },
     {
-      "bytes": 2064,
+      "bytes": 2046,
       "path": "spec/upstream/source-bundle-manifest.json",
-      "sha256": "880a0c0358a2d47f04d419bdd805619ec1d0d2630f375defbb4e07a34e88f74c"
+      "sha256": "3f7395c8725cdc23362591274bb2a941159dc592c588a0e0b331fd366eed8b7e"
     },
     {
       "bytes": 152715,
@@ -345,14 +372,19 @@
       "sha256": "9cbb441da363f41e89de66285369555ab95c169140ecb70666cb81873562f2a8"
     },
     {
-      "bytes": 2044,
+      "bytes": 2273,
       "path": "src/hermes_a2a/agent_card.py",
-      "sha256": "35f2ce78fc9db9489d576c310d59a9b80c3c24b25c7b3a1e513767dd7ccf27cb"
+      "sha256": "a44206496d1b7700c1841ec6bb748cbb019f2675ba0a9dc7687556f9b6c31623"
     },
     {
-      "bytes": 1805,
+      "bytes": 4880,
       "path": "src/hermes_a2a/app.py",
-      "sha256": "22eadb790ab3fa4753c832e8447afd694f1371fa803a02b298fd6f8cf1e20874"
+      "sha256": "d38bded69fb235e71b0e87e2275e98ea36c7d7953e9497451aa6c123064aa09d"
+    },
+    {
+      "bytes": 26765,
+      "path": "src/hermes_a2a/config.py",
+      "sha256": "59cce9607c45a9302a49a255d6f155da10dd13baebf37f62a304c74c1d4c20ea"
     },
     {
       "bytes": 1568,
@@ -365,9 +397,9 @@
       "sha256": "e5930dea83a4a621eb75e473d544c59a86d440d91c73dcb3103f5b7726f268b1"
     },
     {
-      "bytes": 1748,
+      "bytes": 2431,
       "path": "src/hermes_a2a/grpc_server.py",
-      "sha256": "fd17e7f8118ce1009e462c19c1aab5f100fe201b8a72e1ef95c4ec4569cdc343"
+      "sha256": "fe99ea87e602dccf5c24873bc1ffd7a7786a693be6698cc0c3fc1474bd298ce0"
     },
     {
       "bytes": 1284,
@@ -375,14 +407,19 @@
       "sha256": "745d30557a5778b34c1d9e78278c492f7b32fedbb470df804f0cace09313e043"
     },
     {
+      "bytes": 9280,
+      "path": "src/hermes_a2a/live_executor.py",
+      "sha256": "9c9b0cf0f533505e3bce01e88efe2f9027a3d338589ad65016210de1b23baef7"
+    },
+    {
       "bytes": 1136,
       "path": "src/hermes_a2a/policy.py",
       "sha256": "acb04bd5037f94c3e59952a22a4e4e3c55592de6d86a91eb27f5a06113a77b4d"
     },
     {
-      "bytes": 3047,
+      "bytes": 3069,
       "path": "src/hermes_a2a/projection.py",
-      "sha256": "29f9e5df7cb44e736e3eb6b0d23b48063aa91e26cfb7f1f6f02e85ce0c3342ad"
+      "sha256": "b190720149f4a279d9268e0a11c49afce38d7cb526444ad75851c759f9e8c287"
     },
     {
       "bytes": 2230,
@@ -390,9 +427,114 @@
       "sha256": "5f90c4cd776df64cb657f9f26e985bf27ed91e3a3266f2fa8ba2528192c9b0cb"
     },
     {
-      "bytes": 3617,
+      "bytes": 11288,
+      "path": "src/hermes_a2a/serve.py",
+      "sha256": "bc4714de3b339b42186f927639b2a7a981e286dc1051cd3a4e9c116105c85bed"
+    },
+    {
+      "bytes": 6207,
+      "path": "src/hermes_a2a/service_runner.py",
+      "sha256": "824ae5b27c3d3ed614b14cfbbf17147015d5da0e8ae52ab54f88dd4d9b95a421"
+    },
+    {
+      "bytes": 1475,
+      "path": "src/hermes_a2a_plugin/__init__.py",
+      "sha256": "08ab85a708fa3083b4d636935b8afca74dd4fa5aeed8fad57316a9a432433142"
+    },
+    {
+      "bytes": 17138,
+      "path": "src/hermes_a2a_plugin/cli.py",
+      "sha256": "55fdc36bd267ccbafffbe38bffad48c4acaf10512e856746b0d9a32929b1d1a3"
+    },
+    {
+      "bytes": 8716,
+      "path": "src/hermes_a2a_plugin/gates.py",
+      "sha256": "bfe79a84d04c189c36c98515190dc2c925ecd0f639784510b168fc2add52944e"
+    },
+    {
+      "bytes": 3959,
+      "path": "src/hermes_a2a_plugin/skills/operator/SKILL.md",
+      "sha256": "5aab31023fc1a97f620f822fd776bb6ef044d4acc492b1c1c7d6c6e2d46147ca"
+    },
+    {
+      "bytes": 6988,
+      "path": "src/hermes_a2a_plugin/tools.py",
+      "sha256": "5aef23f1c117c153f78a296785691f513391501ba9915b2244e98002bef7c1f1"
+    },
+    {
+      "bytes": 5277,
+      "path": "src/hermes_a2a_plugin/views.py",
+      "sha256": "f2af1f5bcd90fc67aebbf7581191a33fa8441cbf6b92b752e790bb92729ca43c"
+    },
+    {
+      "bytes": 35,
+      "path": "tests/plugin/__init__.py",
+      "sha256": "bb09269b9cd0211a35428939e1e2fe46b947ead631d7a1eaa141099039a7d328"
+    },
+    {
+      "bytes": 3185,
+      "path": "tests/plugin/conftest.py",
+      "sha256": "0ada82284a27cadab3fe5a0c70b9d5f63f4092480773b1779ecfb10f0ac34dd4"
+    },
+    {
+      "bytes": 3423,
+      "path": "tests/plugin/test_cli.py",
+      "sha256": "791704bf7fbee3d5cf72b2efaae4509699fb2ce7a604699b4aedb3334a9449b8"
+    },
+    {
+      "bytes": 919,
+      "path": "tests/plugin/test_docs_and_packaging.py",
+      "sha256": "ac1e82a50c9582b091c3dbcf88d8c3357a866cbce5e3b2f979ba936a102f76b8"
+    },
+    {
+      "bytes": 7444,
+      "path": "tests/plugin/test_gates.py",
+      "sha256": "2826f479259bb02c311ac96a9395388f8e63e3ae060699b5067281e4fce41a5e"
+    },
+    {
+      "bytes": 8275,
+      "path": "tests/plugin/test_live_delegation_seam.py",
+      "sha256": "d942bc85bc2b45d838172927f484520cc7845360553d31f1a3bd39616b6a4932"
+    },
+    {
+      "bytes": 1721,
+      "path": "tests/plugin/test_peer_task_dry_run.py",
+      "sha256": "dc5b3bf1b7b41e4678b3b12d79914401a72ae306016646ff40854f5e56682f28"
+    },
+    {
+      "bytes": 607,
+      "path": "tests/plugin/test_register_api_allowlist.py",
+      "sha256": "650bc729aaeaaa22f7a286961500898eb5610ef25ca164075eacebcc4330699a"
+    },
+    {
+      "bytes": 1891,
+      "path": "tests/plugin/test_register_side_effect_free.py",
+      "sha256": "06cfe10a02b9b7a2b6382c8b32233a1f0e5209910d5747f37cd1eda6c6e733b0"
+    },
+    {
+      "bytes": 1755,
+      "path": "tests/plugin/test_status_tool.py",
+      "sha256": "a429147f6121c17d9e27d259154a645136e08528c3bce48cb4959b50bca260fe"
+    },
+    {
+      "bytes": 3930,
+      "path": "tests/plugin/test_tool_factory.py",
+      "sha256": "d60c440c8c7543cb345f7c1543614903974c62b947f9cb4dae60cfa7baf0f02b"
+    },
+    {
+      "bytes": 649,
+      "path": "tests/plugin/test_tool_schemas.py",
+      "sha256": "1b52d22786eb37b6a986a10d82c4296d78f7d66c03e0a1196d90e02253e26302"
+    },
+    {
+      "bytes": 1840,
+      "path": "tests/plugin/test_validate_config_tool.py",
+      "sha256": "168253d12f5d8a1cc5a4b38ea24272219fe68eab44cb50174b1c641b6e6489b1"
+    },
+    {
+      "bytes": 3616,
       "path": "tests/test_agent_card_and_bindings.py",
-      "sha256": "648d4974b43a36439c0de83aa0c61aada7a1a75d1a579928fe1c6ab2ef2ed947"
+      "sha256": "c37c058aa7c5cc1c064061d4c7d3836d8f06f0d5fa25584c2291a8dd6e64c4ed"
     },
     {
       "bytes": 687,
@@ -400,14 +542,29 @@
       "sha256": "720ff05b286f292b9d02882edf4756d78fb1895edf43d41fdb2f953ab995bdda"
     },
     {
+      "bytes": 3485,
+      "path": "tests/test_instance_config.py",
+      "sha256": "f23ce5a758686a9facc38343da38c2a341a863eb2afa1a6881bede9697898061"
+    },
+    {
+      "bytes": 3973,
+      "path": "tests/test_live_executor_contract.py",
+      "sha256": "d6ae2b4a831cdf7eb2ce71f3edfbbef36a29d5687db9dd13b9578f49536668a6"
+    },
+    {
+      "bytes": 859,
+      "path": "tests/test_m17e_lan_pilot.py",
+      "sha256": "471a78248ff6e850e643eeea50bd2983be70fe9e4b9121cc8e151c901c532e3c"
+    },
+    {
       "bytes": 1031,
       "path": "tests/test_m7_artifacts.py",
       "sha256": "2be42a0f0b6578262a11c95d81dd62f57f3aa65258ed734a23b62a4c9b1742da"
     },
     {
-      "bytes": 1359,
+      "bytes": 1358,
       "path": "tests/test_projection_receipts.py",
-      "sha256": "2f62fd78fd5dc0d703845182c01ecddeefc31f7220072d037a50ac04e03dc286"
+      "sha256": "be6d88471d979613dd232a8d467b8599ec042612ead91be2d32ace161b38ba6b"
     },
     {
       "bytes": 575,
@@ -415,23 +572,43 @@
       "sha256": "560588b8407e6212e9b1b7027261b9b35508a397442934bc41daccf7a1f82c24"
     },
     {
+      "bytes": 3276,
+      "path": "tests/test_sidecar_runner.py",
+      "sha256": "a4de2af78ad2c39004f9b117753f1833ba5c7743e29e2088f34cdeaca589a808"
+    },
+    {
       "bytes": 3528,
       "path": "tests/test_streaming_push_grpc.py",
       "sha256": "235b4577e623b66a7fc299e20e2b8baff41c711591b875abe0c2c7a5862fcbf4"
     },
     {
-      "bytes": 174254,
+      "bytes": 1393,
+      "path": "tests/test_triad_sidecars.py",
+      "sha256": "7cdebf3142694d617d940fb2eeae0f18d63180a58524a2c16ab0824c68f489bb"
+    },
+    {
+      "bytes": 190060,
       "path": "uv.lock",
-      "sha256": "5f8027b4a5121131aaff69c7b4f4f2abb613caedb4af3207c460bf29f67d4aff"
+      "sha256": "2f5f7edd4b060b5d32f85a1540097630f946d221a1149f87527ca871420a3cb7"
     }
   ],
-  "generated_at": "2026-06-30T19:28:50.807772Z",
-  "refreshed_after_prune_at": "2026-06-30T19:30:38.782819Z",
-  "refreshed_after_workspace_split_doc_at": "2026-06-30T19:38:41.114641Z",
-  "refreshed_at": "2026-06-30T19:29:38.788897Z",
-  "skipped": [
-    "src/hermes_a2a/__pycache__",
-    "tests/__pycache__"
-  ],
-  "source": "/home/openclaw/workspace/hermes-a2a"
+  "generated_at": "2026-07-03T15:27:12.341844Z",
+  "git": {
+    "branch": "feat/hermes-plugin-wrapper",
+    "head_before_hygiene_commit": "ec2e732e861ae38531a89f322f24ab888e8cc78c"
+  },
+  "historical_management_root": "<management-root>",
+  "root": "<repo-root>",
+  "sanitization": {
+    "machine_specific_paths": "removed from current tracked publication surface",
+    "path_placeholders": [
+      "<management-root>",
+      "<repo-root>",
+      "<standalone-repo>",
+      "<local-iap-workspace>"
+    ],
+    "personal_operator_identifiers": "neutralized in public-facing plan/test/plugin metadata"
+  },
+  "schema": "hermes-a2a/repository-snapshot-manifest/v2",
+  "scope": "tracked git files plus newly added root LICENSE; excludes SNAPSHOT-MANIFEST.json self-hash by design"
 }

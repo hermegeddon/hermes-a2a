@@ -144,7 +144,7 @@ def projection_evidence() -> dict[str, Any]:
     safe.parts.append(a2a_pb2.Part(text="safe projection text", media_type="text/plain"))
     assert_safe_peer_visible(safe, surface="validator-safe")
     unsafe = a2a_pb2.Message(role=a2a_pb2.ROLE_AGENT)
-    unsafe.parts.append(a2a_pb2.Part(text="/home/openclaw/.hermes MCP sk-test", media_type="text/plain"))
+    unsafe.parts.append(a2a_pb2.Part(text="/home/example/.hermes MCP sk-test", media_type="text/plain"))
     try:
         assert_safe_peer_visible(unsafe, surface="validator-unsafe")
     except ProjectionViolation as exc:

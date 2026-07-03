@@ -8,6 +8,7 @@ import asyncio
 import copy
 import hashlib
 import json
+import os
 import secrets
 import shutil
 import socket
@@ -38,7 +39,7 @@ from hermes_a2a.projection import scan_peer_visible
 from hermes_a2a.serve import SidecarEndpoint, SidecarGroup
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_MANAGEMENT_ROOT = Path("/home/openclaw/workspace/hermes-a2a")
+DEFAULT_MANAGEMENT_ROOT = Path(os.environ.get("HERMES_A2A_MANAGEMENT_ROOT", ROOT))
 A2A_HEADERS = {"A2A-Version": "1.0"}
 
 

@@ -16,7 +16,7 @@ import httpx
 import uvicorn
 
 from hermes_a2a.app import build_app
-from hermes_a2a.config import InstanceConfig, InstancesConfig, load_instances_config
+from hermes_a2a.config import InstanceConfig, InstancesConfig, default_management_root, load_instances_config
 from hermes_a2a.grpc_server import LocalGrpcServer
 from hermes_a2a.live_executor import HermesProfileExecutor, LiveExecutorLimits
 
@@ -228,7 +228,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--config", default=None, help="instances.yaml; default: HERMES_A2A_INSTANCES")
     parser.add_argument("--run-id", required=True, help="M17b run id used in validation receipt")
     parser.add_argument("--instance", required=True, help="conceptual_agent_id to serve")
-    parser.add_argument("--management-root", default="/home/openclaw/workspace/hermes-a2a")
+    parser.add_argument("--management-root", default=None, help="management workspace root; default: HERMES_A2A_MANAGEMENT_ROOT or current directory")
     parser.add_argument(
         "--test-token",
         default=None,
@@ -255,7 +255,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     config = load_instances_config(
         args.config,
         run_id=args.run_id,
-        management_root=Path(args.management_root),
+        management_root=Path(args.management_root).expanduser() if args.management_root else default_management_root(),
         require_validation_receipt=True,
     )
     asyncio.run(_serve_until_interrupted(config, instance_id=args.instance, token=token, executor_factory=executor_factory))

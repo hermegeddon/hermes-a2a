@@ -41,6 +41,10 @@ Model-callable plugin tools are read-only and projection-scanned. CLI receipt wr
 
 See `docs/plugin.md` and the bundled `hermes-a2a:operator` skill for the full gate model, install/enablement notes, rollback, and standing non-authorizations. This implementation does not enable the plugin, install services, restart services, run live profile execution, expose LAN/public listeners, or publish the package.
 
+## Management root
+
+Commands that write run artifacts use the explicit `--management-root` value when present. Otherwise package CLIs use `HERMES_A2A_MANAGEMENT_ROOT` or the current directory, while repo-local pilot scripts use `HERMES_A2A_MANAGEMENT_ROOT` or the repository root. Examples below use `<management-root>` for approval and receipt paths.
+
 ## Run conformance evidence
 
 ```bash
@@ -75,13 +79,13 @@ uv run --extra dev python scripts/run_m17b_triad_pilot.py --overwrite-config
 This is still synthetic-only. It writes or refreshes the management roster at:
 
 ```text
-/home/openclaw/workspace/hermes-a2a/instances/instances.yaml
+<management-root>/instances/instances.yaml
 ```
 
 Then it validates the roster, starts three foreground loopback sidecars with in-memory `test_ephemeral` auth, exercises JSON-RPC, REST, and gRPC, captures `ss -ltnp` bind/teardown evidence, stops every sidecar, and writes per-run evidence under:
 
 ```text
-/home/openclaw/workspace/hermes-a2a/milestones/m17b/runs/<run_id>/
+<management-root>/milestones/m17b/runs/<run_id>/
 ```
 
 The M17b runner must not be used for live Hermes profile execution, host inventory, service installation/restart, LAN/Tailscale exposure, work data, credentials, or raw MCP/tool proxying. Those remain M17c+ / M17d+ / M17e gated actions.
@@ -90,21 +94,21 @@ The M17b runner must not be used for live Hermes profile execution, host invento
 
 ```bash
 uv run --extra dev python scripts/run_m17c_live_executor_pilot.py \
-  --approval-receipt /home/openclaw/workspace/hermes-a2a/milestones/m17c/<approval>.yaml \
+  --approval-receipt <management-root>/milestones/m17c/<approval>.yaml \
   --profile default
 ```
 
 The pilot first proves the exact noninteractive Hermes launcher for the approved profile, then runs one loopback sidecar with `HermesProfileExecutor`. Raw stdout/stderr, profile paths, hidden prompts, and stack traces are private receipt data only; peer-visible A2A output is bounded and projected. It writes per-run evidence under:
 
 ```text
-/home/openclaw/workspace/hermes-a2a/milestones/m17c/runs/<run_id>/
+<management-root>/milestones/m17c/runs/<run_id>/
 ```
 
 ## Run the M17d user-service rollout
 
 ```bash
 uv run --extra dev python scripts/run_m17d_service_rollout.py \
-  --approval-receipt /home/openclaw/workspace/hermes-a2a/milestones/m17d/<approval>.yaml
+  --approval-receipt <management-root>/milestones/m17d/<approval>.yaml
 ```
 
 The rollout installs/reloads only the finite `hermes-a2a-*` user units named in the script, uses environment files under `~/.config/hermes-a2a/m17d/`, binds loopback-only ports `18731`–`18733` and `18741`–`18743`, captures `systemctl --user` state, PID/command lines, focused logs, and `ss -ltnp` evidence, and smokes Agent Card, JSON-RPC, REST, and gRPC. Rollback:
@@ -121,10 +125,10 @@ systemctl --user daemon-reload
 
 ```bash
 uv run --extra dev python scripts/run_m17e_lan_pilot.py \
-  --approval-receipt /home/openclaw/workspace/hermes-a2a/milestones/m17e/<approval>.yaml \
-  --host 192.168.1.3 --http-port 18751 \
+  --approval-receipt <management-root>/milestones/m17e/<approval>.yaml \
+  --host <approved-lan-ip> --http-port 18751 \
   --negative-ssh-host <user@unlisted-lan-host> \
-  --remote-test-approval-receipt /home/openclaw/workspace/hermes-a2a/milestones/m17e/<remote-test-approval>.yaml
+  --remote-test-approval-receipt <management-root>/milestones/m17e/<remote-test-approval>.yaml
 ```
 
 The LAN pilot is synthetic-only by default and starts a foreground HTTP sidecar on the exact named local-network address, never wildcard. It fetches the Agent Card and completes a synthetic JSON-RPC task through that address, denies a non-allowed peer, captures bind/teardown evidence, and stops the listener. If `--negative-ssh-host` is provided, the script SSHes to that unlisted host with a run-local known-hosts file and runs only a TCP/HTTP reachability probe against the pilot listener. If no negative reachability proof from an unlisted host (or equivalent firewall/ACL deny receipt) is provided, the script writes a `blocked` M17e receipt rather than claiming LAN readiness.

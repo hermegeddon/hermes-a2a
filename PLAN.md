@@ -1,7 +1,7 @@
 # hermes-a2a Plan — upstream A2A implementation roadmap
 
 Updated: `2026-06-30T17:13:15Z`
-Workspace: `/home/openclaw/workspace/hermes-a2a`
+Workspace: `<management-root>`
 Review baseline: `reviews/20260630T165925Z-plan-a2a-v1-multi-model-review`
 Current status baseline: M0–M6 local pilot artifacts are complete, but the implementation is **not yet canonical upstream A2A-compatible**.
 
@@ -109,7 +109,7 @@ This plan authorizes planning and future local implementation work only when sep
 - external messages/writes beyond controlled protocol tests explicitly scoped later;
 - raw MCP publication, raw all-tools proxying, or arbitrary shell proxying;
 - protected work data, work credentials, work-paid compute, Windows ACL mutation, or work-protected artifacts;
-- mutation of `/home/openclaw/dev/hermes-agent-interop-profile`, Hermes Stuff submodules, remotes, or unrelated repositories;
+- mutation of `<local-iap-workspace>`, Hermes Stuff submodules, remotes, or unrelated repositories;
 - live profile/plugin/skill/MCP enablement, installation, configuration mutation, or restart without a separately approved exact-scope task.
 
 ## Implementation architecture
@@ -117,7 +117,7 @@ This plan authorizes planning and future local implementation work only when sep
 Preferred future implementation layout, unless M7/M8 establish a different package scaffold from the pinned SDK/tooling decision:
 
 ```text
-/home/openclaw/workspace/hermes-a2a/
+<management-root>/
   PLAN.md
   spec/
     upstream/
@@ -432,7 +432,7 @@ Goal: run a read-only LAN/local-network status/capability pilot only after a sep
 Entry criteria:
 
 - M17a passes.
-- Janusz approves exact named hosts/profiles, ports, bindings, credentials posture, task classes, data classes, and allowed duration.
+- The operator approves exact named hosts/profiles, ports, bindings, credentials posture, task classes, data classes, and allowed duration.
 - Public tunnel, wildcard listener, public Agent Card publication, work data, credentials, and raw tool/MCP proxy remain out of scope unless separately approved.
 
 Work:
@@ -532,13 +532,13 @@ This definition of done does **not** imply production readiness, public release 
 
 ## Relationship to existing IAP work
 
-Use the existing IAP repository as the policy/spec source of gravity for Janusz-specific safety/profile policy:
+Use the existing IAP repository as the policy/spec source of gravity for operator-specific safety/profile policy:
 
 ```text
-/home/openclaw/dev/hermes-agent-interop-profile
+<local-iap-workspace>
 ```
 
-This workspace remains the practical implementation/proof lane. If durable A2A/IAP extension patterns emerge, produce local porting proposals/receipts for IAP review. Do not mutate the IAP repo, Hermes Stuff submodule, remote/public surfaces, or live Hermes profile/service state from this workspace unless Janusz separately approves that exact action.
+This workspace remains the practical implementation/proof lane. If durable A2A/IAP extension patterns emerge, produce local porting proposals/receipts for IAP review. Do not mutate the IAP repo, Hermes Stuff submodule, remote/public surfaces, or live Hermes profile/service state from this workspace unless the operator separately approves that exact action.
 
 ## Immediate next action
 

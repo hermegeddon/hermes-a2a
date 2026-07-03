@@ -30,7 +30,7 @@ def write_receipt(home: Path, *, operation="serve-live", instance="agent:local:h
         "instance": instance,
         "issued_at": (now - timedelta(minutes=5)).isoformat().replace("+00:00", "Z"),
         "expires_at": (now + (-timedelta(minutes=1) if expired else timedelta(minutes=5))).isoformat().replace("+00:00", "Z"),
-        "approver": "janusz",
+        "approver": "operator",
         "scope": "single-use",
     }
     path = approvals_dir(home) / f"{data['id']}.yaml"

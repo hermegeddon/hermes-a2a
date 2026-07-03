@@ -1,7 +1,7 @@
 name: hermes-a2a
 version: 0.1.0
 description: "Local-first A2A v1.0.0 plugin wrapper with Hermes safety gates and no default live exposure."
-author: "Janusz + Hermes"
+author: "Hermes A2A contributors"
 kind: standalone
 platforms:
   - linux

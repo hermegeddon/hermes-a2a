@@ -8,8 +8,8 @@ from typing import Any
 
 
 def _management_root(args: dict[str, Any]) -> Path:
-    text = args.get("management_root") or "/home/openclaw/workspace/hermes-a2a"
-    return Path(str(text)).expanduser()
+    text = args.get("management_root") or os.environ.get("HERMES_A2A_MANAGEMENT_ROOT")
+    return Path(str(text)).expanduser() if text else Path.cwd()
 
 
 def _path_from_args(args: dict[str, Any]) -> tuple[Path | None, dict[str, Any]]:

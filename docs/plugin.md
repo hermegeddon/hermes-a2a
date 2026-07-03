@@ -2,7 +2,7 @@
 
 This document is the operator-facing guide and implementation evidence ledger for the reviewed rev-2 Hermes plugin wrapper plan.
 
-Governing plan: `/home/openclaw/workspace/hermes-a2a/.hermes/plans/2026-07-03_1218-hermes-a2a-plugin-wrapper-plan.md`
+Governing plan: `<management-root>/.hermes/plans/2026-07-03_1218-hermes-a2a-plugin-wrapper-plan.md`
 
 Plan SHA-256 verified before implementation: `8edd084d6f4fc363f49ab89b99be5ea4541f4fb25c2f26612dc7c06d90af54da`.
 

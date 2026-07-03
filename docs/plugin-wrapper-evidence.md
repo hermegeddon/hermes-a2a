@@ -1,6 +1,6 @@
 # hermes-a2a plugin wrapper implementation evidence
 
-Governing plan: `/home/openclaw/workspace/hermes-a2a/.hermes/plans/2026-07-03_1218-hermes-a2a-plugin-wrapper-plan.md`
+Governing plan: `<management-root>/.hermes/plans/2026-07-03_1218-hermes-a2a-plugin-wrapper-plan.md`
 
 Verified plan SHA-256: `8edd084d6f4fc363f49ab89b99be5ea4541f4fb25c2f26612dc7c06d90af54da`.
 
@@ -27,7 +27,7 @@ This established the plugin-wrapper tests before the implementation package exis
 
 ## Focused safety evidence
 
-All commands ran in `/home/openclaw/dev/hermes-stuff/projects/hermes-a2a`.
+All commands ran in `<repo-root>`.
 
 | Command | Result |
 |---|---|

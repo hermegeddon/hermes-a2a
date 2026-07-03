@@ -18,7 +18,7 @@ Status: **local implementation complete; public release not authorized**.
 - M17b synthetic three-sidecar loopback triad passed when `scripts/run_m17b_triad_pilot.py --overwrite-config` writes a per-run management manifest and synthesis.
 - M17c one-profile live Hermes executor loopback pilot passed with an approval receipt, launcher proof, bounded output/private invocation receipts, and safe projection.
 - M17d user-level loopback sidecar service rollout passed for the finite `hermes-a2a-*` unit set, with service/PID/bind/readiness/log/smoke evidence and rollback commands.
-- M17e bounded synthetic LAN Agent Card/A2A pilot passed with exact named-address bind evidence, local positive Agent Card/JSON-RPC smoke, remote unlisted-host negative reachability proof from `janusz@mithraeum.dziurzynscy.com`, peer-denial evidence, and teardown proof.
+- M17e bounded synthetic LAN Agent Card/A2A pilot passed with exact named-address bind evidence, local positive Agent Card/JSON-RPC smoke, remote unlisted-host negative reachability proof from an approved unlisted host, peer-denial evidence, and teardown proof.
 
 ## Public release blockers / separate gates
 
@@ -30,7 +30,7 @@ A public release, PR, package publish, deployment, public Agent Card, public lis
 - Review Apache-2.0 obligations and generated-artifact notices.
 - Decide whether local Hermes/IAP extensions should be public API, private metadata, or omitted.
 - Run external SDK/client interoperability against real official examples if publishing interoperability claims.
-- Re-review M17b–M17e management artifacts before publication because they intentionally contain Janusz-local conceptual instance labels, local-network addresses, unit names, profile names, and absolute local receipt paths.
+- Re-review M17b–M17e management artifacts before publication because they intentionally contain operator-local conceptual instance labels, local-network addresses, unit names, profile names, and local receipt paths.
 
 ## Non-actions preserved
 

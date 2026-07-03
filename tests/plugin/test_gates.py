@@ -19,7 +19,7 @@ def write_receipt(home: Path, **overrides) -> Path:  # type: ignore[no-untyped-d
         "instance": "agent:local:hermes-blinky-wsl",
         "issued_at": (now - timedelta(minutes=5)).isoformat().replace("+00:00", "Z"),
         "expires_at": (now + timedelta(minutes=5)).isoformat().replace("+00:00", "Z"),
-        "approver": "janusz",
+        "approver": "operator",
         "scope": "single-use",
         "reason": "unit test",
     }
@@ -120,7 +120,7 @@ def test_gate_refuses_path_traversal_receipt_id_without_writing_marker(tmp_path:
                 "instance": "agent:local:hermes-blinky-wsl",
                 "issued_at": (now - timedelta(minutes=5)).isoformat().replace("+00:00", "Z"),
                 "expires_at": (now + timedelta(minutes=5)).isoformat().replace("+00:00", "Z"),
-                "approver": "janusz",
+                "approver": "operator",
                 "scope": "single-use",
             },
             sort_keys=False,

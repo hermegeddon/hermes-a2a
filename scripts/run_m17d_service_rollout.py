@@ -24,7 +24,7 @@ from a2a.types import a2a_pb2, a2a_pb2_grpc
 from run_m17b_triad_pilot import artifact_entry, listener_assertions, message_payload, run_command, ss_snapshot, write_json, write_manifest
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_MANAGEMENT_ROOT = Path("/home/openclaw/workspace/hermes-a2a")
+DEFAULT_MANAGEMENT_ROOT = Path(os.environ.get("HERMES_A2A_MANAGEMENT_ROOT", ROOT))
 SYSTEMD_USER_DIR = Path.home() / ".config" / "systemd" / "user"
 ENV_DIR = Path.home() / ".config" / "hermes-a2a" / "m17d"
 PYTHON = ROOT / ".venv" / "bin" / "python"

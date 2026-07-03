@@ -7,6 +7,7 @@ import argparse
 import asyncio
 import hashlib
 import json
+import os
 import secrets
 import shlex
 import socket
@@ -26,8 +27,8 @@ except ModuleNotFoundError:  # pragma: no cover - package import path used by py
     from scripts.run_m17b_triad_pilot import artifact_entry, listener_assertions, message_payload, run_command, ss_snapshot, write_json, write_manifest
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_MANAGEMENT_ROOT = Path("/home/openclaw/workspace/hermes-a2a")
-DEFAULT_LAN_HOST = "192.168.1.3"
+DEFAULT_MANAGEMENT_ROOT = Path(os.environ.get("HERMES_A2A_MANAGEMENT_ROOT", ROOT))
+DEFAULT_LAN_HOST = os.environ.get("HERMES_A2A_LAN_HOST")
 DEFAULT_HTTP_PORT = 18751
 A2A_HEADERS = {"A2A-Version": "1.0"}
 
@@ -423,7 +424,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--management-root", default=str(DEFAULT_MANAGEMENT_ROOT))
     parser.add_argument("--run-id", default=None)
     parser.add_argument("--approval-receipt", required=True)
-    parser.add_argument("--host", default=DEFAULT_LAN_HOST)
+    parser.add_argument("--host", default=DEFAULT_LAN_HOST, required=DEFAULT_LAN_HOST is None, help="LAN address to bind; default: HERMES_A2A_LAN_HOST")
     parser.add_argument("--http-port", type=int, default=DEFAULT_HTTP_PORT)
     parser.add_argument("--negative-reachability-receipt", default=None)
     parser.add_argument("--negative-ssh-host", default=None)

@@ -12,7 +12,7 @@ from typing import Any
 
 from .gates import GateResult, require_live_gate
 from .tools import project_response
-from .views import status_view, validate_config_view
+from .views import _management_root, status_view, validate_config_view
 
 
 def _emit(data: dict[str, Any], *, stream=None) -> None:  # type: ignore[no-untyped-def]
@@ -22,7 +22,7 @@ def _emit(data: dict[str, Any], *, stream=None) -> None:  # type: ignore[no-unty
 def _add_config_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--config", dest="config_path", default=None)
     parser.add_argument("--run-id", default=None)
-    parser.add_argument("--management-root", default="/home/openclaw/workspace/hermes-a2a")
+    parser.add_argument("--management-root", default=None, help="management workspace root; default: HERMES_A2A_MANAGEMENT_ROOT or current directory")
 
 
 def _add_gate_args(parser: argparse.ArgumentParser) -> None:
@@ -72,7 +72,7 @@ def register_cli(parser: argparse.ArgumentParser) -> None:
     for name in ["install", "restart", "stop"]:
         svc = service_subs.add_parser(name)
         svc.add_argument("--instance", default="local-services")
-        svc.add_argument("--management-root", default="/home/openclaw/workspace/hermes-a2a")
+        svc.add_argument("--management-root", default=None, help="management workspace root; default: HERMES_A2A_MANAGEMENT_ROOT or current directory")
         svc.add_argument("--run-id", default=None)
         _add_gate_args(svc)
 
@@ -96,7 +96,7 @@ def _load_config_for_cli(args: argparse.Namespace):  # type: ignore[no-untyped-d
     return load_instances_config(
         getattr(args, "config_path", None),
         run_id=getattr(args, "run_id"),
-        management_root=Path(getattr(args, "management_root")),
+        management_root=_management_root(_args_dict(args)),
         require_validation_receipt=False,
     )
 
@@ -117,7 +117,7 @@ def _validate(args: argparse.Namespace) -> int:
         config = _load_config_for_cli(args)
         receipt = write_validation_receipt(
             config,
-            validation_receipt_path(Path(args.management_root), args.run_id),
+            validation_receipt_path(_management_root(_args_dict(args)), args.run_id),
             command="hermes a2a validate-config --write-receipt",
         )
     except ConfigValidationError as exc:
