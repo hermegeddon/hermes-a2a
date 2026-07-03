@@ -21,6 +21,21 @@ Not authorized by this workspace:
 - IAP repository mutation;
 - protected work data, credentials, or work-paid compute.
 
+## Run a local synthetic sidecar
+
+```bash
+export HERMES_A2A_LOCAL_TEST_TOKEN="$(python -c 'import secrets; print(secrets.token_urlsafe(32))')"
+hermes a2a serve agent:local:hermes-blinky-wsl \
+  --foreground \
+  --executor synthetic \
+  --test-token-env HERMES_A2A_LOCAL_TEST_TOKEN \
+  --management-root <management-root> \
+  --config <management-root>/instances/instances.yaml \
+  --run-id <validated-run-id>
+```
+
+For `test_ephemeral` rosters, protocol routes require both `x-hermes-a2a-test-token: <token>` and an allowed `x-hermes-a2a-peer-id`; the public Agent Card remains unauthenticated.
+
 ## Run local tests
 
 ```bash
@@ -28,6 +43,17 @@ uv run --extra dev python -m pytest tests -q
 ```
 
 ## Hermes plugin wrapper
+
+Install has two explicit steps: install the Python package into the Hermes Python environment, then install and enable the `plugin/` directory shim. For local editable work:
+
+```bash
+cd <repo>
+HERMES_PY="$(dirname "$(dirname "$(realpath "$(command -v hermes)")")")/bin/python"
+"$HERMES_PY" -m pip install -e .
+hermes plugins install "file://$(pwd)#plugin" --no-enable
+hermes plugins enable hermes-a2a --no-allow-tool-override
+hermes gateway restart
+```
 
 The reviewed rev-2 plugin wrapper adds a disabled-by-default Hermes plugin surface around this package:
 

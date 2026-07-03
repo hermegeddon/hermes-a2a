@@ -28,17 +28,22 @@ class TestEphemeralPeerAuthMiddleware:
     unauthenticated; protocol routes require both an allowed peer id and token.
     """
 
-    def __init__(self, app: ASGIApp, *, allowed_peer_ids: Iterable[str], test_token: str | None) -> None:
+    def __init__(self, app: ASGIApp, *, allowed_peer_ids: Iterable[str], test_token: str | None, require_auth: bool = False) -> None:
         self.app = app
         self.allowed_peer_ids = frozenset(allowed_peer_ids)
         self.test_token = test_token
+        self.require_auth = require_auth
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
-        if scope["type"] != "http" or self.test_token is None:
+        if scope["type"] != "http" or not self.require_auth:
             await self.app(scope, receive, send)
             return
-        if scope.get("path") == "/.well-known/agent-card.json":
+        if scope.get("path") in {"/.well-known/agent-card.json", "/extendedAgentCard"}:
             await self.app(scope, receive, send)
+            return
+        if self.test_token is None:
+            response = JSONResponse({"error": "A2A peer authorization token unavailable"}, status_code=403)
+            await response(scope, receive, send)
             return
         headers = {key.decode("latin1").lower(): value.decode("latin1") for key, value in scope.get("headers", [])}
         supplied_token = headers.get("x-hermes-a2a-test-token")
@@ -121,5 +126,5 @@ def build_app(
     routes.extend(create_jsonrpc_routes(handler, rpc_url="/"))
     routes.extend(create_rest_routes(handler))
     app = Starlette(debug=False, routes=routes)
-    app.add_middleware(TestEphemeralPeerAuthMiddleware, allowed_peer_ids=allowed_peer_ids, test_token=test_token)
+    app.add_middleware(TestEphemeralPeerAuthMiddleware, allowed_peer_ids=allowed_peer_ids, test_token=test_token, require_auth=require_auth)
     return app

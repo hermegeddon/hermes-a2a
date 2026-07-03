@@ -27,6 +27,52 @@ This repository is local-first. Public release, public Agent Card publication, d
 - Hermes safety wrappers: projection scanning, receipt-before-exposure, safe receipt refs, loopback-only push policy, and conformance-label gates
 - Hermes Agent plugin wrapper: read-only model tools, `hermes a2a` operator CLI, approval-gated live/service seams, and bundled operator skill; see `docs/plugin.md`
 
+## Install in Hermes
+
+The Hermes wrapper has two pieces:
+
+1. the Python package, installed into the same Python environment that runs `hermes`;
+2. the directory-plugin shim under `plugin/`, installed into the Hermes plugin directory and explicitly enabled.
+
+For a local editable checkout on POSIX/WSL:
+
+```bash
+cd <repo>
+HERMES_PY="$(dirname "$(dirname "$(realpath "$(command -v hermes)")")")/bin/python"
+"$HERMES_PY" -m pip install -e .
+hermes plugins install "file://$(pwd)#plugin" --no-enable
+hermes plugins enable hermes-a2a --no-allow-tool-override
+hermes gateway restart
+hermes a2a status
+```
+
+For a public Git install, including Windows/PowerShell, use the Python interpreter from the Hermes install/venv as `<hermes-python>`:
+
+```powershell
+<hermes-python> -m pip install git+https://github.com/hermegeddon/hermes-a2a.git
+hermes plugins install "https://github.com/hermegeddon/hermes-a2a.git#plugin" --no-enable
+hermes plugins enable hermes-a2a --no-allow-tool-override
+hermes gateway restart
+hermes a2a status
+```
+
+Do not grant tool override permission; the plugin registers only additive read-only tools and a guarded operator CLI.
+
+To run a local synthetic sidecar, provide an ephemeral test token via environment variable. The public Agent Card remains unauthenticated; protocol routes require both the token and an allowed peer id.
+
+```bash
+export HERMES_A2A_LOCAL_TEST_TOKEN="$(python -c 'import secrets; print(secrets.token_urlsafe(32))')"
+hermes a2a serve agent:local:hermes-blinky-wsl \
+  --foreground \
+  --executor synthetic \
+  --test-token-env HERMES_A2A_LOCAL_TEST_TOKEN \
+  --management-root <management-root> \
+  --config <management-root>/instances/instances.yaml \
+  --run-id <validated-run-id>
+```
+
+Live executor, service install/restart/stop, task-smoke, LAN exposure, public Agent Card publication, package publication, push/merge, and deployment remain separately gated.
+
 ## Validate
 
 Commands that write run artifacts use the management root from `--management-root`, then `HERMES_A2A_MANAGEMENT_ROOT`, then the current directory/repository root depending on the entry point. Examples below use `<management-root>` for explicit approval/receipt paths.

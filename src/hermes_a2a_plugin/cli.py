@@ -63,6 +63,7 @@ def register_cli(parser: argparse.ArgumentParser) -> None:
     serve.add_argument("instance")
     serve.add_argument("--foreground", action="store_true")
     serve.add_argument("--executor", choices=["synthetic", "live"], default="synthetic")
+    serve.add_argument("--test-token-env", default=None, help="environment variable containing the test_ephemeral peer token")
     _add_config_args(serve)
     _add_gate_args(serve)
 
@@ -282,6 +283,8 @@ def _serve_delegate(args: argparse.Namespace) -> int:
         "--executor",
         str(args.executor),
     ]
+    if getattr(args, "test_token_env", None):
+        argv.extend(["--test-token-env", str(args.test_token_env)])
     return main(argv)
 
 

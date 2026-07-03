@@ -83,3 +83,51 @@ async def test_extended_agent_card_requires_auth_when_enabled(tmp_path):
     assert "secret" not in denied.text.lower()
     assert allowed.status_code == 200
     assert allowed.json()["name"] == "Hermes A2A Local"
+
+
+@pytest.mark.asyncio
+async def test_test_ephemeral_auth_fails_closed_without_token(tmp_path):
+    app = build_app(
+        receipt_dir=tmp_path / "receipts",
+        require_auth=True,
+        test_token=None,
+        allowed_peer_ids=["agent:local:peer"],
+    )
+    transport = httpx.ASGITransport(app=app)
+    async with httpx.AsyncClient(transport=transport, base_url="http://127.0.0.1") as client:
+        card = await client.get("/.well-known/agent-card.json")
+        denied = await client.post(
+            "/",
+            json={"jsonrpc": "2.0", "id": "1", "method": "SendMessage", "params": _message_payload("ping")},
+            headers={**A2A_HEADERS, "x-hermes-a2a-peer-id": "agent:local:peer"},
+        )
+
+    assert card.status_code == 200
+    assert denied.status_code == 403
+    assert "token unavailable" in denied.text
+
+
+@pytest.mark.asyncio
+async def test_test_ephemeral_auth_allows_only_matching_token_and_peer(tmp_path):
+    app = build_app(
+        receipt_dir=tmp_path / "receipts",
+        require_auth=True,
+        test_token="unit-token",
+        allowed_peer_ids=["agent:local:peer"],
+    )
+    transport = httpx.ASGITransport(app=app)
+    async with httpx.AsyncClient(transport=transport, base_url="http://127.0.0.1") as client:
+        denied = await client.post(
+            "/",
+            json={"jsonrpc": "2.0", "id": "bad", "method": "SendMessage", "params": _message_payload("bad")},
+            headers={**A2A_HEADERS, "x-hermes-a2a-test-token": "wrong", "x-hermes-a2a-peer-id": "agent:local:peer"},
+        )
+        allowed = await client.post(
+            "/",
+            json={"jsonrpc": "2.0", "id": "good", "method": "SendMessage", "params": _message_payload("good")},
+            headers={**A2A_HEADERS, "x-hermes-a2a-test-token": "unit-token", "x-hermes-a2a-peer-id": "agent:local:peer"},
+        )
+
+    assert denied.status_code == 403
+    assert allowed.status_code == 200
+    assert allowed.json()["result"]["task"]["status"]["state"] == "TASK_STATE_COMPLETED"

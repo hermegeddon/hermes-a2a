@@ -28,6 +28,36 @@ def test_cli_registers_expected_subcommands() -> None:
         assert word in help_text
 
 
+def test_cli_serve_passes_test_token_env_to_package_entrypoint(monkeypatch, tmp_path: Path) -> None:  # type: ignore[no-untyped-def]
+    from hermes_a2a_plugin import cli
+
+    calls: list[list[str]] = []
+    monkeypatch.setattr("hermes_a2a.serve.main", lambda argv: calls.append(list(argv)) or 0)
+
+    rc = cli.a2a_command(
+        parse_cli(
+            [
+                "serve",
+                "agent:local:hermes-blinky-wsl",
+                "--executor",
+                "synthetic",
+                "--test-token-env",
+                "HERMES_A2A_LOCAL_TEST_TOKEN",
+                "--config",
+                str(tmp_path / "instances.yaml"),
+                "--run-id",
+                RUN_ID,
+                "--management-root",
+                str(tmp_path),
+            ]
+        )
+    )
+
+    assert rc == 0
+    assert len(calls) == 1
+    assert calls[0][-2:] == ["--test-token-env", "HERMES_A2A_LOCAL_TEST_TOKEN"]
+
+
 def test_cli_status_and_plan_are_read_only(tmp_path: Path, capsys) -> None:  # type: ignore[no-untyped-def]
     from hermes_a2a_plugin.cli import a2a_command
 

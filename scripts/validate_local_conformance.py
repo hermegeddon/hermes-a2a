@@ -23,6 +23,8 @@ from hermes_a2a.projection import ProjectionViolation, assert_safe_peer_visible
 
 ROOT = Path(__file__).resolve().parents[1]
 A2A_HEADERS = {"A2A-Version": "1.0"}
+TEST_TOKEN = "validator-token"
+TEST_PEER_ID = "agent:validator"
 
 
 def now() -> str:
@@ -56,32 +58,43 @@ def proto_request(text: str) -> a2a_pb2.SendMessageRequest:
 
 
 async def exercise_http(receipt_dir: Path) -> dict[str, Any]:
-    app = build_app(receipt_dir=receipt_dir, require_auth=True, api_key="validator-key")
+    app = build_app(
+        receipt_dir=receipt_dir,
+        require_auth=True,
+        api_key="validator-key",
+        test_token=TEST_TOKEN,
+        allowed_peer_ids=[TEST_PEER_ID],
+    )
+    auth_headers = {
+        **A2A_HEADERS,
+        "x-hermes-a2a-test-token": TEST_TOKEN,
+        "x-hermes-a2a-peer-id": TEST_PEER_ID,
+    }
     transport = httpx.ASGITransport(app=app)
     async with httpx.AsyncClient(transport=transport, base_url="http://127.0.0.1") as client:
         card = await client.get("/.well-known/agent-card.json")
         jsonrpc = await client.post(
             "/",
             json={"jsonrpc": "2.0", "id": "v-json", "method": "SendMessage", "params": message_payload("validator jsonrpc")},
-            headers=A2A_HEADERS,
+            headers=auth_headers,
         )
         stream = await client.post(
             "/",
             json={"jsonrpc": "2.0", "id": "v-stream", "method": "SendStreamingMessage", "params": message_payload("validator stream")},
-            headers=A2A_HEADERS,
+            headers=auth_headers,
         )
-        rest = await client.post("/message:send", json=message_payload("validator rest"), headers=A2A_HEADERS)
+        rest = await client.post("/message:send", json=message_payload("validator rest"), headers=auth_headers)
         task_id = rest.json()["task"]["id"]
-        fetched = await client.get(f"/tasks/{task_id}", headers=A2A_HEADERS)
+        fetched = await client.get(f"/tasks/{task_id}", headers=auth_headers)
         push_denied = await client.post(
             f"/tasks/{task_id}/pushNotificationConfigs",
             json={"id": "cfg-ext", "taskId": task_id, "url": "https://example.com/hook"},
-            headers=A2A_HEADERS,
+            headers=auth_headers,
         )
         push_allowed = await client.post(
             f"/tasks/{task_id}/pushNotificationConfigs",
             json={"id": "cfg-loop", "taskId": task_id, "url": "http://127.0.0.1:9999/hook"},
-            headers=A2A_HEADERS,
+            headers=auth_headers,
         )
         ext_denied = await client.get("/extendedAgentCard", headers=A2A_HEADERS)
         ext_allowed = await client.get("/extendedAgentCard", headers={**A2A_HEADERS, "x-hermes-a2a-key": "validator-key"})
