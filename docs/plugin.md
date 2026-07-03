@@ -60,8 +60,8 @@ Gated commands:
 | Command | Gate requirement |
 |---|---|
 | `hermes a2a serve <instance> --foreground` with live executor | Full gate set. Synthetic foreground serving remains aligned with the existing package behavior. |
-| `hermes a2a service install|restart|stop` | Full gate set plus service-operation env gate. |
-| `hermes a2a task-smoke <instance>` | Full gate set plus task-smoke env gate. |
+| `hermes a2a service install|restart|stop --instance local-services` | Full gate set plus service-operation env gate. The plugin service delegate is limited to the two local service units and excludes the work-labeled unit unless a future separate plan authorizes it. |
+| `hermes a2a task-smoke agent:local:hermes-blinky-wsl` | Full gate set plus task-smoke env gate; delegates to the existing M17c live loopback pilot for that supported local live instance. |
 
 Service status is read-only and ungated.
 
@@ -91,7 +91,7 @@ Strict schema:
 ```yaml
 kind: approval
 schema_version: 1
-id: <uuid4>
+id: <normalized uuid4>
 operation: <serve-live|service-install|service-restart|service-stop|task-smoke>
 instance: <roster instance name>
 issued_at: <RFC3339 UTC>
@@ -105,6 +105,7 @@ Verification rules:
 
 - The path must be supplied explicitly, resolve to a regular file, and remain contained in the approvals directory after symlink resolution.
 - YAML must parse and match the strict schema; unknown keys are refused.
+- `id` must be a normalized UUID4 string; consumption markers are derived from that normalized UUID and rechecked for approvals-directory containment before creation.
 - `kind`, `schema_version`, `operation`, and `instance` must match the requested operation.
 - `issued_at <= now < expires_at`; TTL must be at most 24 hours.
 - `approver` must be non-empty.
@@ -140,4 +141,4 @@ This plugin-wrapper work does not authorize public release, public PR, push, mer
 
 ## Verification status
 
-Slice 0 is complete. Later slices must attach command receipts proving registration safety, tool factory safety, gate refusals, read-only behavior, packaging, and isolated disabled-plugin discovery.
+Slice 0 is complete. Implementation evidence is recorded in `docs/plugin-wrapper-evidence.md`, including red/green plugin tests, focused registration/tool/gate/CLI safety receipts, full-suite evidence, packaging build/install proof, isolated disabled-plugin discovery, and explicit non-actions.
